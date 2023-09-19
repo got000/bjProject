@@ -47,8 +47,7 @@
                                 <table class="table table-striped table-hover text-center mt-2">
                                     <thead>
                                         <tr>
-                                            <th width="10%">ลำดับ</th>
-                                            <th width="20%">รหัสผูเใช้งาน</th>
+                                            <th width="10%">ลำดับ</th>  
                                             <th width="20%">ชื่อผู้ใช้งาน</th>
                                             <th width="20%">ระดับ</th>
                                             <th width="20%">เบอร์โทร</th>
@@ -65,17 +64,16 @@
                                         ?>
                                                 <tr>
                                                     <td><?php echo $i + 1 ?></td>
-                                                    <td><?php echo $row["emp_id"]; ?></td>
                                                     <td><?php echo $row["emp_name"]; ?></td>
                                                     <td>
                                                         <?php
-                                                            if ($row["emp_level"] == 1){
-                                                                echo "แอดมิน";
-                                                            }else  if ($row["emp_level"] == 2){
-                                                                echo "ผู้ใช้งาน";
-                                                            }else if ($row["emp_level"] == 3){
-                                                                echo "ลูกค้า";
-                                                            }
+                                                        if ($row["emp_level"] == 1) {
+                                                            echo "แอดมิน";
+                                                        } else  if ($row["emp_level"] == 2) {
+                                                            echo "ผู้ใช้งาน";
+                                                        } else if ($row["emp_level"] == 3) {
+                                                            echo "ลูกค้า";
+                                                        }
                                                         ?>
                                                     </td>
                                                     <td><?php echo $row["emp_tel"]; ?></td>
@@ -95,9 +93,14 @@
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
+                                                                
                                                                     <div class="mb-3">
-                                                                        <input type="hidden" value="<?php echo $row["emp_id"] ?>" maxlength="11" name="emp_id" class="form-control" required>
                                                                         <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>ชื่อผู้ใช้งาน</label>
+                                                                        <input type="text" value="<?php echo $row['emp_username']?>"  name="emp_username" class="form-control" required>
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <input type="hidden" value="<?php echo $row["emp_id"] ?>" name="emp_id" class="form-control" required>
+                                                                        <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>ชื่อ-สกุล พนักงาน</label>
                                                                         <input type="text" value="<?php echo $row["emp_name"] ?>" name="emp_name" class="form-control" required>
                                                                     </div>
                                                                     <div class="mb-3">
@@ -171,12 +174,20 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="mb-3">
-                                                    <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสผู้ใช้งาน<b>[สูงสุด 11 ตัวอักษร]</b></label>
-                                                    <input type="text" maxlength="11" name="emp_id" class="form-control" required>
+                                                    <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>ชื่อผู้ใช้งาน</label>
+                                                    <input type="text" name="emp_username" class="form-control" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>ชื่อผู้ใช้งาน</label>
+                                                    <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสผ่าน</label>
+                                                    <input type="password" name="emp_password" class="form-control" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>ชื่อ-สกุล พนักงาน</label>
                                                     <input type="text" name="emp_name" class="form-control" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>เบอร์โทร</label>
+                                                    <input type="text" name="emp_tel" class="form-control" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="dropdown" class="form-label"><span class="text-danger"><b>*</b></span>ระดับ</label>
@@ -186,10 +197,6 @@
                                                         <option value="2">ผู้ใช้งาน</option>
                                                         <option value="3">ลูกค้า</option>
                                                     </select>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>เบอร์โทร</label>
-                                                    <input type="text" name="emp_tel" class="form-control" required>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
