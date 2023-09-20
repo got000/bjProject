@@ -107,7 +107,7 @@
                                                                     <div class="mb-3">
                                                                         <label for="dropdown" class="form-label"><span class="text-danger"><b>*</b></span>ระดับ</label>
                                                                         <select class="form-select" id="dropdown" name="emp_level" required>
-                                                                            <option selected value="<?php echo $row["emp_level"]?>"><?php echo $row["emp_level"]?></option>
+                                                                            <option selected value="<?php echo $row["emp_level"] ?>"><?php echo $row["emp_level"] ?></option>
                                                                             <option value="1">แอดมิน</option>
                                                                             <option value="2">ผู้ใช้งาน</option>
                                                                             <option value="3">ลูกค้า</option>
@@ -138,12 +138,8 @@
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                   
-                                                                    <div class="mb-3">
-                                                                        <input type="hidden" value="<?php echo $row["emp_id"] ?>" name="emp_id">
-                                                                        <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสผ่านปัจจุบัน</label>
-                                                                        <input type="password" name="emp_currentPassword" class="form-control" required>
-                                                                    </div>
+                                                                    <input type="hidden" value="<?php echo $row["emp_id"] ?>" name="emp_id">
+                                                                    <input type="hidden" value="<?php echo $row["emp_password"] ?>" name="emp_password" class="form-control" required>
                                                                     <div class="mb-3">
                                                                         <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสผ่านใหม่</label>
                                                                         <input type="password" name="emp_newPassword" class="form-control" required>
@@ -173,7 +169,7 @@
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body text-center">
-                                                                    <input type="hidden" value="<?php echo $row["emp_id"] ?>"  name="emp_id" class="form-control" required>
+                                                                    <input type="hidden" value="<?php echo $row["emp_id"] ?>" name="emp_id" class="form-control" required>
                                                                     <div class="mb-3">
                                                                         <p>คุณต้องการลบ <b>"<?php echo $row["emp_name"] ?>"</b> ใช่หรือไม่?</p>
                                                                     </div>
@@ -291,8 +287,7 @@ if (@$_SESSION['addEmployee'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['addEmployee'] = "";
-}
-else if (@$_SESSION['changePassword'] == "error") {
+} else if (@$_SESSION['changePassword'] == "error") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
@@ -301,7 +296,7 @@ else if (@$_SESSION['changePassword'] == "error") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['changePassword'] = "";
-}else if (@$_SESSION['changePassword'] == "success") {
+} else if (@$_SESSION['changePassword'] == "success") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
@@ -310,8 +305,7 @@ else if (@$_SESSION['changePassword'] == "error") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['changePassword'] = "";
-}
-else if (@$_SESSION['comparePassword'] == "error") {
+} else if (@$_SESSION['comparePassword'] == "error") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
