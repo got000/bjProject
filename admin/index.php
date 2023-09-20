@@ -1,3 +1,7 @@
+<?php 
+  @session_destroy();
+	@session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +14,7 @@
     <title>Admin Management|Login</title>
     <style>
         :root{
-            --main-bg:#e91e63;
+            --main-bg:#3399ff;
         }
 
         .main-bg {
@@ -35,20 +39,31 @@
 <body class="main-bg">
   <!-- Login Form -->
   <div class="container">
+    <div class="row mt-5">
+      <div class="col-lg-3 col-md-3"></div>
+      <div class="col-lg-6 col-md-6">
+        <?php if(@$_SESSION["authen"] === "failed"){ ?>
+          <div class="alert alert-danger text-center" role="alert">
+            ชื่อผู้ใช้และรหัสผ่านไม่ถูกต้อง
+          </div>
+        <?php unset($_SESSION["authen"]); } ?>
+      </div>
+      <div class="col-lg-3 col-md-3"></div>
+    </div>
     <div class="row justify-content-center mt-5">
       <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="card shadow">
           <div class="card-title text-center border-bottom">
-            <h2 class="p-3">Login</h2>
+            <h2 class="p-3">เข้าสู่ระบบ</h2>
           </div>
           <div class="card-body">
-            <form>
+            <form action="./login.php" method="POST">
               <div class="mb-4">
-                <label for="username" class="form-label">Username/Email</label>
+                <label for="username" class="form-label">ชื่อผู้ใช้/เบอร์โทรศัพท์</label>
                 <input type="text" class="form-control" id="username" />
               </div>
               <div class="mb-4">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">รหัสผ่าน</label>
                 <input type="password" class="form-control" id="password" />
               </div>
               <div class="d-grid">
@@ -62,6 +77,6 @@
   </div>
 </body>
 <?php 
-    include("./../js/js_bootstrap.php");
+  include("./../js/jquery.php");
 ?>
 </html>
