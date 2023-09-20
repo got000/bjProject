@@ -94,10 +94,22 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div class="mb-3">
-                                                                        <input type="hidden" value="<?php echo $row["id"] ?>" maxlength="11" name="id" class="form-control" required>
-                                                                        <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสสินค้า<b>[สูงสุด 11 ตัวอักษร]</b></label>
-                                                                        <input type="text" value="<?php echo $row["pro_id"] ?>" maxlength="13" name="pro_id" class="form-control" required>
+                                                                        <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสประเภทสินค้า<b>[สูงสุด 11 ตัวอักษร]</label>
+                                                                        <select value="<?php echo $row['protype_id'] ?>" class="form-select" aria-label="Default select example">
+                                                                            <?php
+                                                                            $sql2 = "SELECT * FROM product_type";
+                                                                            $query2 = @mysqli_query($con, $sql2);
+                                                                            while ($row2 = mysqli_fetch_assoc($query2)) {
+                                                                            ?>
+                                                                                <option value="<?php echo $row2["id"] ?>">
+                                                                                    <?php echo $row2['protype_name'] ?>
+                                                                                </option>
+                                                                            <?php
+                                                                            }
+                                                                            ?>
+                                                                        </select>
                                                                     </div>
+
                                                                     <div class="mb-3">
                                                                         <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>ชื่อสินค้า</label>
                                                                         <input type="text" value="<?php echo $row["pro_name"] ?>" name="pro_name" class="form-control" required>
@@ -114,11 +126,7 @@
                                                                         <label for="recipient-name" class="form-label"><span class="text-danger"><b>*</b></span>รายละเอียดสินค้า</label>
                                                                         <input class="form-control" value="<?php echo $row["pro_detail"] ?>" type="text" name="pro_detail" required>
                                                                     </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสประเภทสินค้า<b>[สูงสุด 11 ตัวอักษร]</label>
-                                                                        <input type="text" maxlength="11" value="<?php echo $row["protype_id"] ?>" name="protype_id" class="form-control" required>
-                                                                        </select>
-                                                                    </div>
+
                                                                     <div class="mb-3">
                                                                         <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รูปภาพ</label>
                                                                         <input type="file" name="pro_image" class="form-control">
@@ -184,8 +192,20 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="mb-3">
-                                                    <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสสินค้า<b>[สูงสุด 11 ตัวอักษร]</b></label>
-                                                    <input type="text" maxlength="11" name="pro_id" class="form-control" required>
+                                                    <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสประเภทสินค้า<b>[สูงสุด 11 ตัวอักษร]</label>
+                                                    <select class="form-select" aria-label="Default select example">
+                                                        <?php
+                                                        $sql2 = "SELECT * FROM product_type";
+                                                        $query2 = @mysqli_query($con, $sql2);
+                                                        while ($row2 = mysqli_fetch_assoc($query2)) {
+                                                        ?>
+                                                            <option value="<?php echo $row2["id"] ?>">
+                                                                <?php echo $row2['protype_name'] ?>
+                                                            </option>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </select>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>ชื่อสินค้า</label>
@@ -202,10 +222,6 @@
                                                 <div class="mb-3">
                                                     <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รายละเอียดสินค้า</label>
                                                     <input type="text" name="pro_detail" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสประเภทสินค้า<b>[สูงสุด 11 ตัวอักษร]</label>
-                                                    <input type="text" maxlength="11" name="protype_id" class="form-control" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รูปภาพ</label>
