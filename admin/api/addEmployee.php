@@ -22,8 +22,8 @@
         echo "<meta HTTP-EQUIV='Refresh' CONTENT='0;URL=../employees.php'>";
         exit(0);
     }
-    $hashPasss =md5($emp_password);
-    $sql = "INSERT INTO employees (emp_name, emp_level, emp_tel, emp_username, emp_password) VALUES('".$emp_name."', '".$emp_level."', '".$emp_tel."', '".$emp_username."', '".$hashPasss."')";
+    $hashPassword =md5($emp_password);
+    $sql = "INSERT INTO employees (emp_name, emp_level, emp_tel, emp_username, emp_password) VALUES('".$emp_name."', '".$emp_level."', '".$emp_tel."', '".$emp_username."', '".$hashPassword."')";
     $query = mysqli_query($con, $sql);
     if($query){
         $_SESSION["addEmployee"] = "success";

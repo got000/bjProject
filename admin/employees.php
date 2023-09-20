@@ -47,7 +47,7 @@
                                 <table class="table table-striped table-hover text-center mt-2">
                                     <thead>
                                         <tr>
-                                            <th width="10%">ลำดับ</th>  
+                                            <th width="10%">ลำดับ</th>
                                             <th width="20%">ชื่อผู้ใช้งาน</th>
                                             <th width="20%">ระดับ</th>
                                             <th width="20%">เบอร์โทร</th>
@@ -80,6 +80,7 @@
                                                     <td>
                                                         <button class="btn btn-outline-warning" data-bs-toggle="modal" type="button" data-bs-target="#modalUpdateEmployee<?php echo $row["emp_id"] ?>"><i class="fas fa-edit"></i></button>
                                                         <button class="btn btn-outline-danger" data-bs-toggle="modal" type="button" data-bs-target="#modalDeleteEmployee<?php echo $row["emp_id"] ?>"><i class="fas fa-trash-alt"></i></button>
+                                                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" type="button" data-bs-target="#modalUpdatePasswordEmployee<?php echo $row["emp_id"] ?>"><i class="fa fa-key"></i></button>
                                                     </td>
                                                 </tr>
 
@@ -93,10 +94,10 @@
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                
+
                                                                     <div class="mb-3">
                                                                         <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>ชื่อผู้ใช้งาน</label>
-                                                                        <input type="text" value="<?php echo $row['emp_username']?>"  name="emp_username" class="form-control" required>
+                                                                        <input type="text" value="<?php echo $row['emp_username'] ?>" name="emp_username" class="form-control" required>
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <input type="hidden" value="<?php echo $row["emp_id"] ?>" name="emp_id" class="form-control" required>
@@ -106,7 +107,7 @@
                                                                     <div class="mb-3">
                                                                         <label for="dropdown" class="form-label"><span class="text-danger"><b>*</b></span>ระดับ</label>
                                                                         <select class="form-select" id="dropdown" name="emp_level" required>
-                                                                            <option selected>เลือกระดับ</option>
+                                                                            <option selected value="<?php echo $row["emp_level"]?>"><?php echo $row["emp_level"]?></option>
                                                                             <option value="1">แอดมิน</option>
                                                                             <option value="2">ผู้ใช้งาน</option>
                                                                             <option value="3">ลูกค้า</option>
@@ -127,6 +128,41 @@
                                                 </div>
                                                 <!-- modal edit -->
 
+                                                <!-- modal edit password -->
+                                                <div class="modal fade" tabindex="-1" id="modalUpdatePasswordEmployee<?php echo $row["emp_id"] ?>" tabindex="-1" aria-labelledby="modalUpdatePasswordEmployeeLabel<?php echo $row["id"] ?>" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <form action="./api/updatePasswordEmployee.php" method="POST">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">แก้ไขรหัสผ่าน</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                   
+                                                                    <div class="mb-3">
+                                                                        <input type="hidden" value="<?php echo $row["emp_id"] ?>" name="emp_id">
+                                                                        <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสผ่านปัจจุบัน</label>
+                                                                        <input type="password" name="emp_currentPassword" class="form-control" required>
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสผ่านใหม่</label>
+                                                                        <input type="password" name="emp_newPassword" class="form-control" required>
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>ยืนยันรหัสผ่านใหม่</label>
+                                                                        <input type="password" name="emp_confirmPassword" class="form-control" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+                                                                    <button type="submit" class="btn btn-warning">บันทึก</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- modal edit password -->
+
                                                 <!-- modal delete -->
                                                 <div class="modal fade" tabindex="-1" id="modalDeleteEmployee<?php echo $row["emp_id"] ?>" tabindex="-1" aria-labelledby="modalDeleteEmployeeLabel<?php echo $row["id"] ?>" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
@@ -137,7 +173,7 @@
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body text-center">
-                                                                    <input type="hidden" value="<?php echo $row["emp_id"] ?>" maxlength="11" name="emp_id" class="form-control" required>
+                                                                    <input type="hidden" value="<?php echo $row["emp_id"] ?>"  name="emp_id" class="form-control" required>
                                                                     <div class="mb-3">
                                                                         <p>คุณต้องการลบ <b>"<?php echo $row["emp_name"] ?>"</b> ใช่หรือไม่?</p>
                                                                     </div>
@@ -256,4 +292,35 @@ if (@$_SESSION['addEmployee'] == "success") {
     echo @$swal;
     @$_SESSION['addEmployee'] = "";
 }
+else if (@$_SESSION['changePassword'] == "error") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . @$type . "ล้มเหลว',";
+    $swal .= "text: '" . @$type . "รหัสผ่านผู้ใช้งานไม่สำเร็จ', icon: 'error', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['changePassword'] = "";
+}else if (@$_SESSION['changePassword'] == "success") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . @$type . "สำเร็จ',";
+    $swal .= "text: '" . @$type . "รหัสผ่านผู้ใช้งาน', icon: 'success', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['changePassword'] = "";
+}
+else if (@$_SESSION['comparePassword'] == "error") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . @$type . "ล้มเหลว',";
+    $swal .= "text: '" . @$type . "รหัสผ่านไม่ตรงกัน', icon: 'error', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['comparePassword'] = "";
+}
+
+
 ?>

@@ -116,12 +116,13 @@
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสประเภทสินค้า<b>[สูงสุด 11 ตัวอักษร]</label>
-                                                                        <input type="text" value="<?php echo $row["protype_id"] ?>" maxlength="11" name="protype_id" class="form-control" required>
+                                                                        <input type="text" maxlength="11" value="<?php echo $row["protype_id"] ?>" name="protype_id" class="form-control" required>
+                                                                        </select>
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รูปภาพ</label>
                                                                         <input type="file" name="pro_image" class="form-control">
-                                                                        <input type="hidden" name="pro_image_old" value="<?php echo $row['pro_image']?>" class="form-control" required>
+                                                                        <input type="hidden" name="pro_image_old" value="<?php echo $row['pro_image'] ?>" class="form-control" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -149,7 +150,7 @@
                                                                     <div class="mb-3">
                                                                         <p>คุณต้องการลบ <b>"<?php echo $row["pro_name"] ?>"</b> ใช่หรือไม่?</p>
                                                                         <img src='uploads/<?php echo $row['pro_image']; ?>' alt="เพิ่มรูปภาพ" width="80" height="80">
-                                                                    </div> 
+                                                                    </div>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
@@ -245,10 +246,10 @@
                     previewImg.src = e.target.result;
                 };
                 reader.readAsDataURL(imgInput.files[0]);
-                previewImg.style.display = "block"; 
+                previewImg.style.display = "block";
             } else {
                 previewImg.src = "";
-                previewImg.style.display = "none"; 
+                previewImg.style.display = "none";
             }
         }
     </script>
@@ -279,7 +280,7 @@ if (@$_SESSION['addProduct'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['addProduct'] = "";
-}else if (@$_SESSION['addProduct'] == "image_duplicate") {
+} else if (@$_SESSION['addProduct'] == "image_duplicate") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
@@ -288,8 +289,7 @@ if (@$_SESSION['addProduct'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['addProduct'] = "";
-} 
-else if (@$_SESSION['addProduct'] == "error") {
+} else if (@$_SESSION['addProduct'] == "error") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
@@ -298,8 +298,7 @@ else if (@$_SESSION['addProduct'] == "error") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['addProduct'] = "";
-}
-else if (@$_SESSION['addProduct'] == "imageType_error") {
+} else if (@$_SESSION['addProduct'] == "imageType_error") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
