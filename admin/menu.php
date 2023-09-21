@@ -5,7 +5,7 @@
     </div>
     <a href="./system.php" id="activeSystem">ข้อมูลระบบ</a>
     <a href="./employees.php" id="activeEmployee">จัดการข้อมูลผู้ใช้งาน</a>
-    <a href="./employeePassword.php" id="activeEmployee">จัดการรหัสผ่าน</a>
+    <a href="./employeePassword.php" id="activeEmployeePassword">จัดการรหัสผ่าน</a>
     <a href="./product_type.php" id="activeProductType">จัดการประเภทสินค้า</a>
     <a href="./products.php" id="activeProducts">จัดการสินค้า</a>
     <a href="./logout.php" id="activeProductType">ออกจากระบบ</a>
@@ -27,6 +27,6 @@
     }else if(url === "products.php"){
         $('#activeProducts').addClass("active")
     }else if(url === "employeePassword.php"){
-        $('#activeProducts').addClass("active")
+        $('#activeEmployeePassword').addClass("active")
     }
 </script>
