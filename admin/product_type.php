@@ -1,5 +1,9 @@
 <?php 
     @session_start(); 
+    if(!isset($_SESSION["emp_level"])){
+        @$_SESSION["empty"] = "y";
+        header("location: index.php");
+    }
     @include("./../config/config.php")
 ?>
 <!DOCTYPE html>

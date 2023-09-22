@@ -35,7 +35,7 @@ if ($stru_logo != "") {
     $updateLogo = $stru_logo_old;
 }
 
-$targetFile = "../uploads/logo/" . basename($stru_logo);
+$targetFile = "../uploads/systems/" . basename($stru_logo);
 $sql = "UPDATE systems SET stru_name='" . $stru_name . "', stru_logo='" . $updateLogo . "', stru_ann='" . $stru_ann . "', stru_add='" . $stru_add . "' WHERE stru_id='" . $stru_id . "'";
 $query = mysqli_query($con, $sql);
 if ($query) {

@@ -1,5 +1,12 @@
 <?php
 @session_start();
+if(isset($_SESSION["emp_level"]) && @$_SESSION["emp_level"] !== "1"){
+    @$_SESSION["empty"] = "y";
+    header("location: index.php");
+}else if(!isset($_SESSION["emp_level"])){
+    @$_SESSION["empty"] = "y";
+   header("location: index.php");
+}
 @include("./../config/config.php")
 ?>
 <!DOCTYPE html>
@@ -108,14 +115,13 @@
                                                                         <label for="dropdown" class="form-label"><span class="text-danger"><b>*</b></span>ระดับ</label>
                                                                         <select class="form-select" id="dropdown" name="emp_level" required>
                                                                             <option selected value="<?php echo $row["emp_level"] ?>"><?php echo $row["emp_level"] ?></option>
-                                                                            <option value="1">แอดมิน</option>
                                                                             <option value="2">ผู้ใช้งาน</option>
                                                                             <option value="3">ลูกค้า</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>เบอร์โทร</label>
-                                                                        <input type="text" value="<?php echo $row["emp_tel"] ?>" name="emp_tel" class="form-control" required>
+                                                                        <input type="text" maxlength="10" value="<?php echo $row["emp_tel"] ?>" name="emp_tel" class="form-control" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">

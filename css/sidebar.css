@@ -11,13 +11,14 @@
     padding-top: 20px;
 }
 
-.sidenav .brand{
+.sidenav .brand, .sidenav .manage-title{
     padding: 8px 8px 8px 32px;
     color: #f1f1f1;
+    margin: 5px 0;
 }
   
 .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 8px 8px 8px 40px;
     text-decoration: none;
     font-size: 20px;
     color: #818181;

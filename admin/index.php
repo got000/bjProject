@@ -44,7 +44,7 @@
       <div class="col-lg-6 col-md-6">
         <?php if(@$_SESSION["authen"] === "failed"){ ?>
           <div class="alert alert-danger text-center" role="alert">
-            ชื่อผู้ใช้และรหัสผ่านไม่ถูกต้อง
+            ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง
           </div>
         <?php unset($_SESSION["authen"]); } ?>
       </div>
@@ -60,11 +60,11 @@
             <form action="./login.php" method="POST">
               <div class="mb-4">
                 <label for="username" class="form-label">ชื่อผู้ใช้/เบอร์โทรศัพท์</label>
-                <input type="text" class="form-control" id="username" />
+                <input type="text" name="username" class="form-control" id="username" />
               </div>
               <div class="mb-4">
                 <label for="password" class="form-label">รหัสผ่าน</label>
-                <input type="password" class="form-control" id="password" />
+                <input type="password" name="password" class="form-control" id="password" />
               </div>
               <div class="d-grid">
                 <button type="submit" class="btn text-light main-bg">Login</button>
@@ -78,5 +78,16 @@
 </body>
 <?php 
   include("./../js/jquery.php");
+  include("./../js/sweetalert.php");
+  if (@$_SESSION['empty'] == "y") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: 'ไม่มีสิทธิ',";
+    $swal .= "text: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง', icon: 'error', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    session_destroy();
+  }
 ?>
 </html>

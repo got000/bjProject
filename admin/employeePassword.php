@@ -1,5 +1,9 @@
 <?php
 @session_start();
+if(!isset($_SESSION["emp_level"])){
+    @$_SESSION["empty"] = "y";
+    header("location: index.php");
+}
 @include("./../config/config.php");
 ?>
 <!DOCTYPE html>
@@ -37,7 +41,7 @@
                         <div class="col-lg-5 col-md-5">
                             <form action="./api/updatePasswordEmployee.php" method="POST">
                                 <div class="mb-3">
-                                    <h1>จัดการรหัสผ่าน</h1>
+                                    <h3>แก้ไขรหัสผ่าน</h3>
                                     <!-- Current SESSION['emp_id'] -->
                                     <input type="hidden" name="emp_id" value="<?php echo $_SESSION["emp_id"] ?>">
                                 </div>
@@ -49,7 +53,7 @@
                                     <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>ยืนยันรหัสผ่าน</label>
                                     <input type="password" name="emp_confirmPassword" class="form-control">
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3" align="right">
                                     <button data-bs-toggle="modal" type="button" data-bs-target="#modalSubmitPassword" class="btn btn-primary">บันทึก</button>
                                 </div>
                             </form>

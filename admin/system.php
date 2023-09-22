@@ -1,5 +1,12 @@
 <?php
 @session_start();
+if(isset($_SESSION["emp_level"]) && @$_SESSION["emp_level"] !== "1"){
+   @$_SESSION["empty"] = "y";
+   header("location: index.php");
+}else if(!isset($_SESSION["emp_level"])){
+    @$_SESSION["empty"] = "y";
+   header("location: index.php");
+}
 @include("./../config/config.php")
 ?>
 <!DOCTYPE html>
@@ -29,8 +36,7 @@
         <div class="container-fluid">
             <div class="row mt-5">
                 <div class="col-lg-2 col-md-2">
-                    <?php include("./menu.php");
-                    ?>
+                    <?php include("./menu.php");?>
                 </div>
                 <?php
                 $sql = "SELECT * FROM systems";
@@ -39,15 +45,18 @@
                     while ($row = mysqli_fetch_assoc($query)) {
                 ?>
                         <div class="col-lg-10 col-md-10">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <h3>ตั้งค่าร้าน</h3>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row justify-content-center">
                                 <div class="col-lg-5 col-md-5">
                                     <div class="row align-items-center">
-                                        <div class="col">
-                                            <h1>ตั้งค่าร้าน</h1>
-                                        </div>
-                                        <div class="col"></div>
-                                        <div class="col">
-                                            <img src="./uploads/logo/<?php echo $row['stru_logo'] ?>" alt="Logo" height="100" width="100">
+                                        <div class="col-lg-12 text-center">
+                                            <img src="./uploads/systems/<?php echo $row['stru_logo'] ?>" alt="Logo" height="100" width="100">
                                         </div>
                                     </div>
                                     <form action="./api/systemAction.php" method="POST" enctype="multipart/form-data">
@@ -70,7 +79,7 @@
                                             <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>ที่อยู่ร้าน</label>
                                             <textarea rows="3" class="form-control" value="<?php echo $row["stru_add"] ?>" name="stru_add"><?php echo $row["stru_add"] ?></textarea rows="3">
                                         </div>
-                                        <div class="mb-3">
+                                        <div class="mb-3" align="right">
                                             <button class="btn btn-primary" type="submit">บันทึก</button>
                                         </div>
                                     </form>

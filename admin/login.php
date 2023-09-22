@@ -1,6 +1,10 @@
 <?php 
     @session_start();
-    include("./api/header.php");
+    @header("content-type:application/json;charset=utf-8");
+    @header('Content-Type: text/html; charset=UTF-8');
+    @header("Access-Control-Allow-Origin: *");
+    @header('Access-Control-Allow-Headers: X-Requested-With, content-type, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers');
+    include("./../config/config.php");
 ?>
 <?php 
     //input
@@ -16,6 +20,7 @@
     if($query){
 
         $fetch = mysqli_fetch_assoc($query);
+        echo $fetch;
         if($fetch["emp_password"] !== $password){
             $_SESSION["authen"] = "failed";
             header("location:index.php");
