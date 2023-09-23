@@ -1,9 +1,9 @@
 <?php
 
-use function PHPSTORM_META\map;
-
 @session_start();
 include("./../config/config.php");
+include("./../css/css_bootstap.php");
+include("./../js/js_bootstrap.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,11 +18,11 @@ include("./../config/config.php");
     <?php include("./navbar.php") ?>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-2 col-md-3">
                 <!-- LEFT SIDE HERE! -->
             </div>
-            <div class="col-lg-6 col-md-6">
-                <h2 class="pb-2 border-bottom text-center mt-5">เลือกซื้อสินค้า</h2>
+            <div class="col-lg-10 col-md-6">
+                <!-- <h2 class="pb-2 border-bottom text-center mt-5">เลือกซื้อสินค้า</h2> -->
                 <div class="row px-5 py-4">
                     <?php
                     $sql = "SELECT * FROM products";
@@ -32,14 +32,19 @@ include("./../config/config.php");
                     ?>
                             <div class="col-lg-3 col-md-3 mb-3">
                                 <div class="card">
+<<<<<<< HEAD
                                     <a href="./product_view.php?id=<?php echo $row["id"] ?>">
                                         <img src="../admin/uploads/<?php echo $row["pro_image"] ?>" style="width: 100%; height: 100px; object-fit:cover;" class="card-img-top" alt="...">
+=======
+                                    <a href="./product_view.php?pro_id=<?php echo $row["pro_id"] ?>">
+                                        <img src="../admin/uploads/<?php echo $row["pro_image"] ?>" style="width: 100%; height: 250px; object-fit:cover;" class="card-img-top" alt="...">
+>>>>>>> developer
                                     </a>
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $row["pro_name"] ?></h5>
                                         <p class="card-text"><?php echo $row["pro_detail"] ?></p>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="fw-bold"><i class="fab fa-btc"></i><?php echo $row["pro_price"] ?></p>
+                                            <p class="fw-bold"><i class="fab fa-btc my-auto"></i><?php echo $row["pro_price"] ?></p>
                                             <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-cart-plus"></i></a>
                                         </div>
                                     </div>
@@ -54,10 +59,6 @@ include("./../config/config.php");
                     }
                     ?>
                 </div>
-            </div>
-            <!-- ADD HTML ELEMENTS FOR NO PRODUCTS -->
-            <div class="col-lg-3 col-md-3">
-                <!-- RIGHT SIDE HERE! -->
             </div>
         </div>
     </div>
@@ -149,7 +150,6 @@ include("./../config/config.php");
 <?php
 include("./../js/jquery.php");
 include("./../js/ajax.php");
-include("./../js/js_bootstrap.php");
 ?>
 
 <script>
