@@ -18,10 +18,10 @@ include("./../js/js_bootstrap.php");
     <?php include("./navbar.php") ?>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-2 col-md-3">
+            <div class="col-lg-2 col-md-2">
                 <!-- LEFT SIDE HERE! -->
             </div>
-            <div class="col-lg-10 col-md-6">
+            <div class="col-lg-10 col-md-10">
                 <!-- <h2 class="pb-2 border-bottom text-center mt-5">เลือกซื้อสินค้า</h2> -->
                 <div class="row px-5 py-4">
                     <?php
@@ -32,13 +32,8 @@ include("./../js/js_bootstrap.php");
                     ?>
                             <div class="col-lg-3 col-md-3 mb-3">
                                 <div class="card">
-<<<<<<< HEAD
                                     <a href="./product_view.php?id=<?php echo $row["id"] ?>">
-                                        <img src="../admin/uploads/<?php echo $row["pro_image"] ?>" style="width: 100%; height: 100px; object-fit:cover;" class="card-img-top" alt="...">
-=======
-                                    <a href="./product_view.php?pro_id=<?php echo $row["pro_id"] ?>">
                                         <img src="../admin/uploads/<?php echo $row["pro_image"] ?>" style="width: 100%; height: 250px; object-fit:cover;" class="card-img-top" alt="...">
->>>>>>> developer
                                     </a>
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $row["pro_name"] ?></h5>
@@ -135,7 +130,14 @@ include("./../js/js_bootstrap.php");
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        ...
+                        <div class="mb-3">
+                            <label for="username" class="col-form-label">ชื่อผู้ใช้งาน:</label>
+                            <input type="text" name="username" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="col-form-label">รหัสผ่าน:</label>
+                            <input type="password" name="password" class="form-control">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">ยกเลิก</button>
@@ -236,7 +238,7 @@ if (@$_SESSION['register'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['register'] = "";
-}else if (@$_SESSION['register'] == "error") {
+} else if (@$_SESSION['register'] == "error") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
@@ -245,7 +247,7 @@ if (@$_SESSION['register'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['register'] = "";
-}else if (@$_SESSION['register'] == "duplicate") {
+} else if (@$_SESSION['register'] == "duplicate") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
@@ -254,7 +256,7 @@ if (@$_SESSION['register'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['register'] = "";
-}else if (@$_SESSION['login'] == "success") {
+} else if (@$_SESSION['login'] == "success") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
@@ -263,7 +265,7 @@ if (@$_SESSION['register'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['login'] = "";
-}else  if (@$_SESSION['login'] == "error") {
+} else  if (@$_SESSION['login'] == "error") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
@@ -272,6 +274,7 @@ if (@$_SESSION['register'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['login'] = "";
-}    
+}
 ?>
+
 </html>
