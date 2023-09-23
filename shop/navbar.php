@@ -1,5 +1,4 @@
 <?php 
-    include("./../css/css_bootstap.php");
     @session_start();
 ?>
 <?php 
@@ -9,12 +8,10 @@
     $fetch = @mysqli_fetch_assoc($query);
 ?>
 
-<!-- <?php include("./../css/css_bootstap.php") ?> -->
-
 <style>
     .dropdown-menu[data-bs-popper]{
         top: 48px;
-        left: -130px;
+        left: -60px;
     }
 
     .badge {
@@ -51,9 +48,6 @@
                 <li class="nav-item">
                     <a class="nav-link" id="homeActive" aria-current="page" href="./index.php">หน้าหลัก</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" id="productActive" href="./product">สินค้า</a>
-                </li> -->
             </ul>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
@@ -72,7 +66,7 @@
                 <li style="width: 10px;"></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">
-                        <?php ?>
+                        <?php echo "John Doe" ?>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="">จัดการข้อมูลส่วนตัว</a></li>
@@ -91,7 +85,6 @@
 
 <?php
 include("./../js/jquery.php");
-include("./../js/js_bootstrap.php");
 ?>
 
 <script>
