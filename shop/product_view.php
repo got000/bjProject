@@ -19,9 +19,9 @@ include("./../config/config.php");
     <div class="container-fluid">
         <div class="row mt-5 justify-content-center">
             <?php
-            if (isset($_GET['pro_id'])) {
-                $pro_id = $_GET['pro_id'];
-                $sql = "SELECT * FROM products WHERE pro_id='" . $pro_id . "' LIMIT 1";
+            if (isset($_GET['id'])) {
+                $id = $_GET['id'];
+                $sql = "SELECT * FROM products WHERE id='" . $id . "' LIMIT 1";
                 $query = @mysqli_query($con, $sql);
                 $product = mysqli_fetch_assoc($query);
                 if ($product) {

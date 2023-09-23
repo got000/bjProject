@@ -32,7 +32,7 @@ include("./../config/config.php");
                     ?>
                             <div class="col-lg-3 col-md-3 mb-3">
                                 <div class="card">
-                                    <a href="./product_view.php?pro_id=<?php echo $row["pro_id"] ?>">
+                                    <a href="./product_view.php?id=<?php echo $row["id"] ?>">
                                         <img src="../admin/uploads/<?php echo $row["pro_image"] ?>" style="width: 100%; height: 100px; object-fit:cover;" class="card-img-top" alt="...">
                                     </a>
                                     <div class="card-body">
