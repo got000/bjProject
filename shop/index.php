@@ -77,15 +77,15 @@ include("./../js/js_bootstrap.php");
                             <input type="text" name="lname" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label for="fname" class="col-form-label">เบอร์โทร:</label>
+                            <label for="tel" class="col-form-label">เบอร์โทร:</label>
                             <input type="text" name="tel" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label for="fname" class="col-form-label">รหัสผ่าน:</label>
-                            <input type="text" name="password" class="form-control">
+                            <label for="password" class="col-form-label">รหัสผ่าน:</label>
+                            <input type="password" name="password" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label for="fname" class="col-form-label">จังหวัด:</label>
+                            <label for="province" class="col-form-label">จังหวัด:</label>
                             <select name="province" id="province" class="form-select">
                                 <option selected>เลือกจังหวัด</option>
                                 <?php
@@ -225,16 +225,13 @@ include("./../js/ajax.php");
         })
     })
 </script>
-<!-- Alert -->
 <?php
-@$type = @$_SESSION["registerHeader"] || @$_SESSION["loginHeader"];
-
 if (@$_SESSION['register'] == "success") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
-    $swal .= "title: '" . @$type . "สำเร็จ',";
-    $swal .= "text: '" . @$type . "บัญชีสำเร็จ', icon: 'success', confirmButtonText: 'ตกลง'})";
+    $swal .= "title: '" . "สำเร็จ',";
+    $swal .= "text: '" . "ลงทะเบียนบัญชีสำเร็จ', icon: 'success', confirmButtonText: 'ตกลง'})";
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['register'] = "";
@@ -242,8 +239,8 @@ if (@$_SESSION['register'] == "success") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
-    $swal .= "title: '" . @$type . "ไม่สำเร็จ',";
-    $swal .= "text: '" . @$type . "บัญชีไม่สำเร็จ', icon: 'error', confirmButtonText: 'ตกลง'})";
+    $swal .= "title: '" . "ไม่สำเร็จ',";
+    $swal .= "text: '" . "ลงทะเบียนบัญชีไม่สำเร็จ', icon: 'error', confirmButtonText: 'ตกลง'})";
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['register'] = "";
@@ -251,8 +248,8 @@ if (@$_SESSION['register'] == "success") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
-    $swal .= "title: '" . @$type . "ไม่สำเร็จ',";
-    $swal .= "text: '" . @$type . "เบอร์โทรศัพท์ซ้ำ', icon: 'error', confirmButtonText: 'ตกลง'})";
+    $swal .= "title: '" . "ไม่สำเร็จ',";
+    $swal .= "text: '" . "มีผู้ใช้เบอร์โทรศัพท์นี้แล้ว', icon: 'error', confirmButtonText: 'ตกลง'})";
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['register'] = "";
@@ -260,8 +257,8 @@ if (@$_SESSION['register'] == "success") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
-    $swal .= "title: '" . @$type . "สำเร็จ',";
-    $swal .= "text: '" . @$type . "สำเร็จ', icon: 'success', confirmButtonText: 'ตกลง'})";
+    $swal .= "title: '" . "สำเร็จ',";
+    $swal .= "text: '" . "เข้าสู่ระบบสำเร็จ', icon: 'success', confirmButtonText: 'ตกลง'})";
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['login'] = "";
@@ -269,8 +266,8 @@ if (@$_SESSION['register'] == "success") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
-    $swal .= "title: '" . @$type . "ไม่สำเร็จ',";
-    $swal .= "text: '" . @$type . "ไม่สำเร็จ', icon: 'error', confirmButtonText: 'ตกลง'})";
+    $swal .= "title: '" . "ไม่สำเร็จ',";
+    $swal .= "text: '" . "เข้าสู่ระบบไม่สำเร็จ', icon: 'error', confirmButtonText: 'ตกลง'})";
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['login'] = "";

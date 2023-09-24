@@ -69,8 +69,8 @@
                         <?php echo "John Doe" ?>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="">จัดการข้อมูลส่วนตัว</a></li>
-                        <li><a class="dropdown-item" href="">แก้ไขรหัสผ่าน</a></li>
+                        <li><a class="dropdown-item" href="./edit_profile.php">จัดการข้อมูลส่วนตัว</a></li>
+                        <li><a class="dropdown-item" href="./edit_password.php">แก้ไขรหัสผ่าน</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="">ประวัติการซื้อสินค้า</a></li>
                         <li><a class="dropdown-item" href="">ประวัติการแจ้งปัญหา</a></li>

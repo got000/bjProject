@@ -72,6 +72,5 @@ include("./../js/js_bootstrap.php");
 <?php
 include("./../js/jquery.php");
 ?>
-<!-- Write Alert -->
 
 </html>
