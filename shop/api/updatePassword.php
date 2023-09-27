@@ -1,5 +1,9 @@
 <?php
-include("./header.php");
+@header("content-type:application/json;charset=utf-8");
+@header('Content-Type: text/html; charset=UTF-8');
+@header("Access-Control-Allow-Origin: *");
+@header('Access-Control-Allow-Headers: X-Requested-With, content-type, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers');
+include("./../../config/config.php");
 @session_start();
 ?>
 
@@ -14,26 +18,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <?php
 // PROCESS
-$sql_select = "SELECT * FROM customers WHERE cus_id='" . $cus_id . "' LIMIT 1";
-$result_select = mysqli_query($con, $sql_select);
-$select_password = mysqli_fetch_assoc($result_select);
-$data_pwd = $select_password['cus_pass'];
-
-if ($data_pwd != "") {
-    if ($newPassword == $confirmPassword) {
-        $hashPassword = md5($newPassword);
-        $sql = "UPDATE customers SET cus_pass='" . $hashPassword . "' WHERE cus_id='" . $cus_id . "'";
-        $query = mysqli_query($con, $sql);
-        if ($query) {
-            $_SESSION["editPassword"] = "success";
-            header("location: ./edit_password.php");
-            exit;
-        }
-    }
+if(strlen($_POST['newPassword']) < 6){
+    $_SESSION['editPassword'] = "password_minimum_six";
+    header("location: ./../../edit_password.php");
+    exit;
+}
+if ($newPassword != $confirmPassword) {
+    $_SESSION["editPassword"] = "not_matching";
+    exit;
+}
+$hashPassword = md5($newPassword);
+$sql = "UPDATE customers SET cus_password='" . $hashPassword . "' WHERE cus_id='" . $cus_id . "'";
+$query = mysqli_query($con, $sql);
+if ($query) {
+    $_SESSION["editPassword"] = "success";
+    header("location: ./../../edit_password.php");
+    exit;
 }
 
 $_SESSION["editPassword"] = "error";
-header("location: ./edit_password.php");
+header("location: ./../../edit_password.php");
 exit;
 
 ?>

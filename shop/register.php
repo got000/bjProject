@@ -22,7 +22,11 @@
 ?>
 <?php 
     //process
-    $_SESSION["registerHeader"] = "ลงทะเบียน";
+    if(strlen($_POST['password']) < 6){
+        $_SESSION['register'] = "password_minimum_six";
+        header("location: index.php");
+        exit;
+    }
     $sql_select = "SELECT * FROM customers WHERE cus_tel='".$tel."' LIMIT 1";
     $result_select = mysqli_query($con, $sql_select);
     // check tel duplicate

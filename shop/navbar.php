@@ -50,6 +50,7 @@
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
+                <?php if(!isset($_SESSION['cus_id'])){ ?>
                 <li class="nav-item">
                     <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalLogin">เข้าสู่ระบบ</button>
                 </li>
@@ -57,7 +58,9 @@
                 <li class="nav-item">
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegister">สมัครสมาชิก</button>
                 </li>
+                <?php } ?>
                 <li style="width: 10px;"></li>
+                <?php if(isset($_SESSION['cus_id'])){ ?>
                 <li class="nav-item">
                     <i class="fas fa-shopping-cart mt-2" style="font-size: 22px; cursor: pointer;">
                         <span class='badge badge-warning' id='lblCartCount'>0</span>
@@ -66,7 +69,7 @@
                 <li style="width: 10px;"></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">
-                        <?php echo "John Doe" ?>
+                        <?php echo $_SESSION['cus_name'] ?>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="./edit_profile.php">จัดการข้อมูลส่วนตัว</a></li>
@@ -75,9 +78,10 @@
                         <li><a class="dropdown-item" href="">ประวัติการซื้อสินค้า</a></li>
                         <li><a class="dropdown-item" href="">ประวัติการแจ้งปัญหา</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="">ออกจากระบบ</a></li>
+                        <li><a class="dropdown-item" href="./logout.php">ออกจากระบบ</a></li>
                     </ul>
                 </li>
+                <?php } ?>
             </ul>
         </div>
     </div>
