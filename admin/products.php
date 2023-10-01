@@ -224,7 +224,7 @@ if(!isset($_SESSION["emp_level"])){
                                                     <input type="number" name="pro_price" class="form-control" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รายละเอียดสินค้า</label>
+                                                    <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รายละเอียดสินค้า<br>*ถ้ารายละเอียดมากกว่า 1 โปรดใส่ ,</label>
                                                     <input type="text" name="pro_detail" class="form-control" required>
                                                 </div>
                                                 <div class="mb-3">

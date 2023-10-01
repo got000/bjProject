@@ -34,8 +34,18 @@ include("./../js/js_bootstrap.php");
                     <div class="col-md-6">
                         <h1 class="display-5 fw-bold lh-1 mb-5 position-static"><?php echo $product["pro_name"] ?></h1>
                         <p><strong>ราคา:</strong> $<?php echo $product["pro_price"] ?></p>
-                        <p><strong>รายละเอียดสินค้า:</strong> <?php echo $product["pro_detail"] ?></p>
-                        <div class="input-group mb-3">
+                        <p><strong>รายละเอียดสินค้า:</p>
+                        <!-- LIST PRODUCT DETAIL CASE DETAIL > 1 -->
+                        <?php 
+                            $details = $product['pro_detail'];
+                            $detail_parts = explode(',', $details);
+                            foreach ($detail_parts as $detail) {
+                        ?>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class="fas fa-circle" style="font-size: 0.1rem;"></i> <?php echo $detail ?></li>
+                        </ul>                        
+                        <?php }?>
+                        <div class="input-group mb-3 mt-3">
                             <button style="width: 3rem;" class="btn btn-outline-secondary" type="button"><i class="fas fa-minus"></i></button>
                             <input type="text" class="form-control-sm" style="width: 3rem; text-align: center; border-width: 1px" placeholder="1">
                             <button style="width: 3rem;" class="btn btn-outline-secondary" type="button"><i class="fas fa-plus"></i></button>
