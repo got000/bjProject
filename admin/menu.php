@@ -26,9 +26,12 @@
     <div class="manage-title">
         <h6>ข้อมูลซื้อขาย</h6>
     </div>
+    <a href="./wait_approve.php" id="activeWaitForApprove">รายการรออนุมัติ</a>
     <div class="manage-title">
         <h6>ข้อมูลการติดตั้ง</h6>
     </div>
+    <a href="./wait_install.php" id="activeWaitInstall">รายการรอติดตั้ง</a>
+    <a href="./installed.php" id="activeInstalled">รายการติดตั้งเสร็จสมบูรณ์</a>
     <div class="manage-title">
         <h6>ข้อมูลการแจ้งปัญหา</h6>
     </div>
@@ -53,5 +56,12 @@
         $('#activeProducts').addClass("active")
     }else if(url === "employeePassword.php"){
         $('#activeEmployeePassword').addClass("active")
+    }else if(url === "wait_approve.php"){
+        $('#activeWaitForApprove').addClass("active")
+    }else if(url === "wait_install.php"){
+        $('#activeWaitInstall').addClass("active")
+    }else if(url === "installed.php"){
+        $('#activeInstalled').addClass("active")
     }
+
 </script>
