@@ -78,7 +78,7 @@ include("./../js/js_bootstrap.php");
                         </div>
                         <div class="mb-3">
                             <label for="tel" class="col-form-label">เบอร์โทร:</label>
-                            <input type="text" name="tel" class="form-control">
+                            <input maxlength="10" type="text" name="tel" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="col-form-label">รหัสผ่าน:</label>

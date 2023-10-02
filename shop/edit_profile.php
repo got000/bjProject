@@ -41,7 +41,7 @@ include("./../js/js_bootstrap.php");
                     </div>
                     <div class="mb-3 px-5">
                         <label for="tel" class="form-label">เบอร์โทร</label>
-                        <input value="<?php echo $_SESSION['cus_tel'] ?>" name="tel" type="text" class="form-control" id="tel">
+                        <input maxlength="10" value="<?php echo $_SESSION['cus_tel'] ?>" name="tel" type="text" class="form-control" id="tel">
                     </div>
                     <div class="mb-3 px-5">
                         <label for="province" class="col-form-label">จังหวัด:</label>
@@ -86,13 +86,12 @@ include("./../js/ajax.php");
         getCurrentProvince();
         getCurrentAmphur();
         getCurrentDistrict();
-    });
+    })
 </script>
 
 <script>
     const getCurrentProvince = () => {
-        let province = <?php echo $_SESSION["cus_province"] ?>
-
+        let province = <?php echo $_SESSION["cus_province"] ?>;
         $.ajax({
             url: "api/getAmphur.php",
             method: "POST",
@@ -159,6 +158,86 @@ include("./../js/ajax.php");
             }
         })
     }
+</script>
+
+<script>
+    $('#province').change((e) => { // ค้นหาอำเภอด้วย id ของจังหวัด
+        let province = e.target.value
+        $.ajax({
+            url: "api/getAmphur.php",
+            method: "POST",
+            data: JSON.stringify({
+                province
+            }),
+            async: false,
+            success: (response) => {
+                let data = JSON.parse(response)
+                $("#amphur").empty();
+                $("#zip_code").val("");
+                $("#district").empty();
+                $("#amphur").append(`<option value="0">เลือกอำเภอ</option>`)
+                $.each(data, (index, value) => {
+                    $("#amphur").append(`<option value="${value.id}">${value.name_th}</option>`)
+                })
+                console.log(data);
+            },
+            error: (error) => {
+                console.log({
+                    error
+                })
+            }
+        })
+    })
+
+    $('#amphur').change((e) => { // ค้นหาตำบลด้วย id ของอำเภอ
+        let amphur = e.target.value
+        $.ajax({
+            url: "api/getDistrict.php",
+            method: "POST",
+            data: JSON.stringify({
+                amphur
+            }),
+            async: false,
+            success: (response) => {
+                let data = JSON.parse(response)
+                $("#district").empty();
+                $("#zip_code").val("");
+                $("#district").append(`<option value="0">เลือกตำบล</option>`)
+                $.each(data, (index, value) => {
+                    $("#district").append(`<option value="${value.id}">${value.name_th}</option>`)
+                })
+                console.log(data);
+            },
+            error: (error) => {
+                console.log({
+                    error
+                })
+            }
+        })
+    })
+
+    $('#district').change((e) => { // ค้นหารหัสไปรษณีย์ด้วย id ของตำบล
+        let district = e.target.value
+
+        $.ajax({
+            url: "api/getZipCode.php",
+            method: "POST",
+            data: JSON.stringify({
+                district
+            }),
+            async: false,
+            success: (response) => {
+                $("#zip_code").val("");
+                let data = JSON.parse(response)
+                $("#zip_code").val(data?.zip_code)
+            },
+            error: (error) => {
+                console.log({
+                    error
+                })
+            }
+        })
+    })
 </script>
 
 <?php
