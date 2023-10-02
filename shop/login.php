@@ -23,7 +23,7 @@ if ($query) {
         header("location: index.php");
         exit;
     }
-
+    $_SESSION["carts"] = [];
     $_SESSION["login"] = "success";
     $_SESSION["cus_id"] = $fetch["cus_id"];
     $_SESSION["cus_name"] = $fetch["cus_name"];
