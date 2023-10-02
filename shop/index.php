@@ -32,7 +32,8 @@ include("./../js/js_bootstrap.php");
                     "pro_name" => $fetch["pro_name"],
                     "pro_amount" => 1,
                     "pro_price" => $fetch["pro_price"],
-                    "protype_id" => $fetch["protype_id"]
+                    "protype_id" => $fetch["protype_id"],
+                    "pro_image" => $fetch["pro_image"]
                 ));
             }
         }else{
@@ -42,7 +43,8 @@ include("./../js/js_bootstrap.php");
                 "pro_name" => $fetch["pro_name"],
                 "pro_amount" => 1,
                 "pro_price" => $fetch["pro_price"],
-                "protype_id" => $fetch["protype_id"]
+                "protype_id" => $fetch["protype_id"],
+                "pro_image" => $fetch["pro_image"]
             );
         }
 

@@ -49,7 +49,19 @@ include("./../js/js_bootstrap.php");
                 <div class="tab-content" id="pills-tabContent">
                     <!-- รายการทั้งหมด -->
                     <div class="tab-pane fade show active" id="pills-purchase-all" role="tabpanel" aria-labelledby="pills-purchase-all-tab">
-                       
+                       <div class="card">
+                        <div class="card-header"></div>
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+
+                                </div>
+                            </div>
+                        </div>
+                       </div>
                     </div>
                     <!-- รายการทั้งหมด -->
                     <!-- ที่ต้องชำระ -->
