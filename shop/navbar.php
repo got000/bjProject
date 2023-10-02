@@ -7,7 +7,14 @@
     $query = @mysqli_query($con, $sql);
     $fetch = @mysqli_fetch_assoc($query);
 ?>
-
+<?php 
+    $amount = 0;
+    if(count($_SESSION["carts"]) > 0){
+        foreach(@$_SESSION["carts"] as $item){
+            $amount += (int)$item["pro_amount"];
+        }
+    }
+?>
 <style>
     .dropdown-menu[data-bs-popper]{
         top: 48px;
@@ -63,7 +70,7 @@
                 <?php if(isset($_SESSION['cus_id'])){ ?>
                 <li class="nav-item">
                     <i class="fas fa-shopping-cart mt-2" style="font-size: 22px; cursor: pointer;">
-                        <span class='badge badge-warning' id='lblCartCount'>0</span>
+                        <span class='badge badge-warning' id='lblCartCount'><?php echo @$amount; ?></span>
                     </i>
                 </li>
                 <li style="width: 10px;"></li>

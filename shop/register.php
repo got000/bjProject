@@ -36,7 +36,7 @@
         exit;
     }
     $data = array();
-    $sql = "INSERT INTO customers(cus_name, cus_pass, cus_tel, cus_province, cus_amphur, cus_district, cus_zip_code) 
+    $sql = "INSERT INTO customers(cus_name, cus_password, cus_tel, cus_province, cus_amphur, cus_district, cus_zip_code) 
             VALUES ('".$fullname."', '".$password."', '".$tel."', '".$province."', '".$amphur."', '".$district."', '".$zip_code."')";
     $query = mysqli_query($con, $sql);
     if($query){

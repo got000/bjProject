@@ -5,6 +5,55 @@ include("./../config/config.php");
 include("./../css/css_bootstap.php");
 include("./../js/js_bootstrap.php");
 ?>
+<?php 
+    if(isset($_GET["add_cart"])){
+        $pro_id = $_GET["add_cart"];
+        $sql = "SELECT * FROM products WHERE pro_id='".$pro_id."' LIMIT 1";
+        $query = @mysqli_query($con, $sql);
+        $fetch = mysqli_fetch_assoc($query);
+
+        if(count($_SESSION["carts"]) > 0){
+            $index = -1;
+            for($i=0; $i<count($_SESSION["carts"]); $i++){
+                if($_SESSION["carts"][$i]["pro_id"] == $pro_id){
+                    $index = $i;
+                    break;
+                }
+            }
+            
+            if((int)$index !== -1){
+                $val = (int)$_SESSION["carts"][$index]["pro_amount"];
+                $val += 1;
+                $_SESSION["carts"][$index]["pro_amount"] = $val;
+            }else{
+                array_push($_SESSION["carts"], array(
+                    "id" => $fetch["id"],
+                    "pro_id" => $fetch["pro_id"],
+                    "pro_name" => $fetch["pro_name"],
+                    "pro_amount" => 1,
+                    "pro_price" => $fetch["pro_price"],
+                    "protype_id" => $fetch["protype_id"]
+                ));
+            }
+        }else{
+            $_SESSION["carts"][0] = array(
+                "id" => $fetch["id"],
+                "pro_id" => $fetch["pro_id"],
+                "pro_name" => $fetch["pro_name"],
+                "pro_amount" => 1,
+                "pro_price" => $fetch["pro_price"],
+                "protype_id" => $fetch["protype_id"]
+            );
+        }
+
+        header("location: index.php");
+    }
+
+    if(isset($_GET["clear_cart"])){
+       $_SESSION["carts"] = [];
+        header("location: index.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +66,16 @@ include("./../js/js_bootstrap.php");
 <body>
     <?php include("./navbar.php") ?>
     <div class="container-fluid">
+        <!-- <div class="row">
+            <div class="col-md-12">
+                <?php echo json_encode(@$_SESSION["carts"]) ?>
+                <a href="<?php echo $_SERVER["PHP_SELF"] ?>?clear_cart=0" class="btn btn-danger">clear cart</a>
+                <form action="./api/addOrder.php" method="POST">
+                    <input type="hidden" value="<?php echo @$_SESSION["cus_id"] ?>" name="cus_id">
+                    <button class="btn btn-success" type="submit">order</button>
+                </form>
+            </div>
+        </div> -->
         <div class="row">
             <div class="col-lg-2 col-md-2">
                 <!-- LEFT SIDE HERE! -->
@@ -40,7 +99,7 @@ include("./../js/js_bootstrap.php");
                                         <p class="card-text"><?php echo $row["pro_detail"] ?></p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <p class="fw-bold"><i class="fab fa-btc my-auto"></i><?php echo $row["pro_price"] ?></p>
-                                            <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-cart-plus"></i></a>
+                                            <a href="<?php echo $_SERVER["PHP_SELF"] ?>?add_cart=<?php echo $row["pro_id"] ?>" class="btn btn-warning btn-sm"><i class="fas fa-cart-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -282,6 +341,33 @@ if (@$_SESSION['register'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['login'] = "";
+}else  if (@$_SESSION['order'] == "success") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "สำเร็จ',";
+    $swal .= "text: '" . "สั่งซื้อสินค้าสำเร็จ', icon: 'success', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['order'] = "";
+}else  if (@$_SESSION['order'] == "error") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "ไม่สำเร็จ',";
+    $swal .= "text: '" . "สั่งซื้อสินค้าไม่สำเร็จ กรุณาลองใหม่อีกครั้ง', icon: 'error', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['order'] = "";
+}else  if (@$_SESSION['order'] == "empty") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "ไม่มีรายการสินค้า',";
+    $swal .= "text: '" . "ไม่สามารถสั่งซื้อได้ เนื่องจากไม่พบสินค้าในตระกร้า', icon: 'warning', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['order'] = "";
 }
 ?>
 
