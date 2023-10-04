@@ -8,10 +8,12 @@
     $fetch = @mysqli_fetch_assoc($query);
 ?>
 <?php 
-    $amount = 0;
-    if(count($_SESSION["carts"]) > 0){
-        foreach(@$_SESSION["carts"] as $item){
-            $amount += (int)$item["pro_amount"];
+    @$amount = 0;
+    if(isset($_SESSION["cus_id"])){
+        if(@count(@$_SESSION["carts"]) > 0){
+            foreach(@$_SESSION["carts"] as $item){
+                @$amount += (int)$item["pro_amount"];
+            }
         }
     }
 ?>
@@ -41,6 +43,14 @@
         vertical-align: top;
         margin-left: -10px; 
     }
+    .btn-carts{
+        text-decoration: none;
+        color: #000;
+    }
+    .btn-carts:hover{
+        text-decoration: none;
+        color: darkgray;
+    }
 </style>
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
     <div class="container-fluid">
@@ -69,10 +79,12 @@
                 <li style="width: 10px;"></li>
                 <?php if(isset($_SESSION['cus_id'])){ ?>
                 <li class="nav-item">
+                <a href="./cart.php" class="btn-carts">
                     <i class="fas fa-shopping-cart mt-2" style="font-size: 22px; cursor: pointer;">
-                        <span class='badge badge-warning' id='lblCartCount'><?php echo @$amount; ?></span>
-                    </i>
-                </li>
+                            <span class='badge badge-warning' id='lblCartCount'><?php echo @$amount; ?></span>
+                        </i>
+                    </li>
+                </a>    
                 <li style="width: 10px;"></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">

@@ -32,9 +32,15 @@ if ($result_select->num_rows > 0) {
 
     if($idS != $tel){
         $_SESSION["editProfile"] = "duplicate";
-        header("location: ./../../edit_profile.php");
+        header("location: ./../../index.php");
         exit;
     }
+}
+
+if(!$fname && !$lname && !$tel && !$province && !$district && !$zip_code){
+    $_SESSION["editProfile"] = "error";
+    header("location: ../edit_profile.php");
+    exit;
 }
 $sql = "UPDATE customers SET cus_name='".$fullname."', cus_tel='".$tel."', cus_province='".$province."', cus_amphur='".$amphur."', cus_district='".$district."', cus_zip_code='".$zip_code."' WHERE cus_id='".$cus_id."'";
 $query = mysqli_query($con, $sql);
@@ -45,12 +51,11 @@ if($query){
     $_SESSION["cus_amphur"] = $amphur;
     $_SESSION["cus_district"] = $district;
     $_SESSION["cus_zip_code"] = $zip_code;
+
     $_SESSION["editProfile"] = "success";
-    header("location: ./../../edit_profile.php");
+    header("location: ../edit_profile.php");
     exit;
 }
 
-$_SESSION["editProfile"] = "error";
-header("location: ./../../edit_profile.php");
-exit;
+
 ?>

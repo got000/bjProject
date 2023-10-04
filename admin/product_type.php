@@ -34,7 +34,7 @@
             <div class="col-lg-10 col-md-10">
                 <div class="container">
                     <div class="row">
-                        <div class="col md-9">
+                        <div class="col-md-9">
                             <h3>ข้อมูลประเภทสินค้า</h3>
                         </div>
                         <button class="btn btn-outline-success col-md-3" data-bs-toggle="modal" data-bs-target="#modalAddProductType">
@@ -126,7 +126,7 @@
                                     </div>
                                     <!-- modal delete -->
 
-                                    <?php $i++; }} else { ?>
+                                    <?php ++$i; }} else { ?>
                                         <tr>
                                             <td colspan="4">ไม่มีข้อมูล</td>
                                         </tr>

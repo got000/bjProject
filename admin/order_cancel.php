@@ -16,7 +16,7 @@ if (!isset($_SESSION["emp_level"])) {
     include("./../css/css_bootstap.php");
     ?>
     <link rel="stylesheet" href="./../css/sidebar.css">
-    <title>รายการรอติดตั้ง</title>
+    <title>รายการที่ยกเลิก</title>
 </head>
 
 <body>
@@ -29,7 +29,7 @@ if (!isset($_SESSION["emp_level"])) {
                 <div class="container">
                     <div class="row">
                         <div class="col-md-9">
-                            <h3>รายการรอติดตั้ง</h3>
+                            <h3>รายการที่ยกเลิก</h3>
                         </div>
                     </div>
                     <div class="row">
@@ -47,22 +47,21 @@ if (!isset($_SESSION["emp_level"])) {
                                     </tr>
                                 </thead>
                                 <?php
-                                $sql = "SELECT installation.id, installation.eq_id, installation.eq_status,installation.cus_id , orders.id, orders.order_id, orders.order_date, customers.cus_name, customers.cus_tel, 
-                                customers.cus_address, provinces.name_th AS province_name, amphures.name_th AS amphur_name, 
-                                districts.name_th AS district_name, districts.zip_code, employees.emp_name 
-                                FROM installation
-                                LEFT JOIN orders ON installation.order_id = orders.id
-                                LEFT JOIN employees ON orders.emp_id = employees.emp_id
-                                LEFT JOIN customers ON installation.cus_id = customers.cus_id
-                                LEFT JOIN provinces ON customers.cus_province = provinces.id
-                                LEFT JOIN amphures ON customers.cus_amphur = amphures.id
-                                LEFT JOIN districts ON customers.cus_district = districts.id
-                                WHERE orders.cus_id = customers.cus_id AND orders.order_status = 3 AND installation.eq_status = 1;";
+                                $sql = "SELECT orders.id, orders.order_id, orders.order_date, customers.cus_name, customers.cus_tel, 
+                                    customers.cus_address, provinces.name_th AS province_name, amphures.name_th AS amphur_name, 
+                                    districts.name_th AS district_name, districts.zip_code, employees.emp_name 
+                                    FROM orders
+                                    LEFT JOIN customers ON orders.cus_id = customers.cus_id
+                                    LEFT JOIN employees ON orders.emp_id = employees.emp_id
+                                    LEFT JOIN provinces ON customers.cus_province = provinces.id
+                                    LEFT JOIN amphures ON customers.cus_amphur = amphures.id
+                                    LEFT JOIN districts ON customers.cus_district = districts.id
+                                    WHERE orders.cus_id = customers.cus_id AND orders.order_status = 99 AND orders.emp_id=employees.emp_id;";
                                 $query = mysqli_query($con, $sql);
                                 $i = 0;
                                 if ($query->num_rows > 0) {
                                     while ($order = mysqli_fetch_assoc($query)) {
-                                      $i++;  
+                                        $i++;
                                 ?>
                                         <tbody>
                                             <tr>
@@ -77,37 +76,11 @@ if (!isset($_SESSION["emp_level"])) {
                                                     <?php echo $order["zip_code"] ?><br>
                                                     เบอร์โทร: <?php echo $order["cus_tel"] ?>
                                                 </td>
-                                                <td><?php echo $order["emp_name"]?></td>
+                                                <td><?php echo $order["emp_name"] ?></td>
                                                 <td>
-                                                    <button data-bs-toggle="modal" type="button" data-bs-target="#modalApprove<?php echo $order["id"] ?>" class="btn btn-success btn-sm">อนุมัติรอติดตั้ง</button>
                                                     <button data-bs-toggle="modal" type="button" data-bs-target="#modalOrder<?php echo $order["id"] ?>" class="btn btn-secondary btn-sm">รายการสั่งซื้อ</button>
                                                 </td>
                                             </tr>
-                                            <!-- modal Approve order -->
-                                            <div class="modal fade" id="modalApprove<?php echo $order["id"] ?>" tabindex="-1" tabindex="-1" aria-labelledby="modalApproveLabel<?php echo $order["id"] ?>" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">อนุมัติรอติดตั้ง</h5>
-                                                        </div>
-                                                        <div class="modal-body text-center">
-                                                            <div class="mb-3">
-                                                                <p>คุณต้องการอนุมัติรายการรอติดตั้ง <strong><?php echo $order["order_id"] ?></strong> ใช่หรือไม่?</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <form action="./api/installed_api.php" method="post">
-                                                                <input type="hidden" name="emp_id" value="<?php echo $_SESSION["emp_id"] ?>">
-                                                                <input type="hidden" name="order_id" value="<?php echo $order["id"] ?>">
-                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
-                                                                <button type="submit" class="btn btn-primary">ยืนยัน</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- End modal Approve order -->
-
                                             <!-- modal order detail -->
                                             <div class="modal fade" id="modalOrder<?php echo $order["id"] ?>" tabindex="-1" aria-labelledby="modalOrderLabel<?php echo $order["id"] ?>" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
@@ -159,7 +132,7 @@ if (!isset($_SESSION["emp_level"])) {
                                         <?php }
                                 } else { ?>
                                         <tr>
-                                            <td colspan="7">ไม่มีข้อมูลรายการรออนุมัติ</td>
+                                            <td colspan="7">ไม่มีข้อมูลรายการยกเลิก</td>
                                         </tr>
                                     <?php } ?>
                                         </tbody>
@@ -175,28 +148,6 @@ if (!isset($_SESSION["emp_level"])) {
 include("./../js/jquery.php");
 include("./../js/js_bootstrap.php");
 include("./../js/sweetalert.php");
-?>
-
-<?php
-if (@$_SESSION['approve_installation'] == "success") {
-    $swal = "";
-    $swal .= "<script>";
-    $swal .= "Swal.fire({";
-    $swal .= "title: '" . "สำเร็จ',";
-    $swal .= "text: '" . "อนุมัติรายการติดตั้งสำเร็จ', icon: 'success', confirmButtonText: 'ตกลง'})";
-    $swal .= "</script>";
-    echo @$swal;
-    @$_SESSION['approve_installation'] = "";
-} else if (@$_SESSION['approve_installation'] == "failed") {
-    $swal = "";
-    $swal .= "<script>";
-    $swal .= "Swal.fire({";
-    $swal .= "title: '" . "ไม่สำเร็จ',";
-    $swal .= "text: '" . "อนุมัติรายการติดตั้งไม่สำเร็จ', icon: 'error', confirmButtonText: 'ตกลง'})";
-    $swal .= "</script>";
-    echo @$swal;
-    @$_SESSION['approve_installation'] = "";
-}
 ?>
 
 </html>

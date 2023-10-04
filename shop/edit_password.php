@@ -37,6 +37,11 @@ include("./../js/js_bootstrap.php");
         </div>
     </div>
 </body>
+<?php
+include("./../js/jquery.php");
+include("./../js/ajax.php");
+include("./../js/sweetalert.php");
+?>
 
 <?php
 if (@$_SESSION['editPassword'] == "success") {

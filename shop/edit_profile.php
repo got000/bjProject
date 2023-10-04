@@ -19,7 +19,7 @@ include("./../js/js_bootstrap.php");
         <div class="row justify-content-center">
             <div class="col-md-6 bg-light shadow rounded-5 p-3">
                 <h1 class="text-center">แก้ไขข้อมูลส่วนตัว</h1>
-                <form action="./api/updateProfile.php" method="post" enctype="multipart/form-data">
+                <form action="./api/updateProfile.php" method="post">
                     <input type="hidden" value="<?php echo $_SESSION['cus_id'] ?>" class="form-control">
                     <div class="row g-2 px-5">
                         <div class="col-md mb-3">
@@ -79,6 +79,7 @@ include("./../js/js_bootstrap.php");
 <?php
 include("./../js/jquery.php");
 include("./../js/ajax.php");
+include("./../js/sweetalert.php");
 ?>
 
 <script>

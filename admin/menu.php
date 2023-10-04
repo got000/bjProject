@@ -27,6 +27,8 @@
         <h6>ข้อมูลซื้อขาย</h6>
     </div>
     <a href="./wait_approve.php" id="activeWaitForApprove">รายการรออนุมัติ</a>
+    <a href="./order_approve.php" id="activeOrderApprove">รายการอนุมัติแล้ว</a>
+    <a href="./order_cancel.php" id="activeOrderCancel">รายการยกเลิก</a>
     <div class="manage-title">
         <h6>ข้อมูลการติดตั้ง</h6>
     </div>
@@ -62,6 +64,10 @@
         $('#activeWaitInstall').addClass("active")
     }else if(url === "installed.php"){
         $('#activeInstalled').addClass("active")
+    }else if(url === "order_cancel.php"){
+        $('#activeOrderCancel').addClass("active")
+    }else if(url === "order_approve.php"){
+        $('#activeOrderApprove').addClass("active")
     }
 
 </script>
