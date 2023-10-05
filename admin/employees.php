@@ -114,7 +114,6 @@ if(isset($_SESSION["emp_level"]) && @$_SESSION["emp_level"] !== "1"){
                                                                     <div class="mb-3">
                                                                         <label for="dropdown" class="form-label"><span class="text-danger"><b>*</b></span>ระดับ</label>
                                                                         <select class="form-select" id="dropdown" name="emp_level" required>
-                                                                            <option selected value="<?php echo $row["emp_level"] ?>"><?php echo $row["emp_level"] ?></option>
                                                                             <option value="2">ผู้ใช้งาน</option>
                                                                             <option value="3">ลูกค้า</option>
                                                                         </select>
@@ -231,7 +230,6 @@ if(isset($_SESSION["emp_level"]) && @$_SESSION["emp_level"] !== "1"){
                                                     <label for="dropdown" class="form-label"><span class="text-danger"><b>*</b></span>ระดับ</label>
                                                     <select class="form-select" id="dropdown" name="emp_level" required>
                                                         <option selected>เลือกระดับ</option>
-                                                        <option value="1">แอดมิน</option>
                                                         <option value="2">ผู้ใช้งาน</option>
                                                         <option value="3">ลูกค้า</option>
                                                     </select>
