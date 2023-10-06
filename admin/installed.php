@@ -38,22 +38,23 @@ if (!isset($_SESSION["emp_level"])) {
                                 <thead>
                                     <tr>
                                         <th width="5%">ลำดับ</th>
-                                        <th width="15%">รหัสสั่งซื้อ</th>
+                                        <th width="10%">รหัสสั่งซื้อ</th>
                                         <th width="10%">วันที่</th>
                                         <th width="15%">ชื่อลูกค้า</th>
-                                        <th width="25%">ที่อยู่ลูกค้า</th>
+                                        <th width="20%">ที่อยู่ลูกค้า</th>
+                                        <th width="10%">รายละเอียด</th>
                                         <th width="10%">ดำเนินการโดย</th>
-                                        <th width="20%">#</th>
+                                        <th width="10%">ผู้ติดตั้ง</th>
                                     </tr>
                                 </thead>
                                 <?php
-                                $sql = "SELECT installation.id, installation.eq_id, installation.eq_status,installation.cus_id , orders.id, orders.order_id, orders.order_date, customers.cus_name, customers.cus_tel, 
+                                $sql = "SELECT installation.id, installation.eq_id, installation.eq_status, installation.emp_id, orders.id, orders.order_id, orders.order_date, customers.cus_name, customers.cus_tel, 
                                 customers.cus_address, provinces.name_th AS province_name, amphures.name_th AS amphur_name, 
                                 districts.name_th AS district_name, districts.zip_code, employees.emp_name 
                                 FROM installation
                                 LEFT JOIN orders ON installation.order_id = orders.id
-                                LEFT JOIN employees ON orders.emp_id = employees.emp_id
-                                LEFT JOIN customers ON installation.cus_id = customers.cus_id
+                                LEFT JOIN employees ON installation.emp_id = employees.emp_id
+                                LEFT JOIN customers ON orders.cus_id = customers.cus_id
                                 LEFT JOIN provinces ON customers.cus_province = provinces.id
                                 LEFT JOIN amphures ON customers.cus_amphur = amphures.id
                                 LEFT JOIN districts ON customers.cus_district = districts.id
@@ -62,11 +63,11 @@ if (!isset($_SESSION["emp_level"])) {
                                 $i = 0;
                                 if ($query->num_rows > 0) {
                                     while ($order = mysqli_fetch_assoc($query)) {
-                                      $i++;  
+                                        $i++;
                                 ?>
                                         <tbody>
                                             <tr>
-                                                <td><?php echo $i ?></td>
+                                            <td><?php echo $i ?></td>
                                                 <td><?php echo $order["order_id"] ?></td>
                                                 <td><?php echo $order["order_date"] ?></td>
                                                 <td><?php echo $order["cus_name"] ?></td>
@@ -77,14 +78,24 @@ if (!isset($_SESSION["emp_level"])) {
                                                     <?php echo $order["zip_code"] ?><br>
                                                     เบอร์โทร: <?php echo $order["cus_tel"] ?>
                                                 </td>
-                                                <td><?php echo $order["emp_name"]?></td>
                                                 <td>
                                                     <button data-bs-toggle="modal" type="button" data-bs-target="#modalOrder<?php echo $order["id"] ?>" class="btn btn-secondary btn-sm">รายการสั่งซื้อ</button>
                                                 </td>
+                                                <?php
+                                                $sql_emp_orders = "SELECT employees.emp_name FROM employees
+                                                                    LEFT JOIN orders ON employees.emp_id = orders.emp_id
+                                                                    WHERE employees.emp_level = 1 LIMIT 1;    
+                                                                    ";
+                                                $query_emp_orders = mysqli_query($con, $sql_emp_orders);
+                                                while ($emp = mysqli_fetch_assoc($query_emp_orders)) {
+                                                ?>
+                                                    <td><?php echo $emp["emp_name"] ?></td>
+                                                <?php } ?>
+                                                <td><?php echo $order["emp_name"] ?></td>
                                             </tr>
                                             <!-- modal order detail -->
                                             <div class="modal fade" id="modalOrder<?php echo $order["id"] ?>" tabindex="-1" aria-labelledby="modalOrderLabel<?php echo $order["id"] ?>" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-dialog modal-xl modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title"><?php echo $order["order_id"] ?></h5>
@@ -133,7 +144,7 @@ if (!isset($_SESSION["emp_level"])) {
                                         <?php }
                                 } else { ?>
                                         <tr>
-                                            <td colspan="7">รายการติดตั้งเสร็จสมบูรณ์</td>
+                                            <td colspan="8">รายการติดตั้งเสร็จสมบูรณ์</td>
                                         </tr>
                                     <?php } ?>
                                         </tbody>
@@ -150,4 +161,5 @@ include("./../js/jquery.php");
 include("./../js/js_bootstrap.php");
 include("./../js/sweetalert.php");
 ?>
+
 </html>

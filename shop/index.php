@@ -152,6 +152,10 @@ if (isset($_GET["clear_cart"])) {
                             <input type="password" name="password" class="form-control">
                         </div>
                         <div class="mb-3">
+                            <label for="address" class="col-form-label">ที่อยู่:</label>
+                            <input  type="text" name="address" class="form-control">
+                        </div>
+                        <div class="mb-3">
                             <label for="province" class="col-form-label">จังหวัด:</label>
                             <select name="province" id="province" class="form-select">
                                 <option selected>เลือกจังหวัด</option>

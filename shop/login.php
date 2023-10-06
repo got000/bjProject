@@ -28,6 +28,7 @@ if ($query) {
     $_SESSION["cus_id"] = $fetch["cus_id"];
     $_SESSION["cus_name"] = $fetch["cus_name"];
     $_SESSION["cus_tel"] = $fetch["cus_tel"];
+    $_SESSION["cus_address"] = $fetch["cus_address"];
     $_SESSION["cus_province"] = $fetch["cus_province"];
     $_SESSION["cus_amphur"] = $fetch["cus_amphur"];
     $_SESSION["cus_district"] = $fetch["cus_district"];

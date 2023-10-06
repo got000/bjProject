@@ -15,10 +15,10 @@ $sql = "UPDATE orders SET order_status=99, emp_id='" . $emp_id . "'WHERE id='".$
 $query = mysqli_query($con, $sql);
 if ($query) {
   $_SESSION["cancel_order"] = 'success';
-  header("location: ../wait_approve.php");
+  header("location: ../order_cancel.php");
   exit;
 }
 $_SESSION["cancel_order"] = 'failed';
-  header("location: ../wait_approve.php");
+  header("location: ../order_cancel.php");
   exit;
 ?>

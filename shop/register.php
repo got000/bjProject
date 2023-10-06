@@ -13,6 +13,7 @@
         $lname =   $_POST['lname']; 
         $tel =   $_POST['tel'];
         $password =   md5($_POST['password']);
+        $address =   $_POST['address'];
         $province =   $_POST['province'];
         $amphur =   $_POST['amphur'];
         $district =   $_POST['district'];
@@ -36,8 +37,8 @@
         exit;
     }
     $data = array();
-    $sql = "INSERT INTO customers(cus_name, cus_password, cus_tel, cus_province, cus_amphur, cus_district, cus_zip_code) 
-            VALUES ('".$fullname."', '".$password."', '".$tel."', '".$province."', '".$amphur."', '".$district."', '".$zip_code."')";
+    $sql = "INSERT INTO customers(cus_name, cus_password, cus_tel, cus_province, cus_amphur, cus_district, cus_zip_code, cus_address) 
+            VALUES ('".$fullname."', '".$password."', '".$tel."', '".$province."', '".$amphur."', '".$district."', '".$zip_code."', '".$address."')";
     $query = mysqli_query($con, $sql);
     if($query){
         $_SESSION["register"] = "success";

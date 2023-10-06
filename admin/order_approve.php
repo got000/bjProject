@@ -38,10 +38,12 @@ if (!isset($_SESSION["emp_level"])) {
                                 <thead>
                                     <tr>
                                         <th width="5%">ลำดับ</th>
-                                        <th width="15%">รหัสสั่งซื้อ</th>
+                                        <th width="10%">รหัสสั่งซื้อ</th>
                                         <th width="10%">วันที่</th>
-                                        <th width="15%">ชื่อลูกค้า</th>
-                                        <th width="25%">ที่อยู่ลูกค้า</th>
+                                        <th width="10%">ชื่อลูกค้า</th>
+                                        <th width="15%">ที่อยู่ลูกค้า</th>
+                                        <th width="10%">รายละเอียด</th>
+                                        <th width="10%">ผู้ติดตั้ง</th>
                                         <th width="10%">ดำเนินการโดย</th>
                                         <th width="20%">#</th>
                                     </tr>
@@ -76,11 +78,25 @@ if (!isset($_SESSION["emp_level"])) {
                                                     <?php echo $order["zip_code"] ?><br>
                                                     เบอร์โทร: <?php echo $order["cus_tel"] ?>
                                                 </td>
+                                                <td><button data-bs-toggle="modal" type="button" data-bs-target="#modalOrder<?php echo $order["id"] ?>" class="btn btn-secondary btn-sm">รายการสั่งซื้อ</button></td>
+                                                <td>
+                                                    <form action="./api/wait_install_api.php" method="post">
+                                                        <select class="form-select" id="emp_work" name="emp_work" required>
+                                                            <option selected>เลือกผู้ติดตั้ง</option>
+                                                            <?php
+                                                            $select_emp_work = "SELECT * FROM employees WHERE emp_level=2";
+                                                            $query_emp_work = mysqli_query($con, $select_emp_work);
+                                                            while ($row = mysqli_fetch_assoc($query_emp_work)) {
+                                                            ?>
+                                                                <option value="<?php echo $row["emp_id"] ?>"><?php echo $row["emp_name"] ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                                
+                                                </td>
                                                 <td><?php echo $order["emp_name"] ?></td>
                                                 <td>
-                                                    <button data-bs-toggle="modal" type="button" data-bs-target="#modalApprove<?php echo $order["id"] ?>" class="btn btn-success btn-sm">อนุมัติรอติดตั้ง</button>
-                                                    <!-- <button data-bs-toggle="modal" type="button" data-bs-target="#modalCancel<?php echo $order["id"] ?>" class="btn btn-danger btn-sm">ยกเลิก</button> -->
-                                                    <button data-bs-toggle="modal" type="button" data-bs-target="#modalOrder<?php echo $order["id"] ?>" class="btn btn-secondary btn-sm">รายการ</button>
+                                                    <button data-bs-toggle="modal" type="button" data-bs-target="#modalApprove<?php echo $order["id"] ?>" class="btn btn-success btn-sm">ได้คิวติดตั้ง</button>
+                                                    <button data-bs-toggle="modal" type="button" data-bs-target="#modalCancel<?php echo $order["id"] ?>" class="btn btn-danger btn-sm">ยกเลิก</button>
                                                 </td>
                                             </tr>
                                             <!-- modal Approve wait to install -->
@@ -88,18 +104,17 @@ if (!isset($_SESSION["emp_level"])) {
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title">อนุมัติการรอติดตั้ง</h5>
+                                                            <h5 class="modal-title">คิวติดตั้ง</h5>
                                                         </div>
                                                         <div class="modal-body text-center">
                                                             <div class="mb-3">
-                                                                <p>คุณต้องการอนุมัติรอการติดตั้ง <strong><?php echo $order["order_id"] ?></strong> ใช่หรือไม่?</p>
+                                                                <p>คุณต้องการเพิ่มคิวติดตั้ง <strong><?php echo $order["order_id"] ?></strong> ใช่หรือไม่?</p>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <form action="./api/wait_install_api.php" method="post">
                                                                 <input type="hidden" name="emp_id" value="<?php echo $_SESSION["emp_id"] ?>">
                                                                 <input type="hidden" name="order_id" value="<?php echo $order["id"] ?>">
-                                                                <input type="hidden" name="cus_id" value="<?php echo $order["cus_id"] ?>">
                                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
                                                                 <button type="submit" class="btn btn-primary">ยืนยัน</button>
                                                             </form>
@@ -108,10 +123,33 @@ if (!isset($_SESSION["emp_level"])) {
                                                 </div>
                                             </div>
                                             <!-- End modal Approve wait to install-->
-                                           
+                                            <!-- modal cancel -->
+                                            <div class="modal fade" id="modalCancel<?php echo $order["id"] ?>" tabindex="-1" tabindex="-1" aria-labelledby="modalCancelLabel<?php echo $order["id"] ?>" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">ยกเลิก</h5>
+                                                        </div>
+                                                        <div class="modal-body text-center">
+                                                            <div class="mb-3">
+                                                                <p>คุณต้องการยกเลิกรายการ <strong><?php echo $order["order_id"] ?></strong> ใช่หรือไม่?</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        <form action="./api/cancel_order_api.php" method="post"> <form action="./api/cancel_order_api.php" method="post">
+                                                                <input type="hidden" name="emp_id" value="<?php echo $_SESSION["emp_id"] ?>">
+                                                                <input type="hidden" name="order_id" value="<?php echo $order["id"] ?>">
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+                                                                <button type="submit" class="btn btn-primary">ยืนยัน</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End modal cancel -->
                                             <!-- modal order detail -->
                                             <div class="modal fade" id="modalOrder<?php echo $order["id"] ?>" tabindex="-1" aria-labelledby="modalOrderLabel<?php echo $order["id"] ?>" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-dialog modal-xl modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title"><?php echo $order["order_id"] ?></h5>
@@ -160,7 +198,7 @@ if (!isset($_SESSION["emp_level"])) {
                                         <?php }
                                 } else { ?>
                                         <tr>
-                                            <td colspan="7">ไม่มีข้อมูลรายการอนุมัติ</td>
+                                            <td colspan="9">ไม่มีข้อมูลรายการอนุมัติ</td>
                                         </tr>
                                     <?php } ?>
                                         </tbody>
@@ -198,4 +236,5 @@ if (@$_SESSION['approve_wait'] == "success") {
     @$_SESSION['approve_wait'] = "";
 }
 ?>
+
 </html>

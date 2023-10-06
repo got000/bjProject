@@ -44,6 +44,10 @@ include("./../js/js_bootstrap.php");
                         <input maxlength="10" value="<?php echo $_SESSION['cus_tel'] ?>" name="tel" type="text" class="form-control" id="tel">
                     </div>
                     <div class="mb-3 px-5">
+                        <label for="address" class="form-label">ที่อยู่</label>
+                        <input value="<?php echo $_SESSION['cus_address'] ?>" name="address" type="text" class="form-control" id="address">
+                    </div>
+                    <div class="mb-3 px-5">
                         <label for="province" class="col-form-label">จังหวัด:</label>
                         <select value="<?php echo $_SESSION['cus_province'] ?>" name="province" id="province" class="form-select">
                             <option selected>เลือกจังหวัด</option>
@@ -69,8 +73,28 @@ include("./../js/js_bootstrap.php");
                         <input value="<?php echo $_SESSION['cus_zip_code'] ?>" type="text" name="zip_code" id="zip_code" class="form-control">
                     </div>
                     <div class="mb-3 px-5 d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                        <button data-bs-toggle="modal" type="button" data-bs-target="#modalSubmit" class="btn btn-primary">บันทึก</button>
                     </div>
+                    <!-- modal Submit -->
+                    <div class="modal fade" id="modalSubmit" tabindex="-1" tabindex="-1" aria-labelledby="modalSubmitLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">แก้ไขข้อมูลส่วนตัว</h5>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <div class="mb-3">
+                                        <p>คุณต้องการแก้ไขข้อมูลส่วนตัว ใช่หรือไม่?</p>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+                                    <button type="submit" class="btn btn-success">ยืนยัน</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End modal Submit -->
                 </form>
             </div>
         </div>

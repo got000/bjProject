@@ -43,7 +43,7 @@ if (!isset($_SESSION["emp_level"])) {
                                         <th width="15%">ชื่อลูกค้า</th>
                                         <th width="25%">ที่อยู่ลูกค้า</th>
                                         <th width="10%">ดำเนินการโดย</th>
-                                        <th width="20%">#</th>
+                                        <th width="20%">รายละเอียด</th>
                                     </tr>
                                 </thead>
                                 <?php
@@ -83,7 +83,7 @@ if (!isset($_SESSION["emp_level"])) {
                                             </tr>
                                             <!-- modal order detail -->
                                             <div class="modal fade" id="modalOrder<?php echo $order["id"] ?>" tabindex="-1" aria-labelledby="modalOrderLabel<?php echo $order["id"] ?>" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-dialog modal-xl modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title"><?php echo $order["order_id"] ?></h5>

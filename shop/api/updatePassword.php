@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // PROCESS
 if(strlen($_POST['newPassword']) < 6){
     $_SESSION['editPassword'] = "password_minimum_six";
-    header("location: ./../../edit_password.php");
+    header("location: ../edit_password.php");
     exit;
 }
 if ($newPassword != $confirmPassword) {
@@ -32,12 +32,12 @@ $sql = "UPDATE customers SET cus_password='" . $hashPassword . "' WHERE cus_id='
 $query = mysqli_query($con, $sql);
 if ($query) {
     $_SESSION["editPassword"] = "success";
-    header("location: ./../../edit_password.php");
+    header("location: ../edit_password.php");
     exit;
 }
 
 $_SESSION["editPassword"] = "error";
-header("location: ./../../edit_password.php");
+header("location: ../edit_password.php");
 exit;
 
 ?>

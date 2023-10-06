@@ -94,7 +94,7 @@
                         <li><a class="dropdown-item" href="./edit_profile.php">จัดการข้อมูลส่วนตัว</a></li>
                         <li><a class="dropdown-item" href="./edit_password.php">แก้ไขรหัสผ่าน</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="">ประวัติการซื้อสินค้า</a></li>
+                        <li><a class="dropdown-item" href="./purchase.php">ประวัติการซื้อสินค้า</a></li>
                         <li><a class="dropdown-item" href="">ประวัติการแจ้งปัญหา</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="./logout.php">ออกจากระบบ</a></li>

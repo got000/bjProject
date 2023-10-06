@@ -27,15 +27,46 @@ include("./../js/js_bootstrap.php");
                     </div>
                     <div class="mb-3 px-5">
                         <label for="confirmPassword" class="form-lable">ยืนยันรหัสผ่าน</label>
-                        <input type="password" name="confirmPassword" id="confirmPassword" class="form-control">
+                        <input onkeyup="btnActivation()" type="password" name="confirmPassword" id="confirmPassword" class="form-control">
                     </div>
                     <div class="mb-3 d-flex justify-content-end px-5">
-                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                        <button id="btnModal" data-bs-toggle="modal" type="button" data-bs-target="#modalSubmit" class="btn btn-primary" disabled>บันทึก</button>
                     </div>
+
+                    <!-- modal Submit -->
+                    <div class="modal fade" id="modalSubmit" tabindex="-1" tabindex="-1" aria-labelledby="modalSubmitLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">แก้ไขรหัสผ่าน</h5>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <div class="mb-3">
+                                        <p>คุณต้องการแก้ไขรหัสผ่าน ใช่หรือไม่?</p>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+                                    <button type="submit" class="btn btn-success">ยืนยัน</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End modal Submit -->
+
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        function btnActivation() {
+            if (!document.getElementById('confirmPassword').value.length) {
+                document.getElementById("btnModal").disabled = true;
+            } else {
+                document.getElementById("btnModal").disabled = false;
+            }
+        }
+    </script>
 </body>
 <?php
 include("./../js/jquery.php");

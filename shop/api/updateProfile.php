@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $fname =   $_POST['fname'];
     $lname =   $_POST['lname'];
     $tel =   $_POST['tel'];
+    $address =   $_POST['address'];
     $province =   $_POST['province'];
     $amphur =   $_POST['amphur'];
     $district =   $_POST['district'];
@@ -42,11 +43,12 @@ if(!$fname && !$lname && !$tel && !$province && !$district && !$zip_code){
     header("location: ../edit_profile.php");
     exit;
 }
-$sql = "UPDATE customers SET cus_name='".$fullname."', cus_tel='".$tel."', cus_province='".$province."', cus_amphur='".$amphur."', cus_district='".$district."', cus_zip_code='".$zip_code."' WHERE cus_id='".$cus_id."'";
+$sql = "UPDATE customers SET cus_name='".$fullname."', cus_tel='".$tel."', cus_province='".$province."', cus_amphur='".$amphur."', cus_district='".$district."', cus_zip_code='".$zip_code."', cus_address='".$address."' WHERE cus_id='".$cus_id."'";
 $query = mysqli_query($con, $sql);
 if($query){
     $_SESSION["cus_name"] = $fullname;
     $_SESSION["cus_tel"] = $tel;
+    $_SESSION["cus_address"] = $address;
     $_SESSION["cus_province"] = $province;
     $_SESSION["cus_amphur"] = $amphur;
     $_SESSION["cus_district"] = $district;

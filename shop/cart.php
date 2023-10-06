@@ -48,34 +48,53 @@ if (isset($_GET["delete_item"])) {
             if (count(@$_SESSION["carts"])) {
                 $summary = 0;
             ?>
-                <div class="col-lg-10 col-md-10 rounded-5 bg-light p-4 shadow-sm">
-                    <div class="row g-2 justify-content-between">
-                        <div class="col-auto">
-                            <h5>ตระกร้าสินค้า</h5>
+                <div class="col-lg-10 col-md-10 p-4 rounded-5 bg-light shadow-sm ">
+                    <div class="row justify-content-between">
+                        <div class="col-3">
+                            <h4>ตระกร้าสินค้า</h4>
                         </div>
-                        <div class="col-auto"><a class="text-danger" href="<?php echo $_SERVER["PHP_SELF"] ?>?clear_cart=0">ลบทั้งหมด</a></div>
+                        <div class="col-3"></div>
+                        <div class="col-3"></div>
+                        <div class="col-3"><a class="text-danger" href="<?php echo $_SERVER["PHP_SELF"] ?>?clear_cart=0">ลบทั้งหมด</a></div>
+                    </div>
+                    <div class="row mt-5 justify-content-between align-items-center">
+                        <div class="col-3">
+                            <h5>รูปสินค้า</h5>
+                        </div>
+                        <div class="col-3">
+                            <h5>ชื่อสินค้า</h5>
+                        </div>
+                        <div class="col-3">
+                            <h5>ราคาต่อชิ้น</h5>
+                        </div>
+                        <div class="col-3">
+                            <h5>จำนวน</h5>
+                        </div>
+                        <div class="col-3">
+                            <h5>ราคารวม</h5>
+                        </div>
                     </div>
                     <?php
                     for ($i = 0; $i < count(@$_SESSION["carts"]); $i++) {
                         @$summary += (int)$_SESSION['carts'][$i]["pro_amount"] * (float)$_SESSION['carts'][$i]["pro_price"];
                     ?>
-                        <div class="row g-4 mt-2 p-3 justify-content-between">
-                            <div class="col-auto">
+                        <div class="row mt-2 justify-content-between">
+                            <div class="col-3">
                                 <img src="./../admin/uploads/<?php echo $_SESSION["carts"][$i]["pro_image"] ?>" alt="..." width="100" , height="100">
                             </div>
-                            <div class="col-auto">
-                                <div class="row g-2 d-flex flex-column">
-                                    <div class="col-auto">
+                            <div class="col-3">
+                                <div class="row g-2 d-flex flex-column justify-content-center">
+                                    <div class="col">
                                         <h5><?php echo $_SESSION["carts"][$i]["pro_name"] ?></h5>
                                     </div>
-                                    <div class="col-auto">
-                                        <span>Lorem, ipsum dolor.</span>
+                                    <div class="col">
+                                        <span>$<?php echo $_SESSION["carts"][$i]["pro_price"] ?></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-auto">
-                                <div class="row g-3 d-flex align-items-center">
-                                    <div class="col-auto">
+                            <div class="col-3">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col">
                                         <?php
                                         if ($_SESSION["carts"][$i]["pro_amount"] > 1) {
                                         ?>
@@ -84,21 +103,25 @@ if (isset($_GET["delete_item"])) {
                                             <a href="<?php echo $_SERVER["PHP_SELF"] ?>?decrement=<?php echo $i ?>" class="btn btn-outline-dark btn-sm disabled"><i class="fas fa-minus"></i></a>
                                         <?php } ?>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col">
                                         <input value="<?php echo $_SESSION["carts"][$i]["pro_amount"] ?>" type="number" value="1" class="form-control text-center border-0 rounded" style="width: 3.5rem;">
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col">
                                         <a href="<?php echo $_SERVER["PHP_SELF"] ?>?increment=<?php echo $i ?>" class="btn btn-outline-dark btn-sm"><i class="fas fa-plus"></i></a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-auto">
+                            <div class="col-3">
                                 <div class="row g-2 d-flex flex-column">
-                                    <div class="col-auto">
-                                        <h5>$<?php echo $_SESSION["carts"][$i]["pro_price"] ?></h5>
+                                    <div class="col">
+                                        <h5>$
+                                            <?php
+                                            echo $_SESSION["carts"][$i]["pro_amount"] * $_SESSION["carts"][$i]["pro_price"]
+                                            ?>
+                                        </h5>
                                     </div>
-                                    <div class="col-auto text-end">
-                                        <a class="text-danger" href="<?php echo $_SERVER["PHP_SELF"] ?>?delete_item=<?php echo $i ?>">ลบ</a>
+                                    <div class="col">
+                                        <a class="text-danger" href="<?php echo $_SERVER["PHP_SELF"] ?>?delete_item=<?php echo $i ?>"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -106,8 +129,8 @@ if (isset($_GET["delete_item"])) {
                     <?php } ?>
                     <div class="row d-flex flex-column align-items-end">
                         <hr class="my-3 w-75">
-                        <div class="col-md-8">
-                            <div class="row justify-content-end">
+                        <div class="col-md-6">
+                            <div class="row">
                                 <div class="col-3 px-4 py-3">
                                     <h5>สินค้าทั้งหมด</h5>
                                     <p><?php echo count($_SESSION["carts"]) ?> รายการ</p>
@@ -117,16 +140,34 @@ if (isset($_GET["delete_item"])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="row px-4">
+                        <div class="col-md-6">
+                            <button data-bs-toggle="modal" type="button" data-bs-target="#modalApprove" class="btn btn-primary" style="width: 16rem;">สั่งซื้อสินค้า</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- modal order -->
+                <div class="modal fade" id="modalApprove" tabindex="-1" tabindex="-1" aria-labelledby="modalApproveLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">ตระกร้าสินค้า</h5>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div class="mb-3">
+                                    <p>คุณต้องการสั่งซื้อสินค้า ใช่หรือไม่?</p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
                                 <form action="./api/addOrder.php" method="post">
                                     <input type="hidden" value="<?php echo $_SESSION["cus_id"] ?>" name="cus_id">
-                                    <button type="submit" class="btn btn-primary" style="width: 16rem;">สั่งซื้อสินค้า</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+                                    <button type="submit" class="btn btn-success">ยืนยัน</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- End modal  order -->
             <?php } else { ?>
                 <div class="col-lg-10 col-md-10 rounded-5 bg-light p-4 shadow-sm">
                     <div class="row justify-content-between px-5 py-5">

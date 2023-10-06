@@ -6,8 +6,8 @@ include("./header.php");
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $emp_id = $_SESSION["emp_id"];
+    $emp_work = $_POST["emp_work"];
     $id = $_POST["order_id"];
-    $cus_id = $_POST["cus_id"];
 }
 ?>
 <!-- PROCESS -->
@@ -17,7 +17,7 @@ $query = mysqli_query($con, $sql);
 if ($query) {
     $_SESSION['approve_wait'] == "success";
     $eq_id = uniqid("INSTALLATION-" . date("Y-m-d") . "-", false);
-    $_sql = "INSERT INTO installation(eq_id, eq_status, cus_id, order_id) VALUES ('" . $eq_id . "', '1', '" . $cus_id . "', '" . $id . "')";
+    $_sql = "INSERT INTO installation(eq_id, eq_status, emp_id, order_id) VALUES ('" . $eq_id . "', '1', '" . $emp_work . "', '" . $id . "')";
     $_query = mysqli_query($con, $_sql);
     header("location: ../order_approve.php");
     exit;
