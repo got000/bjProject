@@ -63,7 +63,7 @@ if(isset($_SESSION["emp_level"]) && @$_SESSION["emp_level"] !== "1"){
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM employees";
+                                        $sql = "SELECT * FROM employees WHERE emp_level = 2";
                                         $query = @mysqli_query($con, $sql);
                                         $i = 0;
                                         if ($query->num_rows > 0) {
@@ -74,9 +74,7 @@ if(isset($_SESSION["emp_level"]) && @$_SESSION["emp_level"] !== "1"){
                                                     <td><?php echo $row["emp_name"]; ?></td>
                                                     <td>
                                                         <?php
-                                                        if ($row["emp_level"] == 1) {
-                                                            echo "แอดมิน";
-                                                        } else  if ($row["emp_level"] == 2) {
+                                                        if ($row["emp_level"] == 2) {
                                                             echo "ผู้ใช้งาน";
                                                         } else if ($row["emp_level"] == 3) {
                                                             echo "ลูกค้า";

@@ -99,7 +99,7 @@ if(!isset($_SESSION["emp_level"])){
                                                                 <div class="modal-body">
                                                                     <div class="mb-3">
                                                                         <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสประเภทสินค้า<b>[สูงสุด 11 ตัวอักษร]</label>
-                                                                        <select value="<?php echo $row['protype_id'] ?>" class="form-select" aria-label="Default select example">
+                                                                        <select value="<?php echo $row['protype_id'] ?>" name="protype_id" class="form-select" aria-label="Default select example">
                                                                             <?php
                                                                             $sql2 = "SELECT * FROM product_type";
                                                                             $query2 = @mysqli_query($con, $sql2);
@@ -197,7 +197,7 @@ if(!isset($_SESSION["emp_level"])){
                                             <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสประเภทสินค้า<b>[สูงสุด 11 ตัวอักษร]</label>
-                                                    <select class="form-select" aria-label="Default select example">
+                                                    <select class="form-select" name="protype_id" aria-label="Default select example">
                                                         <?php
                                                         $sql2 = "SELECT * FROM product_type";
                                                         $query2 = @mysqli_query($con, $sql2);

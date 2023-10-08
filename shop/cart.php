@@ -38,147 +38,145 @@ if (isset($_GET["delete_item"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart</title>
+
+    <style>
+        .button4 {
+            background-color: white;
+            color: black;
+            border: 2px solid #e7e7e7;
+            width: 2rem;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .input4 {
+            background-color: white;
+            color: black;
+            border: 2px solid #e7e7e7;
+            width: 3rem;
+            text-align: center;
+        }
+
+        .button4:hover {
+            background-color: #e7e7e7;
+        }
+    </style>
 </head>
 
 <body>
     <?php include("./navbar.php") ?>
-    <div class="container py-3">
-        <div class="row d-flex justify-content-center py-4">
-            <?php
-            if (count(@$_SESSION["carts"])) {
-                $summary = 0;
-            ?>
-                <div class="col-lg-10 col-md-10 p-4 rounded-5 bg-light shadow-sm ">
-                    <div class="row justify-content-between">
-                        <div class="col-3">
-                            <h4>ตระกร้าสินค้า</h4>
+    <div class="container-fluid">
+        <div class="row justify-content-center mt-5 px-5">
+            <div class="col-lg-10 col-md-10 px-5">
+                <!-- CONDITION CARTS -->
+                <?php
+                if (count(@$_SESSION["carts"])) {
+                    $summary = 0;
+                ?>
+                    <div class="card shadow rounded">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span class="fs-3">ตระกร้าสินค้า</span>
+                            <a class="text-danger" href="<?php echo $_SERVER["PHP_SELF"] ?>?clear_cart=0">ลบทั้งหมด</a>
                         </div>
-                        <div class="col-3"></div>
-                        <div class="col-3"></div>
-                        <div class="col-3"><a class="text-danger" href="<?php echo $_SERVER["PHP_SELF"] ?>?clear_cart=0">ลบทั้งหมด</a></div>
-                    </div>
-                    <div class="row mt-5 justify-content-between align-items-center">
-                        <div class="col-3">
-                            <h5>รูปสินค้า</h5>
-                        </div>
-                        <div class="col-3">
-                            <h5>ชื่อสินค้า</h5>
-                        </div>
-                        <div class="col-3">
-                            <h5>ราคาต่อชิ้น</h5>
-                        </div>
-                        <div class="col-3">
-                            <h5>จำนวน</h5>
-                        </div>
-                        <div class="col-3">
-                            <h5>ราคารวม</h5>
-                        </div>
-                    </div>
-                    <?php
-                    for ($i = 0; $i < count(@$_SESSION["carts"]); $i++) {
-                        @$summary += (int)$_SESSION['carts'][$i]["pro_amount"] * (float)$_SESSION['carts'][$i]["pro_price"];
-                    ?>
-                        <div class="row mt-2 justify-content-between">
-                            <div class="col-3">
-                                <img src="./../admin/uploads/<?php echo $_SESSION["carts"][$i]["pro_image"] ?>" alt="..." width="100" , height="100">
-                            </div>
-                            <div class="col-3">
-                                <div class="row g-2 d-flex flex-column justify-content-center">
-                                    <div class="col">
-                                        <h5><?php echo $_SESSION["carts"][$i]["pro_name"] ?></h5>
-                                    </div>
-                                    <div class="col">
-                                        <span>$<?php echo $_SESSION["carts"][$i]["pro_price"] ?></span>
-                                    </div>
+                        <div class="card-body">
+                            <div class="row mb-3 shadow-sm p-3">
+                                <div class="col-4">
+                                    <div class="col">สินค้า</div>
+                                </div>
+                                <div class="col-8 d-flex justify-content-between align-items-center text-center">
+                                    <div class="col-2">ราคาต่อชิ้น</div>
+                                    <div class="col-2">จำนวน</div>
+                                    <div class="col-2">ราคารวม</div>
+                                    <div class="col-2">แอคชั่น</div>
                                 </div>
                             </div>
-                            <div class="col-3">
-                                <div class="row d-flex align-items-center">
-                                    <div class="col">
-                                        <?php
-                                        if ($_SESSION["carts"][$i]["pro_amount"] > 1) {
-                                        ?>
-                                            <a href="<?php echo $_SERVER["PHP_SELF"] ?>?decrement=<?php echo $i ?>" class="btn btn-outline-dark btn-sm"><i class="fas fa-minus"></i></a>
-                                        <?php } else { ?>
-                                            <a href="<?php echo $_SERVER["PHP_SELF"] ?>?decrement=<?php echo $i ?>" class="btn btn-outline-dark btn-sm disabled"><i class="fas fa-minus"></i></a>
-                                        <?php } ?>
+                            <!-- LOOP PHP -->
+                            <?php
+                            for ($i = 0; $i < count(@$_SESSION["carts"]); $i++) {
+                                @$summary += (int)$_SESSION['carts'][$i]["pro_amount"] * (float)$_SESSION['carts'][$i]["pro_price"];
+                            ?>
+                                <div class="row shadow-sm p-3">
+                                    <div class="col-4 d-flex">
+                                        <div class="col-3">
+                                            <a href="#">
+                                                <img src="./../admin/uploads/<?php echo $_SESSION["carts"][$i]["pro_image"] ?>" alt="..." width="70" , height="70">
+                                            </a>
+                                        </div>
+                                        <div class="row d-flex flex-column">
+                                            <span class="fs-4"><?php echo $_SESSION["carts"][$i]["pro_name"] ?></span>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <input value="<?php echo $_SESSION["carts"][$i]["pro_amount"] ?>" type="number" value="1" class="form-control text-center border-0 rounded" style="width: 3.5rem;">
-                                    </div>
-                                    <div class="col">
-                                        <a href="<?php echo $_SERVER["PHP_SELF"] ?>?increment=<?php echo $i ?>" class="btn btn-outline-dark btn-sm"><i class="fas fa-plus"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="row g-2 d-flex flex-column">
-                                    <div class="col">
-                                        <h5>$
+                                    <div class="col-8 d-flex justify-content-between align-items-center text-center">
+                                        <div class="col-2">
+                                            <span class="fs-5"><i class="fab fa-btc"></i><?php echo $_SESSION["carts"][$i]["pro_price"] ?></span>
+                                        </div>
+                                        <div class="col-2 d-flex">
                                             <?php
-                                            echo $_SESSION["carts"][$i]["pro_amount"] * $_SESSION["carts"][$i]["pro_price"]
+                                            if ($_SESSION["carts"][$i]["pro_amount"] > 1) {
                                             ?>
-                                        </h5>
+                                                <a href="<?php echo $_SERVER["PHP_SELF"] ?>?decrement=<?php echo $i ?>" class="button4">-</a>
+                                            <?php } else { ?>
+                                                <a href="<?php echo $_SERVER["PHP_SELF"] ?>?decrement=<?php echo $i ?>" class="button4 " style="pointer-events: none;">-</a>
+                                            <?php } ?>
+                                            <input value="<?php echo $_SESSION["carts"][$i]["pro_amount"] ?>" type="text" class="input4">
+                                            <a href="<?php echo $_SERVER["PHP_SELF"] ?>?increment=<?php echo $i ?>" class="button4">+</a>
+                                        </div>
+                                        <div class="col-2">
+                                            <span class="fs-5"><i class="fab fa-btc"></i><?php echo $_SESSION["carts"][$i]["pro_amount"] * $_SESSION["carts"][$i]["pro_price"] ?></span>
+                                        </div>
+                                        <div class="col-2">
+                                            <a class="text-danger" href="<?php echo $_SERVER["PHP_SELF"] ?>?delete_item=<?php echo $i ?>"><i class="fa fa-trash"></i></a>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <a class="text-danger" href="<?php echo $_SERVER["PHP_SELF"] ?>?delete_item=<?php echo $i ?>"><i class="fa fa-trash"></i></a>
-                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    <?php } ?>
-                    <div class="row d-flex flex-column align-items-end">
-                        <hr class="my-3 w-75">
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-3 px-4 py-3">
-                                    <h5>สินค้าทั้งหมด</h5>
-                                    <p><?php echo count($_SESSION["carts"]) ?> รายการ</p>
+                            <?php } ?>
+                            <!-- END LOOP PHP -->
+                            <div class="row shadow-sm p-3 text-center align-items-center d-flex flex-column mt-3">
+                                <div class="col-md-10 mb-3">
+                                    <span class="fs-5">ราคาทั้งหมด</span>
+                                    <span class="fs-4"><i class="fab fa-btc"></i><?php echo $summary ?></span><br>
+                                    <span class="fs-6">(รวม <?php echo count($_SESSION["carts"]) ?> รายการ)</span>
                                 </div>
-                                <div class="col-3 px-4 py-3">
-                                    <h2>$<?php echo $summary ?></h2>
+                                <div class="col-md-10">
+                                    <button data-bs-toggle="modal" type="button" data-bs-target="#modalApprove" class="btn btn-primary" style="width: 10rem;">สั่งซื้อสินค้า</button>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <button data-bs-toggle="modal" type="button" data-bs-target="#modalApprove" class="btn btn-primary" style="width: 16rem;">สั่งซื้อสินค้า</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- modal order -->
-                <div class="modal fade" id="modalApprove" tabindex="-1" tabindex="-1" aria-labelledby="modalApproveLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">ตระกร้าสินค้า</h5>
-                            </div>
-                            <div class="modal-body text-center">
-                                <div class="mb-3">
-                                    <p>คุณต้องการสั่งซื้อสินค้า ใช่หรือไม่?</p>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <form action="./api/addOrder.php" method="post">
-                                    <input type="hidden" value="<?php echo $_SESSION["cus_id"] ?>" name="cus_id">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
-                                    <button type="submit" class="btn btn-success">ยืนยัน</button>
-                                </form>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- End modal  order -->
-            <?php } else { ?>
-                <div class="col-lg-10 col-md-10 rounded-5 bg-light p-4 shadow-sm">
-                    <div class="row justify-content-between px-5 py-5">
+                    <!-- modal order -->
+                    <div class="modal fade" id="modalApprove" tabindex="-1" tabindex="-1" aria-labelledby="modalApproveLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">ตระกร้าสินค้า</h5>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <div class="mb-3">
+                                        <p>คุณต้องการสั่งซื้อสินค้า ใช่หรือไม่?</p>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="./api/addOrder.php" method="post">
+                                        <input type="hidden" value="<?php echo $_SESSION["cus_id"] ?>" name="cus_id">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+                                        <button type="submit" class="btn btn-success">ยืนยัน</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End modal  order -->
+                    <!-- END CONDITTION CARTS -->
+                <?php } else { ?>
+                    <div class="row justify-content-between px-5 py-5 rounded shadow">
                         <div class="col-lg-12 text-center mt-5">
                             <i class="fas fa-shopping-cart fs-1"></i>
                             <h5 class="fs-3 mt-3 mb-4">ตระกร้าของคุณไม่มีสินค้า</h5>
                             <a href="./index.php" class="btn btn-warning btn-lg mt-5">กลับไปเลือกสินค้า</a>
                         </div>
                     </div>
-                </div>
-            <?php } ?>
+                <?php } ?>
+            </div>
         </div>
     </div>
 </body>

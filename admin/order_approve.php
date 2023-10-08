@@ -215,6 +215,7 @@ include("./../js/jquery.php");
 include("./../js/js_bootstrap.php");
 include("./../js/sweetalert.php");
 ?>
+
 <?php
 if (@$_SESSION['approve_wait'] == "success") {
     $swal = "";

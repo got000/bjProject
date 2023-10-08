@@ -37,6 +37,8 @@
     <div class="manage-title">
         <h6>ข้อมูลการแจ้งปัญหา</h6>
     </div>
+    <a href="./problem_type.php" id="activeProblemType">จัดการประเภทปัญหา</a>
+    <a href="./problems.php" id="activeProblems">จัดการรายการปัญหา</a>
     <a href="./employeePassword.php" id="activeEmployeePassword">แก้ไขรหัสผ่าน</a>
     <a href="./logout.php">ออกจากระบบ</a>
 </div>
@@ -68,6 +70,10 @@
         $('#activeOrderCancel').addClass("active")
     }else if(url === "order_approve.php"){
         $('#activeOrderApprove').addClass("active")
+    }else if(url === "problem_type.php"){
+        $('#activeProblemType').addClass("active")
+    }else if(url === "problems.php"){
+        $('#activeProblems').addClass("active")
     }
 
 </script>
