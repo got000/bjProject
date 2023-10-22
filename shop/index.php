@@ -3,6 +3,7 @@
 @session_start();
 include("./../config/config.php");
 include("./../css/css_bootstap.php");
+include("./../css/css_bx_icon.php");
 include("./../js/js_bootstrap.php");
 ?>
 <?php
@@ -63,11 +64,40 @@ if (isset($_GET["clear_cart"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop</title>
+
+    <style>
+        .baht-icon::before {
+            content: "฿";
+        }
+
+        .btn-circle {
+            width: 30px;
+            height: 30px;
+            padding: 6px 0px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.42857;
+        }
+
+        .btn-circle:hover {
+            background-color: gray;
+        }
+
+        .card:hover {
+            outline: 1px solid black;
+        }
+
+        .add-card{
+            cursor: pointer;
+            color: #000;
+        }
+    </style>
 </head>
 
 <body>
     <?php include("./navbar.php") ?>
-    <div class="container-fluid">
+    <div class="container-fluid bg-light h-100">
         <!-- <div class="row">
             <div class="col-md-12">
                 <?php echo json_encode(@$_SESSION["carts"]) ?>
@@ -78,48 +108,42 @@ if (isset($_GET["clear_cart"])) {
                 </form>
             </div>
         </div> -->
-        <div class="row">
-            <div class="col-lg-2 col-md-2">
-                <!-- LEFT SIDE HERE! -->
-            </div>
-            <div class="col-lg-10 col-md-10">
-                <!-- <h2 class="pb-2 border-bottom text-center mt-5">เลือกซื้อสินค้า</h2> -->
-                <div class="row px-5 py-4">
-                    <?php
-                    $sql = "SELECT * FROM products";
-                    $query = @mysqli_query($con, $sql);
-                    if ($query->num_rows > 0) {
-                        while ($row = mysqli_fetch_assoc($query)) {
-                    ?>
-                            <div class="col-lg-3 col-md-3 mb-3">
-                                <div class="card">
-                                    <a href="./product_view.php?id=<?php echo $row["id"] ?>">
-                                        <img src="../admin/uploads/<?php echo $row["pro_image"] ?>" style="width: 100%; height: 250px; object-fit:cover;" class="card-img-top" alt="...">
-                                    </a>
-                                    <div class="card-body">
-                                        <h5 class="card-title"><?php echo $row["pro_name"] ?></h5>
-                                        <p class="card-text"><?php echo $row["pro_detail"] ?></p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <p class="fw-bold"><i class="fab fa-btc my-auto"></i><?php echo $row["pro_price"] ?></p>
-                                            <?php
-                                            if (isset($_SESSION["cus_id"])) {
-                                            ?>
-                                                <a href="<?php echo $_SERVER["PHP_SELF"] ?>?add_cart=<?php echo $row["pro_id"] ?>" class="btn btn-warning btn-sm"><i class="fas fa-cart-plus"></i></a>
-                                            <?php } else { ?>
-                                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalLogin"><i class="fas fa-cart-plus"></i></button>
-                                            <?php } ?>
+        <div class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="row">
+                            <?php
+                            $sql = "SELECT * FROM products";
+                            $query = @mysqli_query($con, $sql);
+                            if ($query->num_rows > 0) {
+                                while ($row = mysqli_fetch_assoc($query)) {
+                            ?>
+                                    <div class="col-lg-3 col-md-3 col-sm-6 mb-3">
+                                        <div class="card shadow-sm">
+                                            <a href="./product_view.php?id=<?php echo $row["id"] ?>" class="mx-auto my-auto mt-3">
+                                                <img src="../admin/uploads/<?php echo $row["pro_image"] ?>" alt="..." width="200" height="200">
+                                            </a>
+                                            <div class="card-body">
+                                                <h5 class="card-title"><?php echo $row["pro_name"] ?></h5>
+                                                <p class="card-text"><?php echo $row["pro_detail"] ?></p>
+                                                <div class="d-flex justify-content-between align-self-center">
+                                                    <span>฿<?php echo $row["pro_price"] ?></span>
+                                                    <?php
+                                                    if (isset($_SESSION["cus_id"])) {
+                                                    ?>
+                                                        <a class="add-card" href="<?php echo $_SERVER["PHP_SELF"] ?>?add_cart=<?php echo $row["pro_id"] ?>"><i style="color: #0d6efd;" class='bx bxs-cart-add fs-4'></i></a>
+                                                    <?php } else { ?>
+                                                        <a class="add-card" data-bs-toggle="modal" data-bs-target="#modalLogin"><i class='bx bxs-cart-add fs-4' style="color: #0d6efd;"></i></a>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        <?php
-                        }
-                    } else {
-                        ?>
-                        <!-- ADD HTML ELEMENTS FOR DEBUGING CASE: NO PRODUCTS -->
-                    <?php
-                    }
-                    ?>
+                            <?php }
+                            } ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -153,7 +177,7 @@ if (isset($_GET["clear_cart"])) {
                         </div>
                         <div class="mb-3">
                             <label for="address" class="col-form-label">ที่อยู่:</label>
-                            <input  type="text" name="address" class="form-control">
+                            <input type="text" name="address" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label for="province" class="col-form-label">จังหวัด:</label>
