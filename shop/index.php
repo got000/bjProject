@@ -128,7 +128,7 @@ if (isset($_GET["clear_cart"])) {
                                                 <h5 class="card-title"><?php echo $row["pro_name"] ?></h5>
                                                 <p class="card-text"><?php echo $row["pro_detail"] ?></p>
                                                 <div class="d-flex justify-content-between align-self-center">
-                                                    <span>฿<?php echo $row["pro_price"] ?></span>
+                                                    <span>฿<?php echo number_format($row["pro_price"]) ?></span>
                                                     <?php
                                                     if (isset($_SESSION["cus_id"])) {
                                                     ?>

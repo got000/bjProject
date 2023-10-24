@@ -178,12 +178,12 @@ if (!isset($_SESSION["emp_level"])) {
                                                                     <div class="col"><?php echo $j ?></div>
                                                                     <div class="col"><?php echo $detail["pro_name"] ?></div>
                                                                     <div class="col"><img src="./../admin/uploads/<?php echo $detail["pro_image"] ?>" alt="รูปสินค้า" width="50" height="50"></div>
-                                                                    <div class="col"><?php echo $detail["odetail_price"] ?></div>
+                                                                    <div class="col"><?php echo number_format($detail["odetail_price"]) ?></div>
                                                                     <div class="col"><?php echo $detail["odetail_amount"] ?></div>
                                                                 </div>
                                                             <?php } ?>
                                                             <hr class="my-4" />
-                                                            <h5>ราคาสินค้าทั้งหมด $<?php echo $summary ?></h5>
+                                                            <h5>ราคาสินค้าทั้งหมด ฿<?php echo number_format($summary) ?></h5>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ออก</button>

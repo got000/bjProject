@@ -26,8 +26,14 @@ if (isset($_GET["clear_cart"])) {
 }
 // add button remove item of array
 if (isset($_GET["delete_item"])) {
+    // get index from delete_item action
     $index = $_GET["delete_item"];
-    unset($_SESSION["carts"][$index]["pro_id"]);
+    // set carts variable from $_SESSION["carts"]
+    $carts = $_SESSION["carts"];
+    unset($carts[$index]);
+    $carts = array_values($carts);
+    var_dump($carts);
+    $_SESSION["carts"] = $carts;
     header("location: cart.php");
 }
 ?>
@@ -103,7 +109,7 @@ if (isset($_GET["delete_item"])) {
                                     </div>
                                     <div class="col-8 d-flex justify-content-between align-items-center text-center mb-4">
                                         <div class="col-2">
-                                            <span class="fs-5">฿<?php echo $_SESSION["carts"][$i]["pro_price"] ?></span>
+                                            <span class="fs-5">฿<?php echo number_format($_SESSION["carts"][$i]["pro_price"]) ?></span>
                                         </div>
                                         <div class="col-2 d-flex">
                                             <?php
@@ -117,7 +123,7 @@ if (isset($_GET["delete_item"])) {
                                             <a href="<?php echo $_SERVER["PHP_SELF"] ?>?increment=<?php echo $i ?>" class="button4">+</a>
                                         </div>
                                         <div class="col-2">
-                                            <span class="fs-5">฿<?php echo $_SESSION["carts"][$i]["pro_amount"] * $_SESSION["carts"][$i]["pro_price"] ?></span>
+                                            <span class="fs-5">฿<?php echo number_format($_SESSION["carts"][$i]["pro_amount"] * $_SESSION["carts"][$i]["pro_price"]) ?></span>
                                         </div>
                                         <div class="col-2">
                                             <a class="text-danger" href="<?php echo $_SERVER["PHP_SELF"] ?>?delete_item=<?php echo $i ?>"><i class="fa fa-trash"></i></a>
@@ -133,7 +139,7 @@ if (isset($_GET["delete_item"])) {
                                     <div class="row text-center">
                                         <div class="col-4 w-100 mb-3">
                                             <span class="fs-5">ราคาทั้งหมด</span>
-                                            <span class="fs-4">฿</i><?php echo $summary ?></span><br>
+                                            <span class="fs-4">฿</i><?php echo number_format($summary) ?></span><br>
                                             <span class="fs-6 text-center">(รวม <?php echo count($_SESSION["carts"]) ?> รายการ)</span><br>
                                         </div>
                                         <div class="col-4 w-100 mb-3">

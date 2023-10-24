@@ -49,14 +49,14 @@ include("./../js/js_bootstrap.php");
                     </div>
                     <div class="mb-3 px-5">
                         <label for="province" class="col-form-label">จังหวัด:</label>
+                        <?php echo $_SESSION['cus_province'] ?>
                         <select value="<?php echo $_SESSION['cus_province'] ?>" name="province" id="province" class="form-select">
-                            <option selected>เลือกจังหวัด</option>
                             <?php
                             $sql = "SELECT * FROM provinces";
                             $query = @mysqli_query($con, $sql);
                             while ($row = mysqli_fetch_assoc($query)) {
                             ?>
-                                <option value="<?php echo $row["id"] ?>"><?php echo $row["name_th"] ?></option>
+                                <option value="<?php echo $row["id"] ?>" <?php if((int)$_SESSION["cus_province"] == (int)$row["id"]) echo "selected"; ?> ><?php echo $row["name_th"] ?></option>
                             <?php } ?>
                         </select>
                     </div>

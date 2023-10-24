@@ -43,7 +43,6 @@ if (!isset($_SESSION["emp_level"])) {
                                         <th width="10%">ชื่อลูกค้า</th>
                                         <th width="15%">ที่อยู่ลูกค้า</th>
                                         <th width="10%">รายละเอียด</th>
-                                        <th width="10%">ผู้ติดตั้ง</th>
                                         <th width="10%">ดำเนินการโดย</th>
                                         <th width="20%">#</th>
                                     </tr>
@@ -79,20 +78,6 @@ if (!isset($_SESSION["emp_level"])) {
                                                     เบอร์โทร: <?php echo $order["cus_tel"] ?>
                                                 </td>
                                                 <td><button data-bs-toggle="modal" type="button" data-bs-target="#modalOrder<?php echo $order["id"] ?>" class="btn btn-secondary btn-sm">รายการสั่งซื้อ</button></td>
-                                                <td>
-                                                    <form action="./api/wait_install_api.php" method="post">
-                                                        <select class="form-select" id="emp_work" name="emp_work" required>
-                                                            <option selected>เลือกผู้ติดตั้ง</option>
-                                                            <?php
-                                                            $select_emp_work = "SELECT * FROM employees WHERE emp_level=2";
-                                                            $query_emp_work = mysqli_query($con, $select_emp_work);
-                                                            while ($row = mysqli_fetch_assoc($query_emp_work)) {
-                                                            ?>
-                                                                <option value="<?php echo $row["emp_id"] ?>"><?php echo $row["emp_name"] ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                                
-                                                </td>
                                                 <td><?php echo $order["emp_name"] ?></td>
                                                 <td>
                                                     <button data-bs-toggle="modal" type="button" data-bs-target="#modalApprove<?php echo $order["id"] ?>" class="btn btn-success btn-sm">ได้คิวติดตั้ง</button>
@@ -102,24 +87,33 @@ if (!isset($_SESSION["emp_level"])) {
                                             <!-- modal Approve wait to install -->
                                             <div class="modal fade" id="modalApprove<?php echo $order["id"] ?>" tabindex="-1" tabindex="-1" aria-labelledby="modalApproveLabel<?php echo $order["id"] ?>" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">คิวติดตั้ง</h5>
-                                                        </div>
-                                                        <div class="modal-body text-center">
-                                                            <div class="mb-3">
-                                                                <p>คุณต้องการเพิ่มคิวติดตั้ง <strong><?php echo $order["order_id"] ?></strong> ใช่หรือไม่?</p>
+                                                    <form action="./api/wait_install_api.php" method="post">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">ติดตั้ง <?php echo $order["order_id"] ?></h5>
                                                             </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <form action="./api/wait_install_api.php" method="post">
+                                                            <div class="modal-body">
+                                                                <div class="mb-3">
+                                                                    <select class="form-select" id="emp_work" name="emp_work" required>
+                                                                        <option selected>เลือกผู้ติดตั้ง</option>
+                                                                        <?php
+                                                                        $select_emp_work = "SELECT * FROM employees WHERE emp_level=2";
+                                                                        $query_emp_work = mysqli_query($con, $select_emp_work);
+                                                                        while ($row = mysqli_fetch_assoc($query_emp_work)) {
+                                                                        ?>
+                                                                            <option value="<?php echo $row["emp_id"] ?>"><?php echo $row["emp_name"] ?></option>
+                                                                        <?php } ?>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
                                                                 <input type="hidden" name="emp_id" value="<?php echo $_SESSION["emp_id"] ?>">
                                                                 <input type="hidden" name="order_id" value="<?php echo $order["id"] ?>">
                                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
                                                                 <button type="submit" class="btn btn-primary">ยืนยัน</button>
-                                                            </form>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                             <!-- End modal Approve wait to install-->
@@ -136,7 +130,7 @@ if (!isset($_SESSION["emp_level"])) {
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                        <form action="./api/cancel_order_api.php" method="post"> <form action="./api/cancel_order_api.php" method="post">
+                                                            <form action="./api/cancel_order_api.php" method="post">
                                                                 <input type="hidden" name="emp_id" value="<?php echo $_SESSION["emp_id"] ?>">
                                                                 <input type="hidden" name="order_id" value="<?php echo $order["id"] ?>">
                                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
@@ -181,12 +175,12 @@ if (!isset($_SESSION["emp_level"])) {
                                                                     <div class="col"><?php echo $j ?></div>
                                                                     <div class="col"><?php echo $detail["pro_name"] ?></div>
                                                                     <div class="col"><img src="./../admin/uploads/<?php echo $detail["pro_image"] ?>" alt="รูปสินค้า" width="50" height="50"></div>
-                                                                    <div class="col"><?php echo $detail["odetail_price"] ?></div>
+                                                                    <div class="col"><?php echo number_format($detail["odetail_price"]) ?></div>
                                                                     <div class="col"><?php echo $detail["odetail_amount"] ?></div>
                                                                 </div>
                                                             <?php } ?>
                                                             <hr class="my-4" />
-                                                            <h5>ราคาสินค้าทั้งหมด $<?php echo $summary ?></h5>
+                                                            <h5>ราคาสินค้าทั้งหมด ฿<?php echo number_format($summary) ?></h5>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ออก</button>
@@ -198,7 +192,7 @@ if (!isset($_SESSION["emp_level"])) {
                                         <?php }
                                 } else { ?>
                                         <tr>
-                                            <td colspan="9">ไม่มีข้อมูลรายการอนุมัติ</td>
+                                            <td colspan="8">ไม่มีข้อมูลรายการอนุมัติ</td>
                                         </tr>
                                     <?php } ?>
                                         </tbody>
@@ -235,6 +229,24 @@ if (@$_SESSION['approve_wait'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['approve_wait'] = "";
+}else if (@$_SESSION['cancel_order'] == "success") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "สำเร็จ',";
+    $swal .= "text: '" . "ยกรายการรอติดตั้งสำเร็จ', icon: 'success', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['cancel_order'] = "";
+}else if (@$_SESSION['cancel_order'] == "failed") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "ไม่สำเร็จ',";
+    $swal .= "text: '" . "ยกเลิกรายการรอติดตั้งไม่สำเร็จ', icon: 'error', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['cancel_order'] = "";
 }
 ?>
 
