@@ -31,7 +31,7 @@
         $_SESSION["emp_id"] = $fetch["emp_id"];
         $_SESSION["emp_name"] = $fetch["emp_name"];
         $_SESSION["emp_level"] = $fetch["emp_level"];
-        header("location:products.php");
+        header("location:system.php");
         exit;
     }
 
