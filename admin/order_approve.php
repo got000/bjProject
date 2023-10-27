@@ -110,7 +110,7 @@ if (!isset($_SESSION["emp_level"])) {
                                                                 <input type="hidden" name="emp_id" value="<?php echo $_SESSION["emp_id"] ?>">
                                                                 <input type="hidden" name="order_id" value="<?php echo $order["id"] ?>">
                                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
-                                                                <button type="submit" class="btn btn-primary">ยืนยัน</button>
+                                                                <button type="submit" id="submitBtn" class="btn btn-primary">ยืนยัน</button>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -203,6 +203,22 @@ if (!isset($_SESSION["emp_level"])) {
             </div>
         </div>
     </div>
+    <script>
+        // Check user input selected 
+        // if option === "เลือกผู้ติดตั้ง" button disabled
+        $(document).ready(function() {
+            $("#emp_work").on("change", function() {
+                var submitButton = $("#submitBtn");
+                if (this.value !== "เลือกผู้ติดตั้ง") {
+                    submitButton.prop("disabled", false);
+                } else {
+                    submitButton.prop("disabled", true);
+                }
+            });
+            // Trigger the change event on page load to check the initial selection
+            $("#emp_work").trigger("change");
+        });
+    </script>
 </body>
 <?php
 include("./../js/jquery.php");
@@ -229,7 +245,7 @@ if (@$_SESSION['approve_wait'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['approve_wait'] = "";
-}else if (@$_SESSION['cancel_order'] == "success") {
+} else if (@$_SESSION['cancel_order'] == "success") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
@@ -238,7 +254,7 @@ if (@$_SESSION['approve_wait'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['cancel_order'] = "";
-}else if (@$_SESSION['cancel_order'] == "failed") {
+} else if (@$_SESSION['cancel_order'] == "failed") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";

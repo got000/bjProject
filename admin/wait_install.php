@@ -232,6 +232,24 @@ if (@$_SESSION['approve_installation'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['approve_installation'] = "";
+} else if (@$_SESSION['cancel_order'] == "success") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "สำเร็จ',";
+    $swal .= "text: '" . "ยกรายการรอติดตั้งสำเร็จ', icon: 'success', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['cancel_order'] = "";
+} else if (@$_SESSION['cancel_order'] == "failed") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "ไม่สำเร็จ',";
+    $swal .= "text: '" . "ยกเลิกรายการรอติดตั้งไม่สำเร็จ', icon: 'error', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['cancel_order'] = "";
 }
 ?>
 
