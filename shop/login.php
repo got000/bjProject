@@ -24,6 +24,9 @@ if ($query) {
         exit;
     }
     $_SESSION["carts"] = [];
+    $_SESSION["problems"] = [];
+    $_SESSION["problemTypeId"] = "";
+    $_SESSION["problemId"] = "";
     $_SESSION["login"] = "success";
     $_SESSION["cus_id"] = $fetch["cus_id"];
     $_SESSION["cus_name"] = $fetch["cus_name"];

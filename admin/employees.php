@@ -229,7 +229,6 @@ if(isset($_SESSION["emp_level"]) && @$_SESSION["emp_level"] !== "1"){
                                                     <select class="form-select" id="dropdown" name="emp_level" required>
                                                         <option selected>เลือกระดับ</option>
                                                         <option value="2">ผู้ใช้งาน</option>
-                                                        <option value="3">ลูกค้า</option>
                                                     </select>
                                                 </div>
                                             </div>
