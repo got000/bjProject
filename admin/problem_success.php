@@ -12,11 +12,9 @@ if (!isset($_SESSION["emp_level"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php
-    include("./../css/css_bootstap.php");
-    ?>
+    <?php include("./../css/css_bootstap.php"); ?>
     <link rel="stylesheet" href="./../css/sidebar.css">
-    <title>รายการติดตั้งสำเร็จ</title>
+    <title>รายการแจ้งปัญหาสำเร็จ</title>
 </head>
 
 <body>
@@ -29,7 +27,7 @@ if (!isset($_SESSION["emp_level"])) {
                 <div class="container">
                     <div class="row">
                         <div class="col-md-9">
-                            <h3>รายการติดตั้งสำเร็จ</h3>
+                            <h3>รายการแจ้งปัญหาสำเร็จ</h3>
                         </div>
                     </div>
                     <div class="row">
@@ -38,27 +36,25 @@ if (!isset($_SESSION["emp_level"])) {
                                 <thead>
                                     <tr>
                                         <th width="5%">ลำดับ</th>
-                                        <th width="10%">รหัสสั่งซื้อ</th>
+                                        <th width="15%">รหัสสั่งซื้อ</th>
                                         <th width="10%">วันที่</th>
                                         <th width="15%">ชื่อลูกค้า</th>
-                                        <th width="20%">ที่อยู่ลูกค้า</th>
-                                        <th width="10%">รายละเอียด</th>
+                                        <th width="15%">ที่อยู่ลูกค้า</th>
                                         <th width="10%">ดำเนินการโดย</th>
-                                        <th width="10%">ผู้ติดตั้ง</th>
+                                        <th width="10%">รายละเอียด</th>
                                     </tr>
                                 </thead>
                                 <?php
-                                $sql = "SELECT installation.id, installation.eq_id, installation.eq_status, installation.emp_id, orders.id, orders.order_id, orders.order_date, customers.cus_name, customers.cus_tel, 
+                                $sql = "SELECT orders.id, orders.order_id, orders.order_date, orders.cus_id, customers.cus_name, customers.cus_tel, 
                                 customers.cus_address, provinces.name_th AS province_name, amphures.name_th AS amphur_name, 
                                 districts.name_th AS district_name, districts.zip_code, employees.emp_name 
-                                FROM installation
-                                LEFT JOIN orders ON installation.order_id = orders.id
-                                LEFT JOIN employees ON installation.emp_id = employees.emp_id
+                                FROM orders
                                 LEFT JOIN customers ON orders.cus_id = customers.cus_id
+                                LEFT JOIN employees ON orders.emp_id = employees.emp_id
                                 LEFT JOIN provinces ON customers.cus_province = provinces.id
                                 LEFT JOIN amphures ON customers.cus_amphur = amphures.id
                                 LEFT JOIN districts ON customers.cus_district = districts.id
-                                WHERE orders.cus_id = customers.cus_id AND orders.order_status = 4 AND installation.eq_status = 2 AND orders.order_type = 1";
+                                WHERE orders.cus_id = customers.cus_id AND orders.order_status = 3 AND orders.emp_id=employees.emp_id AND orders.order_type = 2";
                                 $query = mysqli_query($con, $sql);
                                 $i = 0;
                                 if ($query->num_rows > 0) {
@@ -67,7 +63,7 @@ if (!isset($_SESSION["emp_level"])) {
                                 ?>
                                         <tbody>
                                             <tr>
-                                            <td><?php echo $i ?></td>
+                                                <td><?php echo $i ?></td>
                                                 <td><?php echo $order["order_id"] ?></td>
                                                 <td><?php echo $order["order_date"] ?></td>
                                                 <td><?php echo $order["cus_name"] ?></td>
@@ -78,21 +74,36 @@ if (!isset($_SESSION["emp_level"])) {
                                                     <?php echo $order["zip_code"] ?><br>
                                                     เบอร์โทร: <?php echo $order["cus_tel"] ?>
                                                 </td>
-                                                <td>
-                                                    <button data-bs-toggle="modal" type="button" data-bs-target="#modalOrder<?php echo $order["id"] ?>" class="btn btn-secondary btn-sm">รายการสั่งซื้อ</button>
-                                                </td>
-                                                <?php
-                                                $sql_emp_orders = "SELECT employees.emp_name FROM employees
-                                                                    LEFT JOIN orders ON employees.emp_id = orders.emp_id
-                                                                    WHERE employees.emp_level = 1 LIMIT 1;    
-                                                                    ";
-                                                $query_emp_orders = mysqli_query($con, $sql_emp_orders);
-                                                while ($emp = mysqli_fetch_assoc($query_emp_orders)) {
-                                                ?>
-                                                    <td><?php echo $emp["emp_name"] ?></td>
-                                                <?php } ?>
                                                 <td><?php echo $order["emp_name"] ?></td>
+                                                <td>
+                                                    <button data-bs-toggle="modal" type="button" data-bs-target="#modalOrder<?php echo $order["id"] ?>" class="btn btn-secondary btn-sm">รายการปัญหา</button>
+                                                </td>
                                             </tr>
+                                            <!-- modal Approve order -->
+                                            <div class="modal fade" id="modalApprove<?php echo $order["id"] ?>" tabindex="-1" tabindex="-1" aria-labelledby="modalApproveLabel<?php echo $order["id"] ?>" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">อนุมัติ</h5>
+                                                        </div>
+                                                        <div class="modal-body text-center">
+                                                            <div class="mb-3">
+                                                                <p>คุณต้องการอนุมัติรายการ <strong><?php echo $order["order_id"] ?></strong> ใช่หรือไม่?</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <form action="./api/approve_order_api.php" method="post">
+                                                                <input type="hidden" name="emp_id" value="<?php echo $_SESSION["emp_id"] ?>">
+                                                                <input type="hidden" name="order_id" value="<?php echo $order["id"] ?>">
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+                                                                <button type="submit" class="btn btn-primary">ยืนยัน</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End modal Approve order -->
+
                                             <!-- modal order detail -->
                                             <div class="modal fade" id="modalOrder<?php echo $order["id"] ?>" tabindex="-1" aria-labelledby="modalOrderLabel<?php echo $order["id"] ?>" aria-hidden="true">
                                                 <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -103,30 +114,30 @@ if (!isset($_SESSION["emp_level"])) {
                                                         <div class="modal-body text-center">
                                                             <div class="row g-4 justify-content-center">
                                                                 <div class="col"><strong>ลำดับ</strong></div>
-                                                                <div class="col"><strong>ชื่อสินค้า</strong></div>
-                                                                <div class="col"><strong>รูปภาพ</strong></div>
+                                                                <div class="col"><strong>ชื่อปัญหา</strong></div>
+                                                                <div class="col"><strong>รายละเอียดปัญหา</strong></div>
                                                                 <div class="col"><strong>ราคา</strong></div>
                                                                 <div class="col"><strong>จำนวน</strong></div>
                                                             </div>
                                                             <hr class="my-3" />
                                                             <?php
-                                                            $_sql = "SELECT orders.order_id, products.pro_name, products.pro_image, 
+                                                            $_sql = "SELECT orders.order_id, problems.prob_name, problems.prob_detail, 
                                                                             order_detail.odetail_amount, order_detail.odetail_price
                                                                             FROM order_detail
                                                                             LEFT JOIN orders ON order_detail.order_id = orders.id
-                                                                            LEFT JOIN products ON order_detail.pro_id = products.id
-                                                                            WHERE order_detail.order_id = '" . $order["id"] . "';";
+                                                                            LEFT JOIN problems ON order_detail.pro_id = problems.id
+                                                                            WHERE order_detail.order_id = '" . $order["id"] . "'";
                                                             $_query = mysqli_query($con, $_sql);
                                                             $j = 0;
                                                             $summary = 0;
                                                             while ($detail = mysqli_fetch_assoc($_query)) {
                                                                 $summary += (int)$detail["odetail_amount"] * (int)$detail["odetail_price"];
-                                                                $j++;
+
                                                             ?>
                                                                 <div class="row g-4 justify-content-center mb-4">
-                                                                    <div class="col"><?php echo $j ?></div>
-                                                                    <div class="col"><?php echo $detail["pro_name"] ?></div>
-                                                                    <div class="col"><img src="./../admin/uploads/<?php echo $detail["pro_image"] ?>" alt="รูปสินค้า" width="50" height="50"></div>
+                                                                    <div class="col"><?php echo $j + 1 ?></div>
+                                                                    <div class="col"><?php echo $detail["prob_name"] ?></div>
+                                                                    <div class="col"><?php echo $detail["prob_detail"] ?></div>
                                                                     <div class="col"><?php echo number_format($detail["odetail_price"]) ?></div>
                                                                     <div class="col"><?php echo $detail["odetail_amount"] ?></div>
                                                                 </div>
@@ -144,7 +155,7 @@ if (!isset($_SESSION["emp_level"])) {
                                         <?php }
                                 } else { ?>
                                         <tr>
-                                            <td colspan="8">รายการติดตั้งเสร็จสมบูรณ์</td>
+                                            <td colspan="8">ไม่มีรายการแจ้งปัญหาสำเร็จ</td>
                                         </tr>
                                     <?php } ?>
                                         </tbody>

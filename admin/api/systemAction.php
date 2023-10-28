@@ -24,8 +24,8 @@ if ($result_select->num_rows > 0) {
 
     if ($idS != $stru_id) {
         $_SESSION["updateSystem"] = "duplicate";
-        echo "<meta HTTP-EQUIV='Refresh' CONTENT='0;URL=../system.php'>";
-        exit(0);
+        header("location: ../system.php");
+        exit;
     }
 }
 
@@ -41,14 +41,14 @@ $query = mysqli_query($con, $sql);
 if ($query) {
     if ($stru_logo != "") {
         move_uploaded_file($_FILES['stru_logo']['tmp_name'], $targetFile);
-        unlink("../uploads/logo/" . $stru_logo_old);
+        unlink("../uploads/systems/" . $stru_logo_old);
     }
     $_SESSION["updateSystem"] = "success";
-    echo "<meta HTTP-EQUIV='Refresh' CONTENT='0;URL=../system.php'>";
-    exit(0);
+    header("location: ../system.php");
+    exit;
 } else {
     $_SESSION["updateSystem"] = "error";
-    echo "<meta HTTP-EQUIV='Refresh' CONTENT='0;URL=../system.php'>";
-    exit(0);
+    header("location: ../system.php");
+    exit;
 }
 ?>

@@ -52,7 +52,7 @@ if(!isset($_SESSION["emp_level"])){
                                     <thead>
                                         <tr>
                                             <th width="5%">ลำดับ</th>
-                                            <th width="12.14%">รหัสสินค้า</th>
+                                            <!-- <th width="12.14%">รหัสสินค้า</th> -->
                                             <th width="12.14%">ชื่อสินค้า</th>
                                             <th width="12.14%">จำนวนสินค้า</th>
                                             <th width="12.14%">ราคาสินค้า</th>
@@ -72,7 +72,7 @@ if(!isset($_SESSION["emp_level"])){
                                         ?>
                                                 <tr>
                                                     <td><?php echo $i + 1 ?></td>
-                                                    <td><?php echo $row["pro_id"]; ?></td>
+                                                    <!-- <td><?php echo $row["pro_id"]; ?></td> -->
                                                     <td><?php echo $row["pro_name"]; ?></td>
                                                     <td><?php echo $row["pro_amount"]; ?></td>
                                                     <td><?php echo $row["pro_price"]; ?></td>
@@ -98,6 +98,10 @@ if(!isset($_SESSION["emp_level"])){
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div class="mb-3">
+                                                                        <!-- Input id -->
+                                                                        <input type="hidden" name="id" value="<?php echo $row["id"] ?>">
+                                                                        <!-- Input pro_id -->
+                                                                        <input type="hidden" name="pro_id" value="<?php echo $row["pro_id"] ?>">
                                                                         <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รหัสประเภทสินค้า<b>[สูงสุด 11 ตัวอักษร]</label>
                                                                         <select value="<?php echo $row['protype_id'] ?>" name="protype_id" class="form-select" aria-label="Default select example">
                                                                             <?php
@@ -105,7 +109,7 @@ if(!isset($_SESSION["emp_level"])){
                                                                             $query2 = @mysqli_query($con, $sql2);
                                                                             while ($row2 = mysqli_fetch_assoc($query2)) {
                                                                             ?>
-                                                                                <option value="<?php echo $row2["id"] ?>">
+                                                                                <option value="<?php echo $row2["id"] ?>" <?php if((int)$row["protype_id"] == (int)$row2["id"]) echo "selected"; ?>>
                                                                                     <?php echo $row2['protype_name'] ?>
                                                                                 </option>
                                                                             <?php
@@ -130,7 +134,6 @@ if(!isset($_SESSION["emp_level"])){
                                                                         <label for="recipient-name" class="form-label"><span class="text-danger"><b>*</b></span>รายละเอียดสินค้า</label>
                                                                         <input class="form-control" value="<?php echo $row["pro_detail"] ?>" type="text" name="pro_detail" required>
                                                                     </div>
-
                                                                     <div class="mb-3">
                                                                         <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>รูปภาพ</label>
                                                                         <input type="file" name="pro_image" class="form-control">
@@ -139,7 +142,7 @@ if(!isset($_SESSION["emp_level"])){
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
-                                                                    <button type="submit" class="btn btn-warning">บันทึก</button>
+                                                                    <button type="submit" class="btn btn-primary">บันทึก</button>
                                                                 </div>
                                                             </form>
                                                         </div>

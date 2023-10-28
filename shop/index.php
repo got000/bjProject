@@ -125,10 +125,10 @@ if (isset($_GET["clear_cart"])) {
                                                 <img src="../admin/uploads/<?php echo $row["pro_image"] ?>" alt="..." width="200" height="200">
                                             </a>
                                             <div class="card-body">
-                                                <h5 class="card-title"><?php echo $row["pro_name"] ?></h5>
-                                                <p class="card-text"><?php echo $row["pro_detail"] ?></p>
+                                                <p class="card-title fs-6 "><?php echo $row["pro_name"] ?></p>
+                                                <!-- <p class="card-text"><?php echo $row["pro_detail"] ?></p> -->
                                                 <div class="d-flex justify-content-between align-self-center">
-                                                    <span>฿<?php echo number_format($row["pro_price"]) ?></span>
+                                                    <span class="fs-6">฿<?php echo number_format($row["pro_price"]) ?></span>
                                                     <?php
                                                     if (isset($_SESSION["cus_id"])) {
                                                     ?>

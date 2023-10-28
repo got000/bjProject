@@ -16,38 +16,27 @@
     //process
     if(count($_SESSION["problems"]) > 0){
         $order_id = uniqid("Problem-".date("Y-m-d")."-", false);
-        $sql = "INSERT INTO orders(order_id, order_status, cus_id) VALUES('".$order_id."', '1', '".$cus_id."')";
+        $sql = "INSERT INTO orders(order_id, order_status, cus_id, order_type) VALUES('".$order_id."', '1', '".$cus_id."', '2')";
         if($con->query($sql)){
             $order_id = $con->insert_id; // last id orders
             foreach($_SESSION["problems"] as $item){ // loop order detail
                 // insert order detail
-                $sql_detail = "INSERT INTO order_detail(odetail_amount, odetail_price, pro_id, order_id) VALUES('".$item["pro_amount"]."', '".$item["pro_price"]."', '".$item["id"]."', '".$order_id."')";
+                $sql_detail = "INSERT INTO order_detail(odetail_amount, odetail_price, pro_id, order_id) VALUES('1', '".$item["prob_price"]."', '".$item["prob_id"]."', '".$order_id."')";
                 $query_detail = mysqli_query($con, $sql_detail);
-                if($query_detail){
-                    // get product amount
-                    $sql_check = "SELECT * FROM products WHERE id='".$item["id"]."' LIMIT 1";
-                    $query_check = mysqli_query($con, $sql_check);
-                    $fetch_check = mysqli_fetch_assoc($query_check);
-
-                    $amount = (int)$fetch_check["pro_amount"] - (int)$item["pro_amount"];
-                    //update stock
-                    $sql_update = "UPDATE products SET pro_amount='".$amount."' WHERE id='".$item["id"]."'";
-                    mysqli_query($con, $sql_update);
-                }
             }
 
-            $_SESSION["order"] = "success";
+            $_SESSION["problem"] = "success";
             $_SESSION["problems"] = [];
             header("location:../index.php");
             exit;
         }
 
-        $_SESSION["order"] = "error";
+        $_SESSION["problem"] = "error";
         header("location:../index.php");
         exit;
     }
 
-    $_SESSION["order"] = "empty";
+    $_SESSION["problem"] = "empty";
     header("location:../index.php");
     exit;
 ?>

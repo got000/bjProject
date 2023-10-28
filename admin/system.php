@@ -1,11 +1,11 @@
 <?php
 @session_start();
-if(isset($_SESSION["emp_level"]) && @$_SESSION["emp_level"] !== "1"){
-   @$_SESSION["empty"] = "y";
-   header("location: index.php");
-}else if(!isset($_SESSION["emp_level"])){
+if (isset($_SESSION["emp_level"]) && @$_SESSION["emp_level"] !== "1") {
     @$_SESSION["empty"] = "y";
-   header("location: index.php");
+    header("location: index.php");
+} else if (!isset($_SESSION["emp_level"])) {
+    @$_SESSION["empty"] = "y";
+    header("location: index.php");
 }
 @include("./../config/config.php")
 ?>
@@ -36,7 +36,7 @@ if(isset($_SESSION["emp_level"]) && @$_SESSION["emp_level"] !== "1"){
         <div class="container-fluid">
             <div class="row mt-5">
                 <div class="col-lg-2 col-md-2">
-                    <?php include("./menu.php");?>
+                    <?php include("./menu.php"); ?>
                 </div>
                 <?php
                 $sql = "SELECT * FROM systems";
@@ -73,15 +73,35 @@ if(isset($_SESSION["emp_level"]) && @$_SESSION["emp_level"] !== "1"){
                                         </div>
                                         <div class="mb-3">
                                             <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>ประกาศทางร้าน</label>
-                                            <textarea rows="3" class="form-control" value="<?php echo $row["stru_ann"] ?>" name="stru_ann"><?php echo $row["stru_ann"] ?></textarea rows="3">
+                                            <textarea rows="3" class="form-control" value="<?php echo $row["stru_ann"] ?>" name="stru_ann"><?php echo $row["stru_ann"] ?></textarea>
                                         </div>
                                         <div class="mb-3">
                                             <label for="recipient-name" class="col-form-label"><span class="text-danger"><b>*</b></span>ที่อยู่ร้าน</label>
-                                            <textarea rows="3" class="form-control" value="<?php echo $row["stru_add"] ?>" name="stru_add"><?php echo $row["stru_add"] ?></textarea rows="3">
+                                            <textarea rows="3" class="form-control" value="<?php echo $row["stru_add"] ?>" name="stru_add"><?php echo $row["stru_add"] ?></textarea>
                                         </div>
                                         <div class="mb-3" align="right">
-                                            <button class="btn btn-primary" type="submit">บันทึก</button>
+                                            <button id="btnModal" data-bs-toggle="modal" type="button" data-bs-target="#modalSubmit" class="btn btn-primary">บันทึก</button>
                                         </div>
+                                         <!-- modal Submit -->
+                                        <div class="modal fade" id="modalSubmit" tabindex="-1" tabindex="-1" aria-labelledby="modalSubmitLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">แก้ไขข้อมูลร้าน</h5>
+                                                    </div>
+                                                    <div class="modal-body text-center">
+                                                        <div class="mb-3">
+                                                            <p>คุณต้องการแก้ไขข้อมูลร้าน ใช่หรือไม่?</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+                                                        <button type="submit" class="btn btn-success">ยืนยัน</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End modal Submit -->
                                     </form>
                                 </div>
                             </div>

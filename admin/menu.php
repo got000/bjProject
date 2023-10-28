@@ -23,22 +23,29 @@
     <?php } ?>
     <a href="./product_type.php" id="activeProductType">จัดการประเภทสินค้า</a>
     <a href="./products.php" id="activeProducts">จัดการสินค้า</a>
+    <a href="./problem_type.php" id="activeProblemType">จัดการประเภทปัญหา</a>
+    <a href="./problems.php" id="activeProblems">จัดการรายการปัญหา</a>
     <div class="manage-title">
         <h6>ข้อมูลซื้อขาย</h6>
     </div>
     <a href="./wait_approve.php" id="activeWaitForApprove">รายการรออนุมัติ</a>
-    <a href="./order_approve.php" id="activeOrderApprove">รายการอนุมัติแล้ว</a>
+    <a href="./order_approve.php" id="activeOrderApprove">รายการอนุมัติ</a>
     <a href="./order_cancel.php" id="activeOrderCancel">รายการยกเลิก</a>
     <div class="manage-title">
         <h6>ข้อมูลการติดตั้ง</h6>
     </div>
     <a href="./wait_install.php" id="activeWaitInstall">รายการรอติดตั้ง</a>
-    <a href="./installed.php" id="activeInstalled">รายการติดตั้งเสร็จสมบูรณ์</a>
+    <a href="./installed.php" id="activeInstalled">รายการติดตั้งสำเร็จ</a>
     <div class="manage-title">
         <h6>ข้อมูลการแจ้งปัญหา</h6>
     </div>
-    <a href="./problem_type.php" id="activeProblemType">จัดการประเภทปัญหา</a>
-    <a href="./problems.php" id="activeProblems">จัดการรายการปัญหา</a>
+    <a href="./wait_approve_problem.php" id="activeProblemWaitForApprove">รายการรออนุมัติแจ้งปัญหา</a>
+    <a href="./problem_approve.php" id="activeProblemApprove">รายการอนุมัติแจ้งปัญหา</a>
+    <a href="./problem_success.php" id="activeProblemSuccess">รายการแจ้งปัญหาสำเร็จ</a>
+    <a href="./problem_cancel.php" id="activeProblemCancel">รายการยกเลิกแจ้งปัญหา</a>
+    <div class="manage-title">
+        <h6>ข้อมูลส่วนตัว</h6>
+    </div>
     <a href="./employeePassword.php" id="activeEmployeePassword">แก้ไขรหัสผ่าน</a>
     <a href="./logout.php">ออกจากระบบ</a>
 </div>
@@ -74,6 +81,14 @@
         $('#activeProblemType').addClass("active")
     }else if(url === "problems.php"){
         $('#activeProblems').addClass("active")
+    }else if(url === "wait_approve_problem.php"){
+        $('#activeProblemWaitForApprove').addClass("active")
+    }else if(url === "problem_approve.php"){
+        $('#activeProblemApprove').addClass("active")
+    }else if(url === "problem_success.php"){
+        $('#activeProblemSuccess').addClass("active")
+    }else if(url === "problem_cancel.php"){
+        $('#activeProblemCancel').addClass("active")
     }
 
 </script>

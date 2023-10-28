@@ -56,7 +56,7 @@ if (!isset($_SESSION["emp_level"])) {
                                     LEFT JOIN provinces ON customers.cus_province = provinces.id
                                     LEFT JOIN amphures ON customers.cus_amphur = amphures.id
                                     LEFT JOIN districts ON customers.cus_district = districts.id
-                                    WHERE orders.cus_id = customers.cus_id AND orders.order_status = 99 AND orders.emp_id=employees.emp_id;";
+                                    WHERE orders.cus_id = customers.cus_id AND orders.order_status = 99 AND orders.emp_id=employees.emp_id AND orders.order_type = 1";
                                 $query = mysqli_query($con, $sql);
                                 $i = 0;
                                 if ($query->num_rows > 0) {

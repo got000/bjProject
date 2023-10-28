@@ -16,7 +16,7 @@
     //process
     if(count($_SESSION["carts"]) > 0){
         $order_id = uniqid("ORDERS-".date("Y-m-d")."-", false);
-        $sql = "INSERT INTO orders(order_id, order_status, cus_id) VALUES('".$order_id."', '1', '".$cus_id."')";
+        $sql = "INSERT INTO orders(order_id, order_status, cus_id, order_type) VALUES('".$order_id."', '1', '".$cus_id."', '1')";
         if($con->query($sql)){
             $order_id = $con->insert_id; // last id orders
             foreach($_SESSION["carts"] as $item){ // loop order detail
