@@ -56,15 +56,14 @@ if (isset($_SESSION["cus_id"])) {
     }
 </style>
 
-<div class="container">
-    <header>
+<div class="container-fluid shadow-sm">
+    <header class="container">
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #fff;">
-
             <!-- <div class="container-fluid"> -->
             <!-- <a class="navbar-brand" href="#">
                     <img src="./../admin/uploads/systems/<?php echo @$fetch["stru_logo"] ?>" width="30" height="30" alt="">
                 </a> -->
-            <a class="navbar-brand" href="#">Shop</a>
+            <a class="navbar-brand text-primary fw-bold" href="./index.php">Shop</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -110,7 +109,7 @@ if (isset($_SESSION["cus_id"])) {
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li><a class="dropdown-item" href="./purchase.php">ประวัติการซื้อสินค้า</a></li>
-                                <li><a class="dropdown-item" href="">ประวัติการแจ้งปัญหา</a></li>
+                                <li><a class="dropdown-item" href="./problem_history.php">ประวัติการแจ้งปัญหา</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

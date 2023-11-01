@@ -25,18 +25,18 @@
                 $query_detail = mysqli_query($con, $sql_detail);
             }
 
-            $_SESSION["problem"] = "success";
+            $_SESSION["add_problem"] = "success";
             $_SESSION["problems"] = [];
             header("location:../index.php");
             exit;
         }
 
-        $_SESSION["problem"] = "error";
+        $_SESSION["add_problem"] = "error";
         header("location:../index.php");
         exit;
     }
 
-    $_SESSION["problem"] = "empty";
+    $_SESSION["add_problem"] = "empty";
     header("location:../index.php");
     exit;
 ?>

@@ -121,7 +121,7 @@ if (!isset($_SESSION["emp_level"])) {
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <form action="./api/cancel_order_api.php" method="post">
+                                                            <form action="./api/cancel_problem_api.php" method="post">
                                                                 <input type="hidden" name="emp_id" value="<?php echo $_SESSION["emp_id"] ?>">
                                                                 <input type="hidden" name="order_id" value="<?php echo $order["id"] ?>">
                                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
@@ -219,7 +219,7 @@ if (@$_SESSION['problem_success'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['problem_success'] = "";
-} else if (@$_SESSION['cancel_order'] == "success") {
+} else if (@$_SESSION['cancel_problem'] == "success") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
@@ -227,8 +227,8 @@ if (@$_SESSION['problem_success'] == "success") {
     $swal .= "text: '" . "ยกรายการแจ้งปัญหาสำเร็จ', icon: 'success', confirmButtonText: 'ตกลง'})";
     $swal .= "</script>";
     echo @$swal;
-    @$_SESSION['cancel_order'] = "";
-} else if (@$_SESSION['cancel_order'] == "failed") {
+    @$_SESSION['cancel_problem'] = "";
+} else if (@$_SESSION['cancel_problem'] == "failed") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
@@ -236,7 +236,7 @@ if (@$_SESSION['problem_success'] == "success") {
     $swal .= "text: '" . "ยกเลิกรายการแจ้งปัญหาไม่สำเร็จ', icon: 'error', confirmButtonText: 'ตกลง'})";
     $swal .= "</script>";
     echo @$swal;
-    @$_SESSION['cancel_order'] = "";
+    @$_SESSION['cancel_problem'] = "";
 }
 ?>
 

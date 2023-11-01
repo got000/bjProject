@@ -117,7 +117,6 @@ if (isset($_GET["delete_problem_item"])) {
                         <th width="10%">#</th>
                     </thead>
                     <tbody></tbody>
-                    <tfoot></tfoot>
                 </table>
             </div>
         </div>
@@ -152,6 +151,13 @@ if (isset($_GET["delete_problem_item"])) {
                             <?php $i++;
                             } ?>
                         </tbody>
+                        <tfoot class="position-relative">
+                            <tr>
+                                <td>
+                                    <button data-bs-toggle="modal" type="button" data-bs-target="#modalProblem" class="btn btn-dark mt-3 position-absolute top-0 end-0" style="width: 10rem;">แจ้งปัญหา</button>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 <?php } ?>
             </div>
@@ -226,8 +232,6 @@ include("./../js/sweetalert.php");
                         table += '</tr>'
                     })
                     $("#table-problem tbody").append(table)
-                    const buttonModal = '<button data-bs-toggle="modal" type="button" data-bs-target="#modalProblem" class="btn btn-dark position-absolute top-0 end-0 mt-3" style="width: 10rem;">แจ้งปัญหา</button>';
-                    $('#table-problem tfoot').addClass("position-relative").append(buttonModal);
                 },
                 error: (error) => {
                     console.log({
@@ -283,7 +287,7 @@ include("./../js/sweetalert.php");
 </script>
 
 <?php
-if (@$_SESSION['problem'] == "success") {
+if (@$_SESSION['add_problem'] == "success") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
@@ -291,8 +295,8 @@ if (@$_SESSION['problem'] == "success") {
     $swal .= "text: '" . "แจ้งปัญหาสำเร็จ', icon: 'success', confirmButtonText: 'ตกลง'})";
     $swal .= "</script>";
     echo @$swal;
-    @$_SESSION['problem'] = "";
-} else if (@$_SESSION['problem'] == "error") {
+    @$_SESSION['add_problem'] = "";
+} else if (@$_SESSION['add_problem'] == "error") {
     $swal = "";
     $swal .= "<script>";
     $swal .= "Swal.fire({";
@@ -300,7 +304,7 @@ if (@$_SESSION['problem'] == "success") {
     $swal .= "text: '" . "แจ้งปัญหาไม่สำเร็จ', icon: 'error', confirmButtonText: 'ตกลง'})";
     $swal .= "</script>";
     echo @$swal;
-    @$_SESSION['problem'] = "";
+    @$_SESSION['add_problem'] = "";
 }
 ?>
 

@@ -61,7 +61,7 @@ include("./../js/js_bootstrap.php");
                             <!-- ทั้งหมด -->
                             <div class="tab-pane fade show active p-3" id="pills-purchase-all" role="tabpanel" aria-labelledby="pills-purchase-all-tab">
                                 <?php
-                                $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' ORDER BY order_date DESC";
+                                $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' AND order_type = 1 ORDER BY order_date DESC";
                                 $query = mysqli_query($con, $sql);
                                 if ($query->num_rows > 0) {
                                     while ($row = mysqli_fetch_assoc($query)) {
@@ -76,9 +76,9 @@ include("./../js/js_bootstrap.php");
                                                 </div>
                                                 <?php
                                                 $_sql = "SELECT orders.id, order_date, order_detail.odetail_id, order_detail.odetail_amount, order_detail.odetail_price, products.pro_name, products.pro_detail, products.pro_image FROM order_detail
-                                            LEFT JOIN orders ON order_detail.order_id = orders.id
-                                            LEFT JOIN products ON order_detail.pro_id = products.id
-                                            WHERE order_detail.order_id = '" . $row["id"] . "'";
+                                                LEFT JOIN orders ON order_detail.order_id = orders.id
+                                                LEFT JOIN products ON order_detail.pro_id = products.id
+                                                WHERE order_detail.order_id = '" . $row["id"] . "'";
                                                 $_query = mysqli_query($con, $_sql);
                                                 $summary = 0;
                                                 while ($order = mysqli_fetch_assoc($_query)) {
@@ -94,13 +94,13 @@ include("./../js/js_bootstrap.php");
                                                             <span>x<?php echo $order["odetail_amount"] ?></span>
                                                         </div>
                                                         <div class="col-3 d-flex flex-column-reverse text-center">
-                                                            <p>฿</i><?php echo $order["odetail_price"] ?></p>
+                                                            <p>฿</i><?php echo number_format($order["odetail_price"]) ?></p>
                                                         </div>
                                                     </div>
                                                 <?php } ?>
                                                 <div class="row">
                                                     <div class="text-end">
-                                                        <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo $summary ?></span></p>
+                                                        <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo number_format($summary) ?></span></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -119,7 +119,7 @@ include("./../js/js_bootstrap.php");
                             <!-- status1 -->
                             <div class="tab-pane fade" id="pills-purchase-must-buy" role="tabpanel" aria-labelledby="pills-purchase-must-buy-tab">
                                 <?php
-                                $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' AND order_status = 1 ORDER BY order_date DESC";
+                                $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' AND order_status = 1 AND order_type = 1 ORDER BY order_date DESC";
                                 $query = mysqli_query($con, $sql);
                                 if ($query->num_rows > 0) {
                                     while ($row = mysqli_fetch_assoc($query)) {
@@ -147,18 +147,18 @@ include("./../js/js_bootstrap.php");
                                                             <img src="../admin/uploads/<?php echo $order["pro_image"] ?>" alt="..." height="100" width="100">
                                                         </div>
                                                         <div class="col-6 d-flex flex-column justify-content-between">
-                                                            <p class="fs-3"><?php echo $order["pro_name"] ?></ห>
+                                                            <p class="fs-3"><?php echo $order["pro_name"] ?></p>
                                                             <p><?php echo $order["pro_detail"] ?></p>
                                                             <span>x<?php echo $order["odetail_amount"] ?></span>
                                                         </div>
                                                         <div class="col-3 d-flex flex-column-reverse text-center">
-                                                            <p>฿</i><?php echo $order["odetail_price"] ?></p>
+                                                            <p>฿<?php echo number_format($order["odetail_price"]) ?></p>
                                                         </div>
                                                     </div>
                                                 <?php } ?>
                                                 <div class="row mb-3">
                                                     <div class="text-end">
-                                                        <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo $summary ?></span></p>
+                                                        <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo number_format($summary) ?></span></p>
                                                         <button class="btn btn-sm btn-danger" style="width: 6rem;">ยกเลิก</button>
                                                     </div>
                                                 </div>
@@ -178,7 +178,7 @@ include("./../js/js_bootstrap.php");
                             <!-- status2 -->
                             <div class="tab-pane fade" id="pills-purchase-delivery" role="tabpanel" aria-labelledby="pills-purchase-delivery-tab">
                                 <?php
-                                $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' AND order_status = 2 ORDER BY order_date DESC";
+                                $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' AND order_status = 2 AND order_type = 1 ORDER BY order_date DESC";
                                 $query = mysqli_query($con, $sql);
                                 if ($query->num_rows > 0) {
                                     while ($row = mysqli_fetch_assoc($query)) {
@@ -211,13 +211,13 @@ include("./../js/js_bootstrap.php");
                                                             <span>x<?php echo $order["odetail_amount"] ?></span>
                                                         </div>
                                                         <div class="col-3 d-flex flex-column-reverse text-center">
-                                                            <p>฿</i><?php echo $order["odetail_price"] ?></p>
+                                                            <p>฿</i><?php echo number_format($order["odetail_price"]) ?></p>
                                                         </div>
                                                     </div>
                                                 <?php } ?>
                                                 <div class="row mb-3">
                                                     <div class="text-end">
-                                                        <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo $summary ?></span></p>
+                                                        <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo number_format($summary) ?></span></p>
                                                         <button class="btn btn-sm btn-danger" style="width: 6rem;">ยกเลิก</button>
                                                     </div>
                                                 </div>
@@ -237,7 +237,7 @@ include("./../js/js_bootstrap.php");
                             <!-- status3 -->
                             <div class="tab-pane fade" id="pills-purchase-receive" role="tabpanel" aria-labelledby="pills-purchase-receive-tab">
                                 <?php
-                                $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' AND order_status = 3 ORDER BY order_date DESC";
+                                $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' AND order_status = 3 AND order_type = 1 ORDER BY order_date DESC";
                                 $query = mysqli_query($con, $sql);
                                 if ($query->num_rows > 0) {
                                     while ($row = mysqli_fetch_assoc($query)) {
@@ -270,13 +270,13 @@ include("./../js/js_bootstrap.php");
                                                             <span>x<?php echo $order["odetail_amount"] ?></span>
                                                         </div>
                                                         <div class="col-3 d-flex flex-column-reverse text-center">
-                                                            <p>฿</i><?php echo $order["odetail_price"] ?></p>
+                                                            <p>฿</i><?php echo number_format($order["odetail_price"]) ?></p>
                                                         </div>
                                                     </div>
                                                 <?php } ?>
                                                 <div class="row mb-3">
                                                     <div class="text-end">
-                                                        <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo $summary ?></span></p>
+                                                        <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo number_format($summary) ?></span></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -295,7 +295,7 @@ include("./../js/js_bootstrap.php");
                             <!-- status4 -->
                             <div class="tab-pane fade" id="pills-purchase-finished" role="tabpanel" aria-labelledby="pills-purchase-finished-tab">
                                 <?php
-                                $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' AND order_status = 4 ORDER BY order_date DESC";
+                                $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' AND order_status = 4 AND order_type = 1 ORDER BY order_date DESC";
                                 $query = mysqli_query($con, $sql);
                                 if ($query->num_rows > 0) {
                                     while ($row = mysqli_fetch_assoc($query)) {
@@ -328,13 +328,13 @@ include("./../js/js_bootstrap.php");
                                                             <span>x<?php echo $order["odetail_amount"] ?></span>
                                                         </div>
                                                         <div class="col-3 d-flex flex-column-reverse text-center">
-                                                            <p>฿</i><?php echo $order["odetail_price"] ?></p>
+                                                            <p>฿</i><?php echo number_format($order["odetail_price"]) ?></p>
                                                         </div>
                                                     </div>
                                                 <?php } ?>
                                                 <div class="row mb-3">
                                                     <div class="text-end">
-                                                        <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo $summary ?></span></p>
+                                                        <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo number_format($summary) ?></span></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -353,7 +353,7 @@ include("./../js/js_bootstrap.php");
                             <!-- status99 -->
                             <div class="tab-pane fade" id="pills-purchase-cancel" role="tabpanel" aria-labelledby="pills-purchase-cancel-tab">
                                 <?php
-                                $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' AND order_status = 99 ORDER BY order_date DESC";
+                                $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' AND order_status = 99 AND order_type = 1 ORDER BY order_date DESC";
                                 $query = mysqli_query($con, $sql);
                                 if ($query->num_rows > 0) {
                                     while ($row = mysqli_fetch_assoc($query)) {
@@ -386,13 +386,13 @@ include("./../js/js_bootstrap.php");
                                                             <span>x<?php echo $order["odetail_amount"] ?></span>
                                                         </div>
                                                         <div class="col-3 d-flex flex-column-reverse text-center">
-                                                            <p>฿</i><?php echo $order["odetail_price"] ?></p>
+                                                            <p>฿</i><?php echo number_format($order["odetail_price"]) ?></p>
                                                         </div>
                                                     </div>
                                                 <?php } ?>
                                                 <div class="row mb-3">
                                                     <div class="text-end">
-                                                        <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo $summary ?></span></p>
+                                                        <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo number_format($summary) ?></span></p>
                                                     </div>
                                                 </div>
                                             </div>
