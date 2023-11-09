@@ -6,15 +6,26 @@ if (!isset($_SESSION["emp_level"])) {
 }
 @include("./../config/config.php")
 ?>
+<?php
+$start_date = null;
+$end_date = null;
+$preview_start_date = date("Y-m-d");
+$preview_end_date = date("Y-m-d");
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $preview_start_date = $_POST["start_date"] != "" ? $_POST["start_date"] : date("Y-m-d");
+    $preview_end_date = $_POST["end_date"] != "" ? $_POST["end_date"] : date("Y-m-d");
+    $start_date = $_POST["start_date"];
+    $end_date = $_POST["end_date"];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include("./../css/css_bootstap.php"); ?>
+    <title>รายงานการแจ้งปัญหา</title>
     <link rel="stylesheet" href="./../css/sidebar.css">
-    <title>รายการยกเลิกแจ้งปัญหา</title>
 </head>
 
 <body>
@@ -27,64 +38,76 @@ if (!isset($_SESSION["emp_level"])) {
                 <div class="container">
                     <div class="row">
                         <div class="col-md-9">
-                            <h3>รายการยกเลิกแจ้งปัญหา</h3>
+                            <h3>รายงานการแจ้งปัญหา</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <form action="<?php $_SERVER["PHP_SELF"] ?>" method="post" class="d-flex justify-content-end align-items-center">
+                                <div class="row">
+                                    <div class="col md-3">
+                                        <input type="date" name="start_date" class="form-control" value="<?php echo @$preview_start_date ?>">
+                                    </div>
+                                    <div class="col md-3">
+                                        <input type="date" name="end_date" class="form-control" value="<?php echo @$preview_end_date ?>">
+                                    </div>
+                                    <div class="col md-3">
+                                        <button type="submit" name="submit" class="btn btn-primary" id="search">Search</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-striped table-hover text-center mt-2">
+                            <table id="table_order" class="table table-striped table-hover text-center mt-2">
                                 <thead>
                                     <tr>
-                                        <th width="5%">ลำดับ</th>
-                                        <th width="15%">รหัสสั่งซื้อ</th>
-                                        <th width="10%">วันที่</th>
-                                        <th width="15%">ชื่อลูกค้า</th>
-                                        <th width="15%">ที่อยู่ลูกค้า</th>
-                                        <th width="10%">ดำเนินการโดย</th>
-                                        <th width="10%">รายละเอียด</th>
+                                        <th>ลำดับ</th>
+                                        <th>รหัสแจ้งปัญหา</th>
+                                        <th>วันที่</th>
+                                        <th>รายละเอียด</th>
+                                        <th>สถานะ</th>
                                     </tr>
                                 </thead>
-                                <?php
-                               $sql = "SELECT orders.id, orders.order_id, orders.order_date, orders.cus_id, customers.cus_name, customers.cus_tel, 
-                               customers.cus_address, provinces.name_th AS province_name, amphures.name_th AS amphur_name, 
-                               districts.name_th AS district_name, districts.zip_code, employees.emp_name 
-                               FROM orders
-                               LEFT JOIN customers ON orders.cus_id = customers.cus_id
-                               LEFT JOIN employees ON orders.emp_id = employees.emp_id
-                               LEFT JOIN provinces ON customers.cus_province = provinces.id
-                               LEFT JOIN amphures ON customers.cus_amphur = amphures.id
-                               LEFT JOIN districts ON customers.cus_district = districts.id
-                               WHERE orders.cus_id = customers.cus_id AND orders.order_status = 99 AND orders.emp_id=employees.emp_id AND orders.order_type = 2";
-                                $query = mysqli_query($con, $sql);
-                                $i = 0;
-                                if ($query->num_rows > 0) {
-                                    while ($order = mysqli_fetch_assoc($query)) {
-                                        $i++;
-                                ?>
-                                        <tbody>
+                                <tbody>
+                                    <?php
+                                    if (!empty($start_date) && !empty($end_date)) {
+                                        $whereCondition = "AND DATE(order_date) BETWEEN '".$start_date."' AND '".$end_date."'";
+                                    } else {
+                                        $whereCondition = "";
+                                    }
+
+                                    $sql = "SELECT * FROM orders WHERE order_type = 2 $whereCondition";
+                                    $query = mysqli_query($con, $sql);
+                                    $i = 0;
+
+                                    if ($query->num_rows > 0) {
+                                        while ($row = mysqli_fetch_assoc($query)) {
+                                    ?>
                                             <tr>
-                                                <td><?php echo $i ?></td>
-                                                <td><?php echo $order["order_id"] ?></td>
-                                                <td><?php echo $order["order_date"] ?></td>
-                                                <td><?php echo $order["cus_name"] ?></td>
-                                                <td><?php echo $order["cus_address"] ?>,
-                                                    <?php echo $order["district_name"] ?>,
-                                                    <?php echo $order["amphur_name"] ?>,
-                                                    <?php echo $order["province_name"] ?>,
-                                                    <?php echo $order["zip_code"] ?><br>
-                                                    เบอร์โทร: <?php echo $order["cus_tel"] ?>
-                                                </td>
-                                                <td><?php echo $order["emp_name"] ?></td>
+                                                <td><?php echo $i + 1 ?></td>
+                                                <td><?php echo $row["order_id"] ?></td>
+                                                <td><?php echo $row["order_date"] ?></td>
+                                                <td><button data-bs-toggle="modal" type="button" data-bs-target="#modalOrder<?php echo $row["id"] ?>" class="btn btn-secondary btn-sm">รายการแจ้งปัญหา</button></td>
                                                 <td>
-                                                    <button data-bs-toggle="modal" type="button" data-bs-target="#modalOrder<?php echo $order["id"] ?>" class="btn btn-secondary btn-sm">รายการปัญหา</button>
+                                                    <?php if ($row["order_status"] == 1) { ?>
+                                                        <span class="badge bg-info text-dark">รออนุมัติ</span>
+                                                    <?php } else if ($row["order_status"] == 2) { ?>
+                                                        <span class="badge bg-warning text-dark">อนุมัติ</span>
+                                                    <?php } else if ($row["order_status"] == 3) { ?>
+                                                        <span class="badge bg-success">สำเร็จ</span>
+                                                    <?php } else if ($row["order_status"] == 99) { ?>
+                                                        <span class="badge bg-danger">ยกเลิก</span>
+                                                    <?php } ?>
                                                 </td>
                                             </tr>
                                             <!-- modal order detail -->
-                                            <div class="modal fade" id="modalOrder<?php echo $order["id"] ?>" tabindex="-1" aria-labelledby="modalOrderLabel<?php echo $order["id"] ?>" aria-hidden="true">
+                                            <div class="modal fade" id="modalOrder<?php echo $row["id"] ?>" tabindex="-1" aria-labelledby="modalOrderLabel<?php echo $row["id"] ?>" aria-hidden="true">
                                                 <div class="modal-dialog modal-xl modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title"><?php echo $order["order_id"] ?></h5>
+                                                            <h5 class="modal-title"><?php echo $row["order_id"] ?></h5>
                                                         </div>
                                                         <div class="modal-body text-center">
                                                             <div class="row g-4 justify-content-center">
@@ -101,7 +124,7 @@ if (!isset($_SESSION["emp_level"])) {
                                                                             FROM order_detail
                                                                             LEFT JOIN orders ON order_detail.order_id = orders.id
                                                                             LEFT JOIN problems ON order_detail.pro_id = problems.id
-                                                                            WHERE order_detail.order_id = '" . $order["id"] . "'";
+                                                                            WHERE order_detail.order_id = '" . $row["id"] . "'";
                                                             $_query = mysqli_query($con, $_sql);
                                                             $j = 0;
                                                             $summary = 0;
@@ -116,7 +139,8 @@ if (!isset($_SESSION["emp_level"])) {
                                                                     <div class="col"><?php echo number_format($detail["odetail_price"]) ?></div>
                                                                     <div class="col"><?php echo $detail["odetail_amount"] ?></div>
                                                                 </div>
-                                                            <?php $j++;} ?>
+                                                            <?php $j++;
+                                                            } ?>
                                                             <hr class="my-4" />
                                                             <h5>ราคาสินค้าทั้งหมด ฿<?php echo number_format($summary) ?></h5>
                                                         </div>
@@ -127,14 +151,19 @@ if (!isset($_SESSION["emp_level"])) {
                                                 </div>
                                             </div>
                                             <!-- End modal order detail -->
-                                        <?php }
-                                } else { ?>
+                                        <?php
+                                            $i++;
+                                        }
+                                    } else { ?>
+                                        <!-- display date empty or no records found -->
                                         <tr>
-                                            <td colspan="7">ไม่มีรายการยกเลิกแจ้งปัญหา</td>
+                                            <td colspan="5">ไม่มีรายงานการแจ้งปัญหา</td>
                                         </tr>
                                     <?php } ?>
+                                </tbody>
                             </table>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -145,6 +174,7 @@ if (!isset($_SESSION["emp_level"])) {
 include("./../js/jquery.php");
 include("./../js/js_bootstrap.php");
 include("./../js/sweetalert.php");
+include("./../css/css_bootstap.php");
 ?>
 
 </html>

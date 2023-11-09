@@ -27,16 +27,16 @@
 
             $_SESSION["add_problem"] = "success";
             $_SESSION["problems"] = [];
-            header("location:../index.php");
+            header("location:../problem.php");
             exit;
         }
 
         $_SESSION["add_problem"] = "error";
-        header("location:../index.php");
+        header("location:../problem.php");
         exit;
     }
 
     $_SESSION["add_problem"] = "empty";
-    header("location:../index.php");
+    header("location:../problem.php");
     exit;
 ?>

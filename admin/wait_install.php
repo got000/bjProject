@@ -6,6 +6,22 @@ if (!isset($_SESSION["emp_level"])) {
 }
 @include("./../config/config.php")
 ?>
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $emp_id = $_SESSION["emp_id"];
+    $id = $_POST["order_id"];
+    $sql = "UPDATE orders SET order_status=99, emp_id='" . $emp_id . "'WHERE id='" . $id . "'";
+    $query = mysqli_query($con, $sql);
+    if ($query) {
+        $_SESSION["cancel_order"] = 'success';
+        header("location: wait_install.php");
+        exit;
+    }
+    $_SESSION["cancel_order"] = 'failed';
+    header("location: wait_install.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,8 +64,9 @@ if (!isset($_SESSION["emp_level"])) {
                                         <th width="20%">#</th>
                                     </tr>
                                 </thead>
-                                <?php
-                                $sql = "SELECT installation.id, installation.eq_id, installation.eq_status, installation.emp_id, orders.id, orders.order_id, orders.order_date, customers.cus_name, customers.cus_tel, 
+                                <tbody>
+                                    <?php
+                                    $sql = "SELECT installation.id, installation.eq_id, installation.eq_status, installation.emp_id, orders.id, orders.order_id, orders.order_date, customers.cus_name, customers.cus_tel, 
                                 customers.cus_address, provinces.name_th AS province_name, amphures.name_th AS amphur_name, 
                                 districts.name_th AS district_name, districts.zip_code, employees.emp_name 
                                 FROM installation
@@ -60,13 +77,12 @@ if (!isset($_SESSION["emp_level"])) {
                                 LEFT JOIN amphures ON customers.cus_amphur = amphures.id
                                 LEFT JOIN districts ON customers.cus_district = districts.id
                                 WHERE orders.cus_id = customers.cus_id AND orders.order_status = 3 AND installation.eq_status = 1 AND orders.order_type = 1";
-                                $query = mysqli_query($con, $sql);
-                                $i = 0;
-                                if ($query->num_rows > 0) {
-                                    while ($order = mysqli_fetch_assoc($query)) {
-                                        $i++;
-                                ?>
-                                        <tbody>
+                                    $query = mysqli_query($con, $sql);
+                                    $i = 0;
+                                    if ($query->num_rows > 0) {
+                                        while ($order = mysqli_fetch_assoc($query)) {
+                                            $i++;
+                                    ?>
                                             <tr>
                                                 <td><?php echo $i ?></td>
                                                 <td><?php echo $order["order_id"] ?></td>
@@ -133,7 +149,7 @@ if (!isset($_SESSION["emp_level"])) {
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <form action="./api/cancel_order_api.php" method="post">
+                                                            <form action="<?php $_SERVER["PHP_SELF"] ?>" method="post">
                                                                 <input type="hidden" name="emp_id" value="<?php echo $_SESSION["emp_id"] ?>">
                                                                 <input type="hidden" name="order_id" value="<?php echo $order["id"] ?>">
                                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
@@ -193,12 +209,12 @@ if (!isset($_SESSION["emp_level"])) {
                                             </div>
                                             <!-- End modal order detail -->
                                         <?php }
-                                } else { ?>
+                                    } else { ?>
                                         <tr>
                                             <td colspan="10">ไม่มีข้อมูลรายการรออนุมัติ</td>
                                         </tr>
                                     <?php } ?>
-                                        </tbody>
+                                </tbody>
                             </table>
                         </div>
                     </div>

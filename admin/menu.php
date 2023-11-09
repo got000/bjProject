@@ -44,6 +44,14 @@
     <a href="./problem_success.php" id="activeProblemSuccess">รายการแจ้งปัญหาสำเร็จ</a>
     <a href="./problem_cancel.php" id="activeProblemCancel">รายการยกเลิกแจ้งปัญหา</a>
     <div class="manage-title">
+        <h6>ข้อมูลรายงาน</h6>
+    </div>
+    <a href="./report_purchase.php" id="reportPurchase">รายงานการสั่งซื้อ</a>
+    <a href="./report_intallation.php" id="reportInstallation">รายงานการติดตั้ง</a>
+    <a href="./report_problem.php" id="reportProblem">รายงานการแจ้งปัญหา</a>
+    <a href="./best_selling_products.php" id="bestseller">รายงานสินค้าที่ถูกสั่งซื้อ</a>
+    <a href="./unsold_products.php" id="unsold">รายงานสินค้าที่ไม่ถูกสั่งซื้อ</a>
+    <div class="manage-title">
         <h6>ข้อมูลส่วนตัว</h6>
     </div>
     <a href="./employeePassword.php" id="activeEmployeePassword">แก้ไขรหัสผ่าน</a>
@@ -89,6 +97,16 @@
         $('#activeProblemSuccess').addClass("active")
     }else if(url === "problem_cancel.php"){
         $('#activeProblemCancel').addClass("active")
+    }else if(url === "report_purchase.php"){
+        $('#reportPurchase').addClass("active")
+    }else if(url === "report_intallation.php"){
+        $('#reportInstallation').addClass("active")
+    }else if(url === "report_problem.php"){
+        $('#reportProblem').addClass("active")
+    }else if(url === "best_selling_products.php"){
+        $('#bestseller').addClass("active")
+    }else if(url === "unsold_products.php"){
+        $('#unsold').addClass("active")
     }
 
 </script>

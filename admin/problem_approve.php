@@ -6,6 +6,22 @@ if (!isset($_SESSION["emp_level"])) {
 }
 @include("./../config/config.php")
 ?>
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $emp_id = $_SESSION["emp_id"];
+    $id = $_POST["order_id"];
+    $sql = "UPDATE orders SET order_status=99, emp_id='" . $emp_id . "'WHERE id='" . $id . "'";
+    $query = mysqli_query($con, $sql);
+    if ($query) {
+        $_SESSION["cancel_problem"] = 'success';
+        header("location: problem_approve.php");
+        exit;
+    }
+    $_SESSION["cancel_problem"] = 'failed';
+    header("location: problem_approve.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -121,7 +137,7 @@ if (!isset($_SESSION["emp_level"])) {
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <form action="./api/cancel_problem_api.php" method="post">
+                                                            <form action="<?php $_SERVER["PHP_SELF"] ?>" method="post">
                                                                 <input type="hidden" name="emp_id" value="<?php echo $_SESSION["emp_id"] ?>">
                                                                 <input type="hidden" name="order_id" value="<?php echo $order["id"] ?>">
                                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
@@ -169,7 +185,7 @@ if (!isset($_SESSION["emp_level"])) {
                                                                     <div class="col"><?php echo number_format($detail["odetail_price"]) ?></div>
                                                                     <div class="col"><?php echo $detail["odetail_amount"] ?></div>
                                                                 </div>
-                                                            <?php } ?>
+                                                            <?php $j++;} ?>
                                                             <hr class="my-4" />
                                                             <h5>ราคาสินค้าทั้งหมด ฿<?php echo number_format($summary) ?></h5>
                                                         </div>

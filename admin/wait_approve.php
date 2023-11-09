@@ -6,6 +6,22 @@ if (!isset($_SESSION["emp_level"])) {
 }
 @include("./../config/config.php")
 ?>
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $emp_id = $_SESSION["emp_id"];
+    $id = $_POST["order_id"];
+    $sql = "UPDATE orders SET order_status=99, emp_id='" . $emp_id . "'WHERE id='" . $id . "'";
+    $query = mysqli_query($con, $sql);
+    if ($query) {
+        $_SESSION["cancel_order"] = 'success';
+        header("location: wait_approve.php");
+        exit;
+    }
+    $_SESSION["cancel_order"] = 'failed';
+    header("location: wait_approve.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -120,7 +136,7 @@ if (!isset($_SESSION["emp_level"])) {
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <form action="./api/cancel_order_api.php" method="post">
+                                                            <form action="<?php $_SERVER["PHP_SELF"] ?>" method="post">
                                                                 <input type="hidden" name="emp_id" value="<?php echo $_SESSION["emp_id"] ?>">
                                                                 <input type="hidden" name="order_id" value="<?php echo $order["id"] ?>">
                                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>

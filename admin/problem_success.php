@@ -141,7 +141,7 @@ if (!isset($_SESSION["emp_level"])) {
                                                                     <div class="col"><?php echo number_format($detail["odetail_price"]) ?></div>
                                                                     <div class="col"><?php echo $detail["odetail_amount"] ?></div>
                                                                 </div>
-                                                            <?php } ?>
+                                                            <?php $j++;} ?>
                                                             <hr class="my-4" />
                                                             <h5>ราคาสินค้าทั้งหมด ฿<?php echo number_format($summary) ?></h5>
                                                         </div>

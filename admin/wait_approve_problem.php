@@ -6,15 +6,34 @@ if (!isset($_SESSION["emp_level"])) {
 }
 @include("./../config/config.php")
 ?>
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $emp_id = $_SESSION["emp_id"];
+    $id = $_POST["order_id"];
+    $sql = "UPDATE orders SET order_status=99, emp_id='" . $emp_id . "'WHERE id='" . $id . "'";
+    $query = mysqli_query($con, $sql);
+    if ($query) {
+        $_SESSION["cancel_problem"] = 'success';
+        header("location: wait_approve_problem.php");
+        exit;
+    }
+    $_SESSION["cancel_problem"] = 'failed';
+    header("location: wait_approve_problem.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include("./../css/css_bootstap.php");?>
+    <?php include("./../css/css_bootstap.php"); ?>
     <link rel="stylesheet" href="./../css/sidebar.css">
     <title>รายการรออนุมัติแจ้งปัญหา</title>
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row mt-5">
@@ -43,7 +62,7 @@ if (!isset($_SESSION["emp_level"])) {
                                     </tr>
                                 </thead>
                                 <!-- Loop Here-->
-                                <?php 
+                                <?php
                                 $sql = "SELECT orders.id, orders.order_id, orders.order_date, customers.cus_name, customers.cus_tel, 
                                 customers.cus_address, provinces.name_th AS province_name, amphures.name_th AS amphur_name, 
                                 districts.name_th AS district_name, districts.zip_code 
@@ -57,31 +76,31 @@ if (!isset($_SESSION["emp_level"])) {
                                 $i = 0;
                                 if ($query->num_rows > 0) {
                                     while ($order = mysqli_fetch_assoc($query)) {
-                                        $i++;      
+                                        $i++;
                                 ?>
-                                <tbody>
-                                    <tr>
-                                        <td><?php echo $i ?></td>
-                                        <td><?php echo $order["order_id"] ?></td>
-                                        <td><?php echo $order["order_date"] ?></td>
-                                        <td><?php echo $order["cus_name"] ?></td>
-                                        <td><?php echo $order["cus_address"] ?>,
-                                            <?php echo $order["district_name"] ?>,
-                                            <?php echo $order["amphur_name"] ?>,
-                                            <?php echo $order["province_name"] ?>,
-                                            <?php echo $order["zip_code"] ?><br>
-                                                เบอร์โทร: <?php echo $order["cus_tel"] ?>
-                                            </td>
-                                            <td>
-                                                <button data-bs-toggle="modal" type="button" data-bs-target="#modalOrder<?php echo $order["id"] ?>" class="btn btn-secondary btn-sm">รายการปัญหา</button>
-                                            </td>
-                                            <td>
-                                                <button data-bs-toggle="modal" type="button" data-bs-target="#modalApprove<?php echo $order["id"] ?>" class="btn btn-success btn-sm">อนุมัติ</button>
-                                                <button data-bs-toggle="modal" type="button" data-bs-target="#modalCancel<?php echo $order["id"] ?>" class="btn btn-danger btn-sm">ยกเลิก</button>
-                                            </td>
-                                    </tr>
-                                     <!-- modal Approve order -->
-                                     <div class="modal fade" id="modalApprove<?php echo $order["id"] ?>" tabindex="-1" tabindex="-1" aria-labelledby="modalApproveLabel<?php echo $order["id"] ?>" aria-hidden="true">
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $i ?></td>
+                                                <td><?php echo $order["order_id"] ?></td>
+                                                <td><?php echo $order["order_date"] ?></td>
+                                                <td><?php echo $order["cus_name"] ?></td>
+                                                <td><?php echo $order["cus_address"] ?>,
+                                                    <?php echo $order["district_name"] ?>,
+                                                    <?php echo $order["amphur_name"] ?>,
+                                                    <?php echo $order["province_name"] ?>,
+                                                    <?php echo $order["zip_code"] ?><br>
+                                                    เบอร์โทร: <?php echo $order["cus_tel"] ?>
+                                                </td>
+                                                <td>
+                                                    <button data-bs-toggle="modal" type="button" data-bs-target="#modalOrder<?php echo $order["id"] ?>" class="btn btn-secondary btn-sm">รายการปัญหา</button>
+                                                </td>
+                                                <td>
+                                                    <button data-bs-toggle="modal" type="button" data-bs-target="#modalApprove<?php echo $order["id"] ?>" class="btn btn-success btn-sm">อนุมัติ</button>
+                                                    <button data-bs-toggle="modal" type="button" data-bs-target="#modalCancel<?php echo $order["id"] ?>" class="btn btn-danger btn-sm">ยกเลิก</button>
+                                                </td>
+                                            </tr>
+                                            <!-- modal Approve order -->
+                                            <div class="modal fade" id="modalApprove<?php echo $order["id"] ?>" tabindex="-1" tabindex="-1" aria-labelledby="modalApproveLabel<?php echo $order["id"] ?>" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -117,7 +136,7 @@ if (!isset($_SESSION["emp_level"])) {
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <form action="./api/cancel_problem_api.php" method="post">
+                                                            <form action="<?php $_SERVER["PHP_SELF"] ?>" method="post">
                                                                 <input type="hidden" name="emp_id" value="<?php echo $_SESSION["emp_id"] ?>">
                                                                 <input type="hidden" name="order_id" value="<?php echo $order["id"] ?>">
                                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
@@ -156,16 +175,17 @@ if (!isset($_SESSION["emp_level"])) {
                                                             $summary = 0;
                                                             while ($detail = mysqli_fetch_assoc($_query)) {
                                                                 $summary += (int)$detail["odetail_amount"] * (int)$detail["odetail_price"];
-                                                                
+
                                                             ?>
                                                                 <div class="row g-4 justify-content-center mb-4">
-                                                                    <div class="col"><?php echo $j+1 ?></div>
+                                                                    <div class="col"><?php echo $j + 1 ?></div>
                                                                     <div class="col"><?php echo $detail["prob_name"] ?></div>
                                                                     <div class="col"><?php echo $detail["prob_detail"] ?></div>
                                                                     <div class="col"><?php echo number_format($detail["odetail_price"]) ?></div>
                                                                     <div class="col"><?php echo $detail["odetail_amount"] ?></div>
                                                                 </div>
-                                                            <?php $j++;} ?>
+                                                            <?php $j++;
+                                                            } ?>
                                                             <hr class="my-4" />
                                                             <h5>ราคาสินค้าทั้งหมด ฿<?php echo number_format($summary) ?></h5>
                                                         </div>
@@ -176,12 +196,13 @@ if (!isset($_SESSION["emp_level"])) {
                                                 </div>
                                             </div>
                                             <!-- End modal order detail -->
-                                    <?php }}else{?>
+                                        <?php }
+                                } else { ?>
                                         <tr>
                                             <td colspan="7">รายการรออนุมัติแจ้งปัญหา</td>
                                         </tr>
-                                    <?php }?>
-                                </tbody>
+                                    <?php } ?>
+                                        </tbody>
                             </table>
                         </div>
                     </div>
@@ -234,4 +255,5 @@ if (@$_SESSION['approve_problem'] == "success") {
     @$_SESSION['cancel_problem'] = "";
 }
 ?>
+
 </html>
