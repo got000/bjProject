@@ -38,16 +38,16 @@
 
             $_SESSION["order"] = "success";
             $_SESSION["carts"] = [];
-            header("location:../index.php");
+            header("location:../purchase.php");
             exit;
         }
 
         $_SESSION["order"] = "error";
-        header("location:../index.php");
+        header("location:../purchase.php");
         exit;
     }
 
     $_SESSION["order"] = "empty";
-    header("location:../index.php");
+    header("location:../purchase.php");
     exit;
 ?>

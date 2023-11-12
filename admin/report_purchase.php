@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                                     <?php } else if ($row["order_status"] == 5) { ?>
                                                         <span class="badge bg-danger">ยกเลิก</span>
                                                     <?php } else if ($row["order_status"] == 9) {?>
-                                                        <span class="badge bg-dark">รออนุมัติยกเลิก</span>
+                                                        <span class="badge" style="background-color: #FF4500;">รออนุมัติยกเลิก</span>
                                                     <?php }?>
                                                 </td>
                                             </tr>

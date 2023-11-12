@@ -84,7 +84,7 @@ include("./../js/js_bootstrap.php");
                                                     <?php }else if ($row["order_status"] == 5){?>
                                                         <span class="badge bg-danger">ยกเลิก</span>
                                                     <?php }else if ($row["order_status"] == 9){?>
-                                                        <span class="badge bg-dark">รออนุมัติยกเลิก</span>
+                                                        <span class="badge" style="background-color: #FF4500;">รออนุมัติยกเลิก</span>
                                                     <?php }?>
                                                 </div>
                                             </div>
@@ -484,6 +484,33 @@ if (@$_SESSION['cancel_order'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['cancel_order'] = "";
+}else  if (@$_SESSION['order'] == "success") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "สำเร็จ',";
+    $swal .= "text: '" . "สั่งซื้อสินค้าสำเร็จ', icon: 'success', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['order'] = "";
+} else  if (@$_SESSION['order'] == "error") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "ไม่สำเร็จ',";
+    $swal .= "text: '" . "สั่งซื้อสินค้าไม่สำเร็จ กรุณาลองใหม่อีกครั้ง', icon: 'error', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['order'] = "";
+} else  if (@$_SESSION['order'] == "empty") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "ไม่มีรายการสินค้า',";
+    $swal .= "text: '" . "ไม่สามารถสั่งซื้อได้ เนื่องจากไม่พบสินค้าในตระกร้า', icon: 'warning', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['order'] = "";
 }
 ?>
 </html>

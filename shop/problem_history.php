@@ -77,7 +77,7 @@ include("./../config/config.php");
                                                     <?php }else if ($row["order_status"] == 5){?>
                                                         <span class="badge bg-danger">ยกเลิก</span>
                                                     <?php }else if ($row["order_status"] == 9){?>
-                                                        <span class="badge bg-dark">รออนุมัติยกเลิก</span>
+                                                        <span class="badge" style="background-color: #FF4500;">รออนุมัติยกเลิก</span>
                                                     <?php }?>
                                                 </div>
                                             </div>
@@ -510,6 +510,24 @@ if (@$_SESSION['cancel_order'] == "success") {
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['cancel_order'] = "";
+}else if (@$_SESSION['add_problem'] == "success") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "สำเร็จ',";
+    $swal .= "text: '" . "แจ้งปัญหาสำเร็จ', icon: 'success', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['add_problem'] = "";
+} else if (@$_SESSION['add_problem'] == "error") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "ไม่สำเร็จ',";
+    $swal .= "text: '" . "แจ้งปัญหาไม่สำเร็จ', icon: 'error', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['add_problem'] = "";
 }
 ?>
 </html>
