@@ -10,7 +10,7 @@ if (!isset($_SESSION["emp_level"])) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $emp_id = $_SESSION["emp_id"];
     $id = $_POST["order_id"];
-    $sql = "UPDATE orders SET order_status=99, emp_id='" . $emp_id . "'WHERE id='" . $id . "'";
+    $sql = "UPDATE orders SET order_status=5, emp_id='" . $emp_id . "'WHERE id='" . $id . "'";
     $query = mysqli_query($con, $sql);
     if ($query) {
         $_SESSION["cancel_problem"] = 'success';

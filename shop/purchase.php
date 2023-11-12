@@ -67,11 +67,26 @@ include("./../js/js_bootstrap.php");
                             ?>
                                     <div class="row mb-3 shadow-sm" style="background-color: #FFFFFF;">
                                         <div class="col-lg-12 col-md-12 col-sm-12">
-                                            <div class="row mb-3 shadow-sm">
+                                            <div class="row mb-3 shadow-sm p-3">
                                                 <div class="col-6 align-items-center">
                                                     <p class="fw-bold"><?php echo $row["order_id"] ?></p>
                                                 </div>
-                                                <div class="col-6 text-end"><?php echo $row["order_date"] ?></div>
+                                                <div class="col-6 text-end">
+                                                    <p><?php echo $row["order_date"] ?></p><br>
+                                                    <?php if($row["order_status"] == 1){?>
+                                                        <span class="badge bg-info text-dark">รออนุมัติ</span>
+                                                    <?php }else if ($row["order_status"] == 2){?>
+                                                        <span class="badge bg-primary">อนุมัติแล้ว</span>
+                                                    <?php }else if ($row["order_status"] == 3){?>
+                                                        <span class="badge bg-warning text-dark">รอติดตั้ง</span>
+                                                    <?php }else if ($row["order_status"] == 4){?>
+                                                        <span class="badge bg-success">ติดตั้งสมบูรณ์</span>
+                                                    <?php }else if ($row["order_status"] == 5){?>
+                                                        <span class="badge bg-danger">ยกเลิก</span>
+                                                    <?php }else if ($row["order_status"] == 9){?>
+                                                        <span class="badge bg-dark">รออนุมัติยกเลิก</span>
+                                                    <?php }?>
+                                                </div>
                                             </div>
                                             <?php
                                             $_sql = "SELECT orders.id, order_date, order_detail.odetail_id, order_detail.odetail_amount, order_detail.odetail_price, products.pro_name, products.pro_detail, products.pro_image FROM order_detail
@@ -137,6 +152,8 @@ include("./../js/js_bootstrap.php");
                                             LEFT JOIN products ON order_detail.pro_id = products.id
                                             WHERE order_detail.order_id = '" . $row["id"] . "'";
                                             $_query = mysqli_query($con, $_sql);
+                                            $number = mysqli_num_rows($_query);
+                                            $i = 1;
                                             $summary = 0;
                                             while ($order = mysqli_fetch_assoc($_query)) {
                                                 $summary += (int)$order["odetail_amount"] * $order["odetail_price"];
@@ -154,13 +171,42 @@ include("./../js/js_bootstrap.php");
                                                         <p>฿<?php echo number_format($order["odetail_price"]) ?></p>
                                                     </div>
                                                 </div>
-                                            <?php } ?>
-                                            <div class="row mb-3">
-                                                <div class="text-end">
-                                                    <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo number_format($summary) ?></span></p>
-                                                    <button class="btn btn-sm btn-danger" style="width: 6rem;">ยกเลิก</button>
+                                                <!-- modal cancel -->
+                                                <div class="modal fade" id="modalCancel<?php echo $order["id"] ?>" tabindex="-1" tabindex="-1" aria-labelledby="modalCancelLabel<?php echo $order["id"] ?>" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">ยกเลิก</h5>
+                                                            </div>
+                                                            <div class="modal-body text-center">
+                                                                <div class="mb-3">
+                                                                    <p>คุณต้องการยกเลิกรายการสั่งซื้อใช่หรือไม่?</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <form action="./api/cancelOrder.php" method="post">
+                                                                    <input type="hidden" name="order_id" value="<?php echo $order["id"] ?>">
+                                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+                                                                    <button type="submit" class="btn btn-primary">ยืนยัน</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <!-- End modal cancel -->
+                                                <?php 
+                                                if ($i >= $number){ ?>
+                                                <div class="row mb-3">
+                                                    <div class="text-end">
+                                                        <p class="fs-5">รวมราคาทั้งหมด: ฿<span><?php echo number_format($summary) ?></span></p>
+                                                        <button style="width: 6rem;" data-bs-toggle="modal" type="button" data-bs-target="#modalCancel<?php echo $order["id"] ?>" class="btn btn-danger btn-sm">ยกเลิก</button>
+                                                    </div>
+                                                </div>
+                                                <?php }else{?>
+                                                <div></div>
+                                                <?php }?>
+                                            <?php $i++;
+                                            } ?>
                                         </div>
                                     </div>
                                 <?php }
@@ -349,10 +395,10 @@ include("./../js/js_bootstrap.php");
                             <?php } ?>
                         </div>
                         <!-- status4 -->
-                        <!-- status99 -->
+                        <!-- status5 -->
                         <div class="tab-pane fade p-3" id="pills-purchase-cancel" role="tabpanel" aria-labelledby="pills-purchase-cancel-tab">
                             <?php
-                            $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' AND order_status = 99 AND order_type = 1 ORDER BY order_date DESC";
+                            $sql = "SELECT * FROM orders WHERE cus_id='" . $_SESSION["cus_id"] . "' AND order_status = 5 OR order_status = 9 AND order_type = 1 ORDER BY order_date DESC";
                             $query = mysqli_query($con, $sql);
                             if ($query->num_rows > 0) {
                                 while ($row = mysqli_fetch_assoc($query)) {
@@ -406,7 +452,7 @@ include("./../js/js_bootstrap.php");
                                 </div>
                             <?php } ?>
                         </div>
-                        <!-- status99 -->
+                        <!-- status5 -->
                     </div>
                 </div>
             </div>
@@ -419,5 +465,25 @@ include("./../js/jquery.php");
 include("./../js/ajax.php");
 include("./../js/sweetalert.php");
 ?>
-
+<?php 
+if (@$_SESSION['cancel_order'] == "success") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "สำเร็จ',";
+    $swal .= "text: '" . "ยกเลิกรายการสั่งซื้อสำเร็จ', icon: 'success', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['cancel_order'] = "";
+} else if (@$_SESSION['cancel_order'] == "failed") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "ไม่สำเร็จ',";
+    $swal .= "text: '" . "ยกเลิกรายการสั่งซื้อไม่สำเร็จ', icon: 'error', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['cancel_order'] = "";
+}
+?>
 </html>

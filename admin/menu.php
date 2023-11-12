@@ -30,6 +30,7 @@
     </div>
     <a href="./wait_approve.php" id="activeWaitForApprove">รายการรออนุมัติ</a>
     <a href="./order_approve.php" id="activeOrderApprove">รายการอนุมัติ</a>
+    <a href="./cancelOrder_approve.php" id="activeCancelApprove">รายการอนุมัติยกเลิก</a>
     <a href="./order_cancel.php" id="activeOrderCancel">รายการยกเลิก</a>
     <div class="manage-title">
         <h6>ข้อมูลการติดตั้ง</h6>
@@ -42,6 +43,7 @@
     <a href="./wait_approve_problem.php" id="activeProblemWaitForApprove">รายการรออนุมัติแจ้งปัญหา</a>
     <a href="./problem_approve.php" id="activeProblemApprove">รายการอนุมัติแจ้งปัญหา</a>
     <a href="./problem_success.php" id="activeProblemSuccess">รายการแจ้งปัญหาสำเร็จ</a>
+    <a href="./cancelProblem_approve.php" id="activeProblemCancelApprove">รายการอนุมัติยกเลิกแจ้งปัญหา</a>
     <a href="./problem_cancel.php" id="activeProblemCancel">รายการยกเลิกแจ้งปัญหา</a>
     <div class="manage-title">
         <h6>ข้อมูลรายงาน</h6>
@@ -107,6 +109,10 @@
         $('#bestseller').addClass("active")
     }else if(url === "unsold_products.php"){
         $('#unsold').addClass("active")
+    }else if(url === "cancelOrder_approve.php"){
+        $('#activeCancelApprove').addClass("active")
+    }else if(url === "cancelProblem_approve.php"){
+        $('#activeProblemCancelApprove').addClass("active")
     }
 
 </script>

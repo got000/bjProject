@@ -94,12 +94,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                                     <?php if ($row["order_status"] == 1) { ?>
                                                         <span class="badge bg-info text-dark">รออนุมัติ</span>
                                                     <?php } else if ($row["order_status"] == 2) { ?>
-                                                        <span class="badge bg-warning text-dark">อนุมัติ</span>
+                                                        <span class="badge bg-primary">อนุมัติ</span>
                                                     <?php } else if ($row["order_status"] == 3) { ?>
                                                         <span class="badge bg-success">สำเร็จ</span>
-                                                    <?php } else if ($row["order_status"] == 99) { ?>
+                                                    <?php } else if ($row["order_status"] == 5) { ?>
                                                         <span class="badge bg-danger">ยกเลิก</span>
-                                                    <?php } ?>
+                                                    <?php } else if ($row["order_status"] == 9) {?>
+                                                        <span class="badge bg-dark">รออนุมัติยกเลิก</span>
+                                                    <?php }?>
                                                 </td>
                                             </tr>
                                             <!-- modal order detail -->
