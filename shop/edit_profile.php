@@ -49,7 +49,6 @@ include("./../js/js_bootstrap.php");
                     </div>
                     <div class="mb-3 px-5">
                         <label for="province" class="col-form-label">จังหวัด:</label>
-                        <?php echo $_SESSION['cus_province'] ?>
                         <select value="<?php echo $_SESSION['cus_province'] ?>" name="province" id="province" class="form-select">
                             <?php
                             $sql = "SELECT * FROM provinces";

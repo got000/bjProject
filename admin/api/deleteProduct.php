@@ -17,11 +17,11 @@
     if($query){
         unlink("../uploads/" . $pro_image);
         $_SESSION["addProduct"] = "success";
-        echo "<meta HTTP-EQUIV='Refresh' CONTENT='0;URL=../products.php'>";
-        exit(0);
+        header("location: ../products.php");
+        exit;
     }else{
         $_SESSION["addProduct"] = "error";
-        echo "<meta HTTP-EQUIV='Refresh' CONTENT='0;URL=../products.php'>";
-        exit(0);
+        header("location: ../products.php");
+        exit;
     }
 ?>

@@ -15,11 +15,11 @@
     $query = mysqli_query($con, $sql);
     if($query){
         $_SESSION["addProductType"] = "success";
-        echo "<meta HTTP-EQUIV='Refresh' CONTENT='0;URL=../product_type.php'>";
-        exit(0);
+        header("location: ../product_type.php");
+        exit;
     }else{
         $_SESSION["addProductType"] = "error";
-        echo "<meta HTTP-EQUIV='Refresh' CONTENT='0;URL=../product_type.php'>";
-        exit(0);
+        header("location: ../product_type.php");
+        exit;
     }
 ?>

@@ -25,6 +25,7 @@ if(strlen($_POST['newPassword']) < 6){
 }
 if ($newPassword != $confirmPassword) {
     $_SESSION["editPassword"] = "not_matching";
+    header("location: ../edit_password.php");
     exit;
 }
 $hashPassword = md5($newPassword);

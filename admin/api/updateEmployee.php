@@ -23,8 +23,8 @@
 
         if($idS != $emp_username){
             $_SESSION["addEmployee"] = "duplicate";
-            echo "<meta HTTP-EQUIV='Refresh' CONTENT='0;URL=../employees.php'>";
-            exit(0);
+            header("location: ../employees.php");
+            exit;
         }
     }
 
@@ -32,11 +32,11 @@
     $query = mysqli_query($con, $sql);
     if($query){
         $_SESSION["addEmployee"] = "success";
-        echo "<meta HTTP-EQUIV='Refresh' CONTENT='0;URL=../employees.php'>";
-        exit(0);
+        header("location: ../employees.php");
+        exit;
     }else{
         $_SESSION["addEmployee"] = "error";
-        echo "<meta HTTP-EQUIV='Refresh' CONTENT='0;URL=../employees.php'>";
-        exit(0);
+        header("location: ../employees.php");
+        exit;
     }
 ?>

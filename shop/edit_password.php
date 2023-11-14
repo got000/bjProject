@@ -21,13 +21,17 @@ include("./../js/js_bootstrap.php");
                 <h1 class="text-center fw-bold">แก้ไขรหัสผ่าน</h1>
                 <form action="./api/updatePassword.php" method="post">
                     <input type="hidden" value="<?php echo $_SESSION['cus_id'] ?>">
-                    <div class="mb-3 px-5">
-                        <label for="newPassword" class="form-lable">รหัสผ่าน</label>
-                        <input type="password" name="newPassword" id="newPassword" class="form-control">
+                    <div class="input-group mb-3 px-5">
+                        <input type="password" name="newPassword" id="newPassword" class="form-control" placeholder="รหัสผ่าน">
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword" onclick="togglePasswordVisibility()">
+                            <i class="fas fa-eye-slash"></i>
+                        </button>
                     </div>
-                    <div class="mb-3 px-5">
-                        <label for="confirmPassword" class="form-lable">ยืนยันรหัสผ่าน</label>
-                        <input onkeyup="btnActivation()" type="password" name="confirmPassword" id="confirmPassword" class="form-control">
+                    <div class="input-group mb-3 px-5">
+                        <input onkeyup="btnActivation()" type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="ยืนยันรหัสผ่าน">
+                        <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword" onclick="toggleConfirmPasswordVisibility()">
+                            <i class="fas fa-eye-slash"></i>
+                        </button>
                     </div>
                     <div class="mb-3 d-flex justify-content-end px-5">
                         <button id="btnModal" data-bs-toggle="modal" type="button" data-bs-target="#modalSubmit" class="btn btn-primary" disabled>บันทึก</button>
@@ -53,17 +57,42 @@ include("./../js/js_bootstrap.php");
                         </div>
                     </div>
                     <!-- End modal Submit -->
-
                 </form>
             </div>
         </div>
     </div>
     <script>
         function btnActivation() {
-            if (!document.getElementById('confirmPassword').value.length) {
-                document.getElementById("btnModal").disabled = true;
+            if (!$('#confirmPassword').val().length) {
+                $('#btnModal').prop('disabled', true);
             } else {
-                document.getElementById("btnModal").disabled = false;
+                $('#btnModal').prop('disabled', false);
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const newPassword = $('#newPassword');
+            const toggleBtn = $('#togglePassword');
+
+            if (newPassword.attr('type') === 'password') {
+                newPassword.attr('type', 'text');
+                toggleBtn.html('<i class="fas fa-eye"></i>');
+            } else {
+                newPassword.attr('type', 'password');
+                toggleBtn.html('<i class="fas fa-eye-slash"></i>');
+            }
+        }
+
+        function toggleConfirmPasswordVisibility() {
+            const confirmPassword = $('#confirmPassword');
+            const toggleBtn = $('#toggleConfirmPassword');
+
+            if (confirmPassword.attr('type') === 'password') {
+                confirmPassword.attr('type', 'text');
+                toggleBtn.html('<i class="fas fa-eye"></i>');
+            } else {
+                confirmPassword.attr('type', 'password');
+                toggleBtn.html('<i class="fas fa-eye-slash"></i>');
             }
         }
     </script>
@@ -90,6 +119,15 @@ if (@$_SESSION['editPassword'] == "success") {
     $swal .= "Swal.fire({";
     $swal .= "title: '" . "ไม่สำเร็จ',";
     $swal .= "text: '" . "เปลี่ยนรหัสผ่านไม่สำเร็จ', icon: 'error', confirmButtonText: 'ตกลง'})";
+    $swal .= "</script>";
+    echo @$swal;
+    @$_SESSION['editPassword'] = "";
+}else if (@$_SESSION['editPassword'] == "not_matching") {
+    $swal = "";
+    $swal .= "<script>";
+    $swal .= "Swal.fire({";
+    $swal .= "title: '" . "ไม่สำเร็จ',";
+    $swal .= "text: '" . "รหัสผ่านไม่ตรงกัน', icon: 'error', confirmButtonText: 'ตกลง'})";
     $swal .= "</script>";
     echo @$swal;
     @$_SESSION['editPassword'] = "";

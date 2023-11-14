@@ -27,21 +27,21 @@ if ($data_pwd != "") {
         $query = mysqli_query($con, $sql);
         if ($query){
             $_SESSION["changePassword"] = "success";
-            header("location:../employees.php");
+            header("location:../employeePassword.php");
             exit;
         }else {
             $_SESSION["changePassword"] = "error";
-            header("location:../employees.php");
+            header("location:../employeePassword.php");
             exit;
         }
     }else {
         $_SESSION["comparePassword"] = "error";
-        header("location:../employees.php");
+        header("location:../employeePassword.php");
         exit;
     }
 }else {
     $_SESSION["changePassword"] = "error";
-    header("location:../employees.php");
+    header("location:../employeePassword.php");
     exit;
 }
 ?>
